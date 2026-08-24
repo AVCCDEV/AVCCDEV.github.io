@@ -1,6 +1,7 @@
-# Local-only working material — never deployed, never committed.
-# The Pofo template is licensed third-party code we use as visual reference only.
-Reference/
+# NOTE: Reference/ (the licensed Pofo template) lives OUTSIDE this repo, one
+# level up in the workspace folder. It is unreachable from here by design —
+# there is no ignore rule to accidentally break, and no way for `git add -f`
+# to pull it in. Do not copy it into the repo.
 
 # OS / editor cruft
 Thumbs.db
@@ -11,3 +12,10 @@ Desktop.ini
 
 # Node (only if we ever add tooling)
 node_modules/
+
+# Unoptimised source art — export web-ready files into assets/img/ instead.
+*.psd
+*.ai
+*.tif
+*.tiff
+*_original.*
