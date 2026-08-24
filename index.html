@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Adam Velazquez — Artist</title>
+  <meta name="description" content="Portfolio of Adam Velazquez.">
+
+  <!-- TODO(setup): replace SITE_URL with the real domain once DNS is pointed. -->
+  <link rel="canonical" href="https://SITE_URL/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Adam Velazquez — Artist">
+  <meta property="og:description" content="Portfolio of Adam Velazquez.">
+  <meta property="og:url" content="https://SITE_URL/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!--
+    Apply the stored theme before first paint. This must stay inline and
+    blocking — deferring it causes a white flash for dark-theme visitors.
+  -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("av-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components/site-header.css">
+  <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/pages/home.css">
+
+  <script type="module" src="/js/main.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-site-header>
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="/">
+        Adam Velazquez<span class="site-header__brand-mark">.</span>
+      </a>
+
+      <nav class="site-nav" data-nav aria-label="Main">
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="/work/">Work</a></li>
+          <li><a class="site-nav__link" href="/about/">About</a></li>
+          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="icon-button theme-toggle" type="button"
+                data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+
+        <button class="icon-button nav-toggle" type="button"
+                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
+                aria-label="Toggle menu">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="hero">
+      <div class="container hero__inner">
+        <p class="eyebrow">Portfolio</p>
+        <h1 class="hero__title">
+          Adam Velazquez
+        </h1>
+        <p class="hero__lede measure">
+          <!-- TODO(content): one or two sentences on what you make and who it's for. -->
+          A short, specific line about the work — medium, subject, and what
+          you are looking for next.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="/work/">View the work</a>
+          <a class="button button--ghost" href="/contact/">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 2 mounts the featured gallery grid here. -->
+    <section class="section" id="featured">
+      <div class="container">
+        <p class="eyebrow">Selected work</p>
+        <h2>Featured pieces</h2>
+        <p class="measure" style="margin-top: var(--space-3); color: var(--color-text-muted);">
+          Placeholder — the gallery grid is the next module.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div class="site-footer__pitch">
+          <h2>Let's work together.</h2>
+          <p>Open to commissions, collaborations, and full-time roles.</p>
+        </div>
+
+        <ul class="site-footer__links" role="list">
+          <!-- TODO(content): real profile URLs. -->
+          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">Instagram</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">ArtStation</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
+        <p>Built by hand.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

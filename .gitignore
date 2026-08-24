@@ -1,0 +1,13 @@
+# Local-only working material — never deployed, never committed.
+# The Pofo template is licensed third-party code we use as visual reference only.
+Reference/
+
+# OS / editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Node (only if we ever add tooling)
+node_modules/

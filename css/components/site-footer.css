@@ -1,0 +1,47 @@
+/* ==========================================================================
+   site-footer.css — closing band: contact prompt, social links, colophon.
+   ========================================================================== */
+
+.site-footer {
+  margin-top: var(--section-y);
+  padding-block: var(--space-8) var(--space-6);
+  background-color: var(--color-bg-sunken);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: var(--space-7);
+}
+
+.site-footer__pitch { max-width: 32rem; }
+.site-footer__pitch h2 { font-size: var(--text-2xl); }
+.site-footer__pitch p {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}

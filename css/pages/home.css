@@ -1,0 +1,26 @@
+/* ==========================================================================
+   home.css — styles unique to the landing page. Anything reused by a second
+   page graduates out of here into css/components/.
+   ========================================================================== */
+
+.hero {
+  padding-block: clamp(var(--space-8), 12vh, var(--space-10)) var(--section-y);
+}
+
+.hero__title {
+  margin-top: var(--space-3);
+  font-size: var(--text-5xl);
+}
+
+.hero__lede {
+  margin-top: var(--space-5);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}

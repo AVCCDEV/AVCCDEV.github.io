@@ -1,0 +1,9 @@
+# Normalise line endings so the repo stays LF regardless of platform.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.pdf binary
+*.woff2 binary
