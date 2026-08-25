@@ -20,25 +20,30 @@ The landing page and deployment are deliberately parked until those exist.
   `Reference/` and `MediaPool/` sit above it, unreachable by git. Image
   budget and export pipeline documented in `CLAUDE.md`.
 
-- [~] **2 — Piece detail page — template built, awaiting content**
-  `/work/obsidian-20th-anniversary-logo/` is the first piece and doubles as the
-  reusable template (`css/pages/piece.css` names no project).
-  Layout from the Traverse Town reference: stacked display title, label/value
-  meta strip, then Overview, Summary, Breakdown, Gallery, related links.
-  Styling experiments with Pofo: Montserrat display at `clamp(2.6rem, 8.4vw,
-  7.5rem)` uppercase, small muted body copy, letter-spaced micro-labels,
-  fade-in on scroll via `js/modules/reveal.js`.
-  *Every unresolved spot is a loud dashed `.placeholder` block — grep for
-  `placeholder` and `TODO(` before this page ever deploys.*
+- [x] **2 — Piece detail pages**
+  Three pages, each built from its brief in `../Reference/DetailPages/`:
+  - `/work/obsidian-20th-anniversary-logo/`
+  - `/work/alien-rogue-incursion-announce/`
+  - `/work/alien-rogue-incursion-story-reveal/`
 
-  Blocked on Adam:
-  - Responsibilities list for the Summary section (brief has none).
-  - Year, and whether the tools line continues past "Unreal Engine, Blender,".
-  - Whether "Logo Garden" is this piece's category or a separate credit; it is
-    currently rendered as the "Discipline" meta value.
-  - Breakdown copy and gallery stills.
-  - Video needs compressing (17 MB webm / 15 MB mp4 committed as-is) and a
-    poster frame. ffmpeg is not installed on this machine.
+  `css/pages/piece.css` is the shared template and names no project. Page
+  shape follows the briefs exactly: kicker, stacked title, Client/Studio/Tools
+  meta, trailer embed, summary copy, related work. The Summary/Breakdown/
+  Gallery sections from the first draft were removed — no brief asked for them.
+
+  *Notes:*
+  - Trailers are **YouTube embeds** (`youtube-nocookie`, `loading="lazy"`), not
+    committed files. This replaced 32 MB of local video with nothing.
+  - Titles over ~35 characters get `.piece-title--long`; at full display size
+    they wrapped to four lines and pushed the trailer below the fold.
+  - Tool logos are monochrome masks in `assets/img/tools/` — Unreal Engine,
+    Blender, Maya. See that folder's README for provenance and how to add one.
+  - The only committed video is the Story Reveal storyboard comparison
+    (932 KB webm). It is webm-only; an mp4 fallback still wants encoding.
+  - Copy is verbatim from the briefs, with one exception: the Story Reveal
+    brief reads "orignially", corrected to "originally". The same sentence
+    also reads "with using in-game content" — left as written, still worth
+    a look.
 
 - [ ] **3 — Work index / gallery**
   `/work/` — responsive grid linking to each piece page, lazy-loaded

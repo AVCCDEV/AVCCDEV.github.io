@@ -50,6 +50,13 @@
   text-transform: uppercase;
   text-wrap: balance;
 }
+/* Long titles wrap to three or four lines at the full size, which pushes the
+   trailer off screen entirely. Apply --long past roughly 35 characters. */
+.piece-title--long {
+  font-size: clamp(2.1rem, 5.4vw, 4.4rem);
+  line-height: 0.98;
+}
+
 .piece-title__line { display: block; }
 /* Second line sits lighter, so the stack has hierarchy. */
 .piece-title__line--soft { color: var(--color-text-muted); }
@@ -90,7 +97,8 @@
   padding-inline: var(--gutter);
 }
 
-.piece-video {
+.piece-video,
+.piece-embed {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -102,6 +110,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* YouTube embeds. Sized by the wrapper's aspect-ratio, so no padding hack. */
+.piece-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .piece-media__caption {

@@ -55,3 +55,6 @@
 .tool-chip__logo[data-tool="blender"] {
   --tool-logo: url("/assets/img/tools/blender.svg");
 }
+.tool-chip__logo[data-tool="maya"] {
+  --tool-logo: url("/assets/img/tools/maya.svg");
+}
