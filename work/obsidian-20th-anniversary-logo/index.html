@@ -107,7 +107,6 @@
           </li>
           <li>
             <span class="piece-meta__label">Tools</span>
-            <!-- TODO(content): the brief ends "Unreal Engine, Blender," — more tools to add? -->
             <ul class="tool-chips" role="list">
               <li class="tool-chip">
                 <span class="tool-chip__logo" data-tool="unreal-engine" aria-hidden="true"></span>
@@ -141,12 +140,35 @@
         <div data-reveal data-reveal-delay="80">
           <div class="piece-section__body">
             <p class="piece-lede">
-              Very proud to have worked on the 20th Anniversary Logo for Obsidian that now plays as the intro logo for Avowed, Grounded 2, and The Outer Worlds 2.
+              I am very proud to have worked on the 20th Anniversary Logo for Obsidian that now plays as the intro logo for Avowed, Grounded 2, and The Outer Worlds 2.
             </p>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ======================== ISOLATED INTRO ======================== -->
+    <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
+      <figure>
+        <div class="piece-video">
+          <!--
+            TODO(media): 15 MB, straight from the master — no poster frame and
+            no compression pass (ffmpeg is not installed on this machine). A
+            web-encoded version would be a fraction of this. preload="metadata"
+            keeps it from downloading until someone presses play.
+          -->
+          <video controls playsinline preload="metadata"
+                 aria-label="Obsidian Entertainment logo cinematic, isolated intro">
+            <source src="/assets/video/obsidian-20th/logo-cinematic-isolated.mp4" type="video/mp4">
+            <p>Your browser cannot play this video.
+               <a href="/assets/video/obsidian-20th/logo-cinematic-isolated.mp4">Download the mp4</a>.</p>
+          </video>
+        </div>
+        <figcaption class="piece-media__caption">
+          The isolated intro logo.
+        </figcaption>
+      </figure>
+    </div>
 
     <!-- ============================ RELATED ============================ -->
     <nav class="container piece-nav" aria-label="Related work">

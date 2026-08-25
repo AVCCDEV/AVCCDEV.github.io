@@ -33,9 +33,10 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
 - **Repo URL** — to add the remote and push.
 - **Social links** — Instagram / ArtStation / LinkedIn.
 - **Year** — no piece page shows one; the briefs give no dates.
-- **Obsidian tools** — line ends "Unreal Engine, Blender," on a trailing comma.
-- **Story Reveal copy** — "for this trailer with using in-game content" is one
-  word too many; left verbatim. ("orignially" was corrected to "originally".)
+- **Compress the isolated intro** — `assets/video/obsidian-20th/
+  logo-cinematic-isolated.mp4` is 15 MB for a **3-second** clip (~40 Mbps,
+  straight off the master). A web encode would be well under 1 MB. Needs
+  ffmpeg, which is not installed on this machine.
 - **Git history is 33 MB** against a ~1 MB tree — the deleted 32 MB Obsidian
   trailers persist in it. Unpushed, so it can still be rewritten; destructive,
   so ask first.
