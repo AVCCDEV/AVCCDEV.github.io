@@ -165,6 +165,22 @@ CH="/c/Program Files/Google/Chrome/Application/chrome.exe"
 - Paths must be **Windows-style** (`C:/...`), not Git Bash style (`/c/...`),
   for both `--screenshot` and any `file:///` URL.
 
+**Headless Chrome clamps the viewport to ~485px minimum on Windows.** Asking
+for `--window-size=375,...` renders at 485 and merely *crops* the screenshot to
+375, which looks like content overflowing when nothing is wrong. To test a real
+narrow viewport, load the page in a sized `<iframe>` inside a wider window — an
+iframe gets a true viewport at whatever width you give it:
+
+```html
+<iframe src="/work/<slug>/" width="375" height="1500"></iframe>
+```
+
+To confirm a suspected overflow rather than eyeballing it, append a script that
+compares `documentElement.scrollWidth` with `clientWidth` and writes the result
+into `document.title`, then read it back with `--dump-dom`. Run it synchronously
+before `</body>` — a `load` listener or `setTimeout` fires after `--dump-dom`
+has already captured.
+
 Then check 375px and 1440px, both themes, and tab through with the keyboard.
 
 **Gotcha:** `mask-image` with an external SVG silently fails over `file://`

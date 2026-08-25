@@ -148,6 +148,13 @@
   }
 }
 
+/* A section with no label (the briefs' summary sections have none) leaves a
+   single child, which would otherwise land in the narrow label column and read
+   as a squashed strip on wide screens. Let it span the whole grid and use the
+   full measure — the point of these sections is one short, prominent statement. */
+.piece-section__grid > :only-child { grid-column: 1 / -1; }
+.piece-section__grid > :only-child .piece-section__body { max-width: none; }
+
 .piece-section__label {
   font-family: var(--font-sans);
   font-size: var(--text-xs);
