@@ -20,9 +20,12 @@
   --ink-050: #f6f6f8;
   --white:   #ffffff;
 
-  --accent-500: #c8613a;   /* warm terracotta — carries the brand */
-  --accent-400: #dd7a4f;
-  --accent-600: #a44b2a;
+  /* Red — deliberately not orange, which reads as Buddha Jones' mark.
+     Contrast-checked: 600 on light bg 5.9:1, 400 on dark bg 7.1:1, both
+     clearing WCAG AA for normal text. Keep those ratios if you retune. */
+  --accent-500: #e5342a;
+  --accent-400: #ff6b5e;   /* dark-theme accent */
+  --accent-600: #b8241c;   /* light-theme accent */
 
   /* --- Semantic colors: light theme (default) --------------------------- */
   --color-bg:            var(--ink-050);

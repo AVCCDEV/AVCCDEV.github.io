@@ -1,0 +1,57 @@
+/* ==========================================================================
+   tool-chip.css — a named tool with its logo, used in piece metadata.
+
+   The logo is painted as a mask filled with currentColor, not as an <img>,
+   so a single monochrome file works in both themes and needs no duplicate
+   light/dark artwork. Files live in assets/img/tools/ (see the README there).
+
+   Adding a tool: drop a wordmark-free monochrome SVG in assets/img/tools/,
+   then add one selector to the list at the bottom of this file.
+   ========================================================================== */
+
+.tool-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tool-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Hidden by default so a browser without mask support shows a clean text-only
+   chip rather than a solid currentColor rectangle. */
+.tool-chip__logo {
+  display: none;
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+@supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+  .tool-chip__logo {
+    display: block;
+    background-color: currentColor;
+    -webkit-mask: var(--tool-logo) center / contain no-repeat;
+            mask: var(--tool-logo) center / contain no-repeat;
+  }
+}
+
+/* --- The tools themselves ------------------------------------------------- */
+.tool-chip__logo[data-tool="unreal-engine"] {
+  --tool-logo: url("/assets/img/tools/unreal-engine.svg");
+}
+.tool-chip__logo[data-tool="blender"] {
+  --tool-logo: url("/assets/img/tools/blender.svg");
+}

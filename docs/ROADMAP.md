@@ -76,7 +76,8 @@ The landing page and deployment are deliberately parked until those exist.
 - Built fresh; the Pofo template in `../Reference/` is visual reference only
   and lives outside the repo.
 - Custom domain, so root-absolute paths are used throughout.
-- Warm terracotta accent on a near-neutral ink palette, Fraunces for display
-  and Inter for UI, light and dark themes both first-class.
+- Red accent on a near-neutral ink palette, Fraunces for display and Inter
+  for UI, light and dark themes both first-class. Orange was rejected: too
+  close to the Buddha Jones mark. Avoid orange anywhere on the site.
 - Repo root is `site/`. Raw artwork stages in `../MediaPool/`; only web-ready
   exports are committed, to keep the published site far under the 1 GB cap.

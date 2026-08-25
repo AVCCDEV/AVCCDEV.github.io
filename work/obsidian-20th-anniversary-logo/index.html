@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components/site-header.css">
   <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/components/tool-chip.css">
   <link rel="stylesheet" href="/css/pages/piece.css">
 
   <script type="module" src="/js/main.js"></script>
@@ -48,7 +49,7 @@
   <header class="site-header" data-site-header>
     <div class="container site-header__inner">
       <a class="site-header__brand" href="/">
-        Adam Velazquez<span class="site-header__brand-mark">.</span>
+        Adam Velazquez
       </a>
 
       <nav class="site-nav" data-nav aria-label="Main">
@@ -102,16 +103,21 @@
           </li>
           <li>
             <span class="piece-meta__label">Studio</span>
-            <span class="piece-meta__value">via Buddha Jones</span>
-          </li>
-          <li>
-            <span class="piece-meta__label">Discipline</span>
-            <span class="piece-meta__value">Logo Garden</span>
+            <span class="piece-meta__value">Buddha Jones</span>
           </li>
           <li>
             <span class="piece-meta__label">Tools</span>
             <!-- TODO(content): the brief ends "Unreal Engine, Blender," — more tools to add? -->
-            <span class="piece-meta__value">Unreal Engine, Blender</span>
+            <ul class="tool-chips" role="list">
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="unreal-engine" aria-hidden="true"></span>
+                Unreal Engine
+              </li>
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="blender" aria-hidden="true"></span>
+                Blender
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -143,9 +149,7 @@
     <!-- ============================ OVERVIEW ============================ -->
     <section class="piece-section">
       <div class="container piece-section__grid">
-        <p class="piece-section__label" data-reveal>Overview</p>
         <div data-reveal data-reveal-delay="80">
-          <h2 class="piece-section__heading">About this project</h2>
           <div class="piece-section__body">
             <p class="piece-lede">
               Very proud to have worked on the 20th Anniversary Logo for Obsidian

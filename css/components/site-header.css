@@ -39,7 +39,6 @@
   white-space: nowrap;
 }
 .site-header__brand:hover { color: var(--color-accent); }
-.site-header__brand-mark { color: var(--color-accent); }
 
 /* --- Navigation ----------------------------------------------------------- */
 .site-nav__list {
