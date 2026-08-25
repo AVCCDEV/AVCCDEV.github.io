@@ -1,0 +1,269 @@
+/* ==========================================================================
+   piece.css — the portfolio piece detail template.
+   Written for reuse: every piece page shares this file, so nothing here
+   names a specific project.
+
+   Layout follows the Traverse Town reference (stacked display title,
+   label/value meta strip, then Overview, Summary, Breakdown, Gallery).
+   Styling follows Pofo: very large Montserrat display type, small muted
+   body copy, uppercase letter-spaced micro-labels, full-bleed media, fade-in.
+   ========================================================================== */
+
+/* --- Scroll reveal --------------------------------------------------------
+   js/modules/reveal.js adds .has-reveal to <html> only when it is safe to
+   animate, so without JS or with reduced motion everything renders visible.
+   -------------------------------------------------------------------------- */
+.has-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.has-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Hero ----------------------------------------------------------------- */
+.piece-hero {
+  padding-block: clamp(var(--space-7), 9vw, var(--space-9)) var(--space-6);
+}
+
+.piece-hero__kicker {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* The Pofo signature: display type as large as the viewport will bear.
+   Each line is its own block so the title stacks, as TRAVERSE over TOWN. */
+.piece-title {
+  margin-top: var(--space-4);
+  font-family: var(--font-display-alt);
+  font-size: clamp(2.6rem, 8.4vw, 7.5rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.piece-title__line { display: block; }
+/* Second line sits lighter, so the stack has hierarchy. */
+.piece-title__line--soft { color: var(--color-text-muted); }
+
+/* --- Meta strip: label above value, in a row that wraps -------------------- */
+.piece-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-7);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+}
+
+.piece-meta__label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+.piece-meta__value {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: 500;
+}
+
+/* --- Media ---------------------------------------------------------------- */
+
+/* Wider than the text container, but still gutter-safe on small screens. */
+.piece-media--bleed {
+  width: 100%;
+  margin-inline: auto;
+  max-width: min(112rem, 100%);
+  padding-inline: var(--gutter);
+}
+
+.piece-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--ink-950);
+  box-shadow: var(--shadow-lg);
+}
+.piece-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.piece-media__caption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+/* --- Sections: label column on the left, content on the right -------------
+   Pofo and the Traverse Town reference both anchor a small uppercase label
+   beside a wide content column. Collapses to one column on narrow screens.
+   -------------------------------------------------------------------------- */
+.piece-section {
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--color-border);
+}
+.piece-section--sunken { background-color: var(--color-bg-sunken); }
+
+.piece-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 56rem) {
+  .piece-section__grid {
+    grid-template-columns: minmax(9rem, 1fr) minmax(0, 3fr);
+    gap: var(--space-7);
+  }
+}
+
+.piece-section__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.piece-section__heading {
+  font-family: var(--font-display-alt);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.piece-section__body {
+  margin-top: var(--space-4);
+  max-width: var(--width-text);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+.piece-section__body > * + * { margin-top: var(--space-4); }
+
+/* Lead paragraph — the line that should land hardest. */
+.piece-lede {
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+
+/* --- Credit list, em-dash marked (Traverse Town idiom) -------------------- */
+.piece-list {
+  margin-top: var(--space-4);
+  list-style: none;
+  padding: 0;
+  columns: 2;
+  column-gap: var(--space-6);
+}
+@media (max-width: 40rem) { .piece-list { columns: 1; } }
+
+.piece-list li {
+  break-inside: avoid;
+  padding-block: var(--space-2);
+  color: var(--color-text-muted);
+}
+.piece-list li::before {
+  content: "―";
+  margin-right: var(--space-2);
+  color: var(--color-accent);
+}
+
+/* --- Gallery -------------------------------------------------------------- */
+.piece-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+.piece-gallery img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-sunken);
+}
+
+/* --- Placeholder ----------------------------------------------------------
+   Deliberately loud. Anything wearing this class is unfinished content that
+   must never reach production — grep for "placeholder" before deploying.
+   -------------------------------------------------------------------------- */
+.placeholder {
+  display: grid;
+  place-items: center;
+  gap: var(--space-2);
+  min-height: 9rem;
+  padding: var(--space-5);
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-subtle);
+  text-align: center;
+}
+.placeholder::before {
+  content: "Placeholder";
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.placeholder p { font-size: var(--text-sm); margin: 0; }
+.placeholder--media { aspect-ratio: 16 / 9; min-height: 0; }
+
+/* --- Prev / next piece navigation ----------------------------------------- */
+.piece-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--color-border);
+}
+@media (min-width: 48rem) {
+  .piece-nav { grid-template-columns: 1fr 1fr; }
+}
+
+.piece-nav__item {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+}
+.piece-nav__item:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-bg-raised);
+}
+.piece-nav__item--next { text-align: right; }
+
+.piece-nav__label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+.piece-nav__title {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-display-alt);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}

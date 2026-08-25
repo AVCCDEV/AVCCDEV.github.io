@@ -20,18 +20,25 @@ The landing page and deployment are deliberately parked until those exist.
   `Reference/` and `MediaPool/` sit above it, unreachable by git. Image
   budget and export pipeline documented in `CLAUDE.md`.
 
-- [ ] **2 — Piece detail page  ← NEXT**
-  Build the template for one portfolio piece end to end, with placeholder
-  imagery, then reuse it. `MediaPool/` suggests the first two are **Avowed**
-  and **Obsidian 20th**.
-  Decide before building:
-  - Which metadata fields a piece carries (role, studio, year, tools,
-    engine, medium, dimensions?) — depends on the discipline.
-  - Whether pieces are hand-written HTML files or rendered from a JSON
-    data file by JS. Hand-written is simpler and better for SEO; JSON wins
-    once there are many pieces sharing one layout.
-  - URL shape: `/work/avowed/` (a folder with `index.html`) keeps links
-    clean and extension-free.
+- [~] **2 — Piece detail page — template built, awaiting content**
+  `/work/obsidian-20th-anniversary-logo/` is the first piece and doubles as the
+  reusable template (`css/pages/piece.css` names no project).
+  Layout from the Traverse Town reference: stacked display title, label/value
+  meta strip, then Overview, Summary, Breakdown, Gallery, related links.
+  Styling experiments with Pofo: Montserrat display at `clamp(2.6rem, 8.4vw,
+  7.5rem)` uppercase, small muted body copy, letter-spaced micro-labels,
+  fade-in on scroll via `js/modules/reveal.js`.
+  *Every unresolved spot is a loud dashed `.placeholder` block — grep for
+  `placeholder` and `TODO(` before this page ever deploys.*
+
+  Blocked on Adam:
+  - Responsibilities list for the Summary section (brief has none).
+  - Year, and whether the tools line continues past "Unreal Engine, Blender,".
+  - Whether "Logo Garden" is this piece's category or a separate credit; it is
+    currently rendered as the "Discipline" meta value.
+  - Breakdown copy and gallery stills.
+  - Video needs compressing (17 MB webm / 15 MB mp4 committed as-is) and a
+    poster frame. ffmpeg is not installed on this machine.
 
 - [ ] **3 — Work index / gallery**
   `/work/` — responsive grid linking to each piece page, lazy-loaded

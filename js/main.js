@@ -9,6 +9,7 @@
 
 import { initTheme } from "./modules/theme.js";
 import { initNav } from "./modules/nav.js";
+import { initReveal } from "./modules/reveal.js";
 
 /** Keeps the footer copyright year correct without an annual edit. */
 function initCurrentYear() {
@@ -21,6 +22,7 @@ function initCurrentYear() {
 function boot() {
   initTheme();
   initNav();
+  initReveal();
   initCurrentYear();
 }
 
