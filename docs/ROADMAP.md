@@ -73,6 +73,16 @@ The landing page and deployment are deliberately parked until those exist.
 - [ ] **Domain** — for `CNAME` and the `SITE_URL` placeholders in `index.html`.
 - [ ] **Repo URL** — to add the git remote and push.
 - [ ] **Social links** — Instagram / ArtStation / LinkedIn for the footer.
+- [ ] **Git history is 33 MB** while the working tree is ~1 MB. The deleted
+      Obsidian trailer files (32 MB) still live in history. Nothing has been
+      pushed yet, so history can still be rewritten to drop them — Adam's call,
+      since that is destructive. Harmless otherwise, just permanent.
+- [ ] **Year** — no piece page shows one; the briefs do not give dates.
+- [ ] **Obsidian tools line** ends "Unreal Engine, Blender," on a trailing
+      comma. More tools, or just a stray comma?
+- [ ] **Story Reveal copy** reads "for this trailer with using in-game
+      content" — left verbatim, but "with" or "using" is probably one word too
+      many.
 
 ## Decisions made
 

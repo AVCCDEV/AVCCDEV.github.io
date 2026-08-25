@@ -94,14 +94,24 @@ and `loading="lazy"` unless it is above the fold.
 
 **Content placeholders** are marked `TODO(content)`; setup values Adam still
 owes us are marked `TODO(setup)`. Grep for `TODO(` before calling a page done.
+Unresolved content also renders as a loud dashed `.placeholder` block — grep
+for `placeholder` too, and never let one reach production.
+
+**Piece pages are hand-maintained.** They were first generated from a one-off
+script, but that script is gone and Adam edits these files directly. Edit the
+HTML by hand; never regenerate, or you will silently revert his changes.
+
+**Titles longer than ~35 characters need `.piece-title--long`.** At full
+display size they wrap to four lines and push the trailer below the fold.
 
 ## Layout
 
-The workspace holds two sibling folders. Only `site/` is the repository.
+The workspace holds three sibling folders. Only `site/` is the repository.
 
 ```
 AdamV_Art/                  workspace — not a repo
-├── Reference/              licensed Pofo template, local only, never ships
+├── Reference/              briefs, peer-site saves, Pofo template — see above
+├── MediaPool/              raw artwork masters, never committed
 └── site/                   ← THE REPO. Its root is what Pages serves.
     ├── index.html          landing page
     ├── CNAME               custom domain (TODO: add once the domain is known)
@@ -115,6 +125,9 @@ AdamV_Art/                  workspace — not a repo
     │   ├── main.js         entry point; imports and runs the modules
     │   └── modules/        one feature per file (theme.js, nav.js, …)
     ├── assets/img/         web-ready site images
+    │   └── tools/          monochrome tool logos (see its README)
+    ├── assets/video/       only small clips; trailers are YouTube embeds
+    ├── work/<slug>/        one folder per piece, each an index.html
     └── docs/ROADMAP.md     module checklist and running notes
 ```
 
@@ -123,14 +136,41 @@ All commands run from `site/`. If a session starts in the workspace folder,
 
 ## Verifying a module
 
-There is no test suite. Before committing:
+There is no test suite. Serve the site, then look at it:
 
 ```sh
 python -m http.server 8000    # then open http://localhost:8000
 ```
 
-Check at 375px and 1440px wide, in both themes, and tab through the page with
-the keyboard. A file:// open will not work — ES modules need a real server.
+**Headless Chrome is installed and is the fastest way to actually see a page.**
+Screenshot it, then read the PNG — this catches layout problems that reading
+markup never will:
+
+```sh
+CH="/c/Program Files/Google/Chrome/Application/chrome.exe"
+"$CH" --headless --disable-gpu \
+      --user-data-dir=<fresh-temp-dir> \
+      --blink-settings=preferredColorScheme=1 \
+      --virtual-time-budget=5000 --hide-scrollbars \
+      --window-size=1440,900 \
+      --screenshot=<abs-path>.png <url>
+```
+
+- `preferredColorScheme=1` is light, `2` is dark. Without it, Chrome follows
+  the machine's setting (currently dark), which is not what you usually want.
+- `--virtual-time-budget` lets the scroll-reveal animations finish; without it
+  everything is caught mid-fade at partial opacity.
+- Pass a **fresh `--user-data-dir`** when re-checking an asset you just edited,
+  or Chrome serves the cached copy and you debug a stale file.
+- Paths must be **Windows-style** (`C:/...`), not Git Bash style (`/c/...`),
+  for both `--screenshot` and any `file:///` URL.
+
+Then check 375px and 1440px, both themes, and tab through with the keyboard.
+
+**Gotcha:** `mask-image` with an external SVG silently fails over `file://`
+(opaque origin) — tool-chip logos render blank. Always test them over HTTP.
+
+A `file://` open will not work for the site at all — ES modules need a server.
 
 ## Deploying
 
