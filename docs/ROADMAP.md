@@ -33,15 +33,15 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
 - **Repo URL** — to add the remote and push.
 - **Social links** — Instagram / ArtStation / LinkedIn.
 - **Year** — no piece page shows one; the briefs give no dates.
-- **Compress the isolated intro** — `assets/video/obsidian-20th/
-  logo-cinematic-isolated.mp4` is 15 MB for a **3-second** clip (~40 Mbps,
-  straight off the master). A web encode would be well under 1 MB. Needs
-  ffmpeg, which is not installed on this machine.
 - **Git history is 33 MB** against a ~1 MB tree — the deleted 32 MB Obsidian
   trailers persist in it. Unpushed, so it can still be rewritten; destructive,
   so ask first.
 
 ## Decisions
+
+- Video is encoded by `../tools/media/compress.sh` (portable ffmpeg in
+  `../tools/`, outside the repo). Masters stay in MediaPool; the manifest
+  records which preset each clip ships at.
 
 - Static HTML/CSS/JS, no build, no framework. Pushing `main` is the deploy.
 - Built fresh; Pofo is visual reference only and lives outside the repo.

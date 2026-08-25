@@ -151,14 +151,12 @@
     <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
       <figure>
         <div class="piece-video">
-          <!--
-            TODO(media): 15 MB, straight from the master — no poster frame and
-            no compression pass (ffmpeg is not installed on this machine). A
-            web-encoded version would be a fraction of this. preload="metadata"
-            keeps it from downloading until someone presses play.
-          -->
+          <!-- Encoded by tools/media/compress.sh (preset: web). webm first,
+               mp4 as the universal fallback. -->
           <video controls playsinline preload="metadata"
+                 poster="/assets/video/obsidian-20th/logo-cinematic-isolated.jpg"
                  aria-label="Obsidian Entertainment logo cinematic, isolated intro">
+            <source src="/assets/video/obsidian-20th/logo-cinematic-isolated.webm" type="video/webm">
             <source src="/assets/video/obsidian-20th/logo-cinematic-isolated.mp4" type="video/mp4">
             <p>Your browser cannot play this video.
                <a href="/assets/video/obsidian-20th/logo-cinematic-isolated.mp4">Download the mp4</a>.</p>

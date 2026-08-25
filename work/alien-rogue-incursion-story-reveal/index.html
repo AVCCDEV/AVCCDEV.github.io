@@ -151,15 +151,15 @@
     <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
       <figure>
         <div class="piece-video">
-          <!--
-            TODO(media): webm only (932 KB). Safari/iOS gained VP9 WebM support
-            some years back, but an mp4 fallback would still widen coverage —
-            the MediaPool mp4 is 158 MB, so it needs an ffmpeg pass first.
-          -->
+          <!-- Encoded by tools/media/compress.sh (preset: tiny — largely
+               static footage, capped to 30fps). webm first, mp4 fallback. -->
           <video controls playsinline preload="metadata"
+                 poster="/assets/video/alien-rogue-incursion/storyboard-comparison.jpg"
                  aria-label="Storyboard to final shot comparison">
             <source src="/assets/video/alien-rogue-incursion/storyboard-comparison.webm" type="video/webm">
-            <p>Your browser cannot play this video.</p>
+            <source src="/assets/video/alien-rogue-incursion/storyboard-comparison.mp4" type="video/mp4">
+            <p>Your browser cannot play this video.
+               <a href="/assets/video/alien-rogue-incursion/storyboard-comparison.mp4">Download the mp4</a>.</p>
           </video>
         </div>
         <figcaption class="piece-media__caption">

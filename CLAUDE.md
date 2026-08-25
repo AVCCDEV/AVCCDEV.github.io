@@ -59,6 +59,21 @@ Only web-ready exports are committed, into `assets/img/<project>/`:
 Every `<img>` gets `alt`, explicit `width`/`height` (to prevent layout shift),
 and `loading="lazy"` unless it is above the fold.
 
+**Video is never committed straight from MediaPool.** Add it to
+`../tools/media/manifest.tsv` and run `../tools/media/compress.sh`, which emits
+a VP9 webm, an H.264 mp4 fallback, and a poster frame into `assets/video/`.
+Pick the preset from what the master actually is — see that folder's README.
+Mark it up webm-first:
+
+```html
+<video controls playsinline preload="metadata" poster="<name>.jpg">
+  <source src="<name>.webm" type="video/webm">
+  <source src="<name>.mp4" type="video/mp4">
+</video>
+```
+
+Long trailers stay on YouTube; only short supporting clips are self-hosted.
+
 ## Conventions
 
 **Paths.** The site is served from a domain root, so root-absolute paths
