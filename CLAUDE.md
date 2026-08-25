@@ -5,10 +5,20 @@ domain. **Read this file first in every new session** — it is the whole contex
 you need. Then read `docs/ROADMAP.md` to see which module is next.
 
 **This folder is the git repository and the entire deployed site.** Everything
-here ships; nothing outside it does. The workspace one level up also holds
-`Reference/` — a licensed third-party template (Pofo) kept for visual reference
-only. It sits above the repo root, so git cannot see it. Never copy its markup,
-CSS, JS, or assets into this repo, and never link to it.
+here ships; nothing outside it does.
+
+The workspace one level up holds local-only material. `../Reference/` contains
+three different kinds of thing, and the rules differ:
+
+- **`../Reference/DetailPages/<Piece>/*.md` — Adam's own briefs.** His copy and
+  a rough design outline for each portfolio piece. **This is the spec.** Read
+  the brief before building a piece page, use his words verbatim rather than
+  rewriting them, and ask him rather than inventing content he did not supply.
+- **`../Reference/site layouts/`** — saved peer portfolio sites plus Adam's
+  current one. Inspiration for layout and structure; we still write our own
+  markup.
+- **`../Reference/html/`, `documentation/`, `*.zip`** — the licensed Pofo
+  template. **Never copy** its markup, CSS, JS, or assets into this repo.
 
 ## How we work
 
