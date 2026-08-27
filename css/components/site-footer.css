@@ -45,3 +45,18 @@
   font-size: var(--text-sm);
   color: var(--color-text-subtle);
 }
+
+/* --- Minimal variant ------------------------------------------------------
+   For a page that already closes on its own contact band (the landing's
+   .connect section). Dropping __top from the markup would otherwise leave the
+   colophon's divider rule floating directly under the section above it, and
+   the tall __top padding with nothing in it.
+   -------------------------------------------------------------------------- */
+.site-footer--minimal {
+  margin-top: 0;
+  padding-block: var(--space-5);
+}
+.site-footer--minimal .site-footer__bottom {
+  padding-top: 0;
+  border-top: 0;
+}

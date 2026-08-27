@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Adam Velazquez — Artist</title>
-  <meta name="description" content="Portfolio of Adam Velazquez.">
+  <title>Adam Velazquez — Cinematic Artist and Animator for Games</title>
+  <meta name="description" content="Cinematic and titles work by Adam Velazquez for Obsidian Entertainment, InXile, Survios, and Undead Labs, made at Buddha Jones.">
 
   <!-- TODO(setup): replace SITE_URL with the real domain once DNS is pointed. -->
   <link rel="canonical" href="https://SITE_URL/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Adam Velazquez — Artist">
-  <meta property="og:description" content="Portfolio of Adam Velazquez.">
+  <meta property="og:title" content="Adam Velazquez — Cinematic Artist and Animator for Games">
+  <meta property="og:description" content="Cinematic and titles work by Adam Velazquez for Obsidian Entertainment, InXile, Survios, and Undead Labs, made at Buddha Jones.">
   <meta property="og:url" content="https://SITE_URL/">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -31,12 +31,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap">
 
   <link rel="stylesheet" href="/css/tokens.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components/site-header.css">
   <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/components/reveal.css">
   <link rel="stylesheet" href="/css/pages/home.css">
 
   <script type="module" src="/js/main.js"></script>
@@ -85,57 +86,243 @@
 
   <main id="main">
 
+    <!-- ============================ HERO ============================
+      Full-bleed cinematic backdrop with the name stacked over it, after the
+      Caleb Moore reference. The backdrop is an existing committed thumbnail,
+      blurred and scrimmed: every trailer frame we ship has burned-in title
+      type, and --blur-media over --color-media-scrim dissolves that into
+      abstract texture so it reads as a plate rather than as someone else's
+      logo. Swapping the src for a cleaner still is a one-line change.
+
+      Hero type uses the --color-on-media group, which tokens.css defines once
+      and deliberately does not redefine per theme — the artwork underneath
+      does not get lighter in light mode.
+    -->
     <section class="hero">
+      <div class="hero__backdrop" aria-hidden="true">
+        <img class="hero__backdrop-image"
+             src="/assets/img/obsidian-20th/logo.webp"
+             alt=""
+             width="800" height="450"
+             fetchpriority="high" decoding="async">
+      </div>
+
       <div class="container hero__inner">
-        <p class="eyebrow">Portfolio</p>
+
         <h1 class="hero__title">
-          Adam Velazquez
+          <span class="hero__title-line">Adam</span>
+          <span class="hero__title-line">Velazquez</span>
         </h1>
-        <p class="hero__lede measure">
-          <!-- TODO(content): one or two sentences on what you make and who it's for. -->
-          A short, specific line about the work — medium, subject, and what
-          you are looking for next.
+
+        <!-- TODO(content): your own wording. This line is assembled only from
+             facts already on your piece pages — replace it with how you'd
+             actually introduce yourself. -->
+        <p class="hero__role">
+          Cinematic artist and animator for games and advertising
+           
         </p>
+
         <div class="hero__actions">
           <a class="button button--primary" href="/work/">View the work</a>
-          <a class="button button--ghost" href="/contact/">Get in touch</a>
+          <a class="button button--on-media" href="/contact/">Get in touch</a>
         </div>
       </div>
+
+      <a class="hero__scroll" href="#featured">
+        <span class="hero__scroll-label">Scroll down</span>
+        <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 4v15m0 0-6-6m6 6 6-6"></path>
+        </svg>
+      </a>
     </section>
 
-    <!-- MODULE 2 mounts the featured gallery grid here. -->
-    <section class="section" id="featured">
+    <!-- ========================= FEATURED WORK =========================
+      Caleb's featured section: a section head, then large alternating rows
+      of artwork and copy, each ending in "View Breakdown". Every paragraph
+      below is verbatim from the matching piece page — Adam's own words.
+
+      "View Breakdown" is the row's only link, named per row by its
+      visually-hidden suffix, and home.css stretches it over the whole row so
+      the artwork is clickable too. That keeps one tab stop per piece and
+      avoids a second, unnamed link on the artwork.
+    -->
+    <section class="section featured" id="featured">
       <div class="container">
-        <p class="eyebrow">Selected work</p>
-        <h2>Featured pieces</h2>
-        <p class="measure" style="margin-top: var(--space-3); color: var(--color-text-muted);">
-          Placeholder — the gallery grid is the next module.
+
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Selected work</p>
+          <h2 class="section-head__title">Featured work</h2>
+        </div>
+
+        <ul class="feature-list" role="list">
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/obsidian-20th/logo.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2023</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Obsidian Entertainment</span>
+                <span class="feature__title-line feature__title-line--soft">20th Anniversary Logo</span>
+              </h3>
+              <p class="feature__text">
+                I am very proud to have worked on the 20th Anniversary Logo for
+                Obsidian that now plays as the intro logo for Avowed, Grounded 2,
+                and The Outer Worlds 2.
+              </p>
+              <a class="feature__link" href="/work/obsidian-20th-anniversary-logo/">
+                View Breakdown<span class="visually-hidden"> — Obsidian Entertainment 20th Anniversary Logo</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature feature--flip" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/covenant/reveal-trailer.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Legion Studios &middot; <span class="feature__year">2024</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Covenant</span>
+              </h3>
+              <p class="feature__text">
+                In 2024 I worked as a Gameplay animator at Legion Studios for
+                their upcoming first person Action RPG, Covenant. Some of my anim
+                work featured in the trailer are the slide, 1st person Kick,
+                traversal, and grappling.
+              </p>
+              <a class="feature__link" href="/work/covenant/">
+                View Breakdown<span class="visually-hidden"> &mdash; Covenant</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/avowed/times-square.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Avowed Times Square</span>
+                <span class="feature__title-line feature__title-line--soft">Anamorphic Billboard</span>
+              </h3>
+              <p class="feature__text">
+                At Buddha Jones I had the honor to create this Times Square ad
+                for the early access launch of Avowed. The ad was built in-engine
+                and I made custom animation with Maya.
+              </p>
+              <a class="feature__link" href="/work/avowed-times-square-billboard/">
+                View Breakdown<span class="visually-hidden"> — Avowed Times Square Anamorphic Billboard</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature feature--flip" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/alien-rogue-incursion/announce.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Survios &amp; 20th Century Games &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Alien Rogue Incursion</span>
+                <span class="feature__title-line feature__title-line--soft">Evolved Edition Announce Trailer</span>
+              </h3>
+              <p class="feature__text">
+                It was a blast working in the world of Alien. I was responsible
+                for creating the cinematic for this trailer in-engine using
+                Survios' in-game assets.
+              </p>
+              <a class="feature__link" href="/work/alien-rogue-incursion-announce/">
+                View Breakdown<span class="visually-hidden"> — Alien Rogue Incursion Evolved Edition Announce Trailer</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/state-of-decay-3/gameplay.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Undead Labs &middot; <span class="feature__year">2026</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">State of Decay 3</span>
+                <span class="feature__title-line feature__title-line--soft">Gameplay Trailer</span>
+              </h3>
+              <p class="feature__text">
+                I worked on the boombox intro and endcard cinematics with Undead
+                Labs for the gameplay reveal trailer that premiered on the Xbox
+                Games Showcase.
+              </p>
+              <a class="feature__link" href="/work/state-of-decay-3-gameplay-trailer/">
+                View Breakdown<span class="visually-hidden"> — State of Decay 3 Gameplay Trailer</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+        </ul>
+
+        <p class="featured__all" data-reveal>
+          <a class="button button--ghost" href="/work/">View all work</a>
         </p>
+
       </div>
     </section>
 
-  </main>
+    <!-- =========================== CONNECT ===========================
+      Caleb closes on a "Let's talk!" band above a bare copyright bar. The
+      footer therefore renders in its --minimal form on this page only, so the
+      pitch is not stated twice.
+    -->
+    <section class="section connect" id="connect">
+      <div class="container connect__inner">
+        <p class="eyebrow">Connect</p>
+        <h2 class="connect__title">Let's talk.</h2>
+        <p class="connect__lede measure">
+          Open to commissions, collaborations, and full-time roles. Reach me at
+          <a class="connect__email" href="mailto:adam.casey.velazquez@gmail.com">adam.casey.velazquez@gmail.com</a>,
+          or use the contact page.
+        </p>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="site-footer__top">
-        <div class="site-footer__pitch">
-          <h2>Let's work together.</h2>
-          <p>Open to commissions, collaborations, and full-time roles.</p>
-        </div>
-
-        <ul class="site-footer__links" role="list">
+        <ul class="connect__links" role="list">
           <!-- TODO(content): real profile URLs. -->
-          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li><a class="button button--primary" href="/contact/">Contact</a></li>
           <li><a class="button button--ghost" href="#" rel="me noopener">Instagram</a></li>
           <li><a class="button button--ghost" href="#" rel="me noopener">ArtStation</a></li>
           <li><a class="button button--ghost" href="#" rel="me noopener">LinkedIn</a></li>
         </ul>
       </div>
+    </section>
 
+  </main>
+
+  <footer class="site-footer site-footer--minimal">
+    <div class="container">
       <div class="site-footer__bottom">
         <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
-        <p>Built by hand.</p>
       </div>
     </div>
   </footer>

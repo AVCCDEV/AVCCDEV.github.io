@@ -19,3 +19,20 @@ node_modules/
 *.tif
 *.tiff
 *_original.*
+
+# Encoded, but shelved until the page that uses it exists (2026-08-27).
+#
+# These are NOT junk — they are finished encodes waiting on their piece pages,
+# and their masters are in MediaPool. They stay out of history because a
+# committed blob is permanent: once in, deleting the file later does not shrink
+# a clone. Delete the matching rule when the page lands, then commit them.
+#
+# Docked — brief exists at Reference/DetailPages/Docked/Docked.md, no page yet.
+assets/video/docked/
+# Clockwork Revolution "Hooligan example gallery" — for the Games Showcase 2026
+# page. heist-endcard.* is in use and deliberately NOT ignored.
+assets/video/clockwork-revolution/cards-cidt.*
+assets/video/clockwork-revolution/cards-inxile.*
+assets/video/clockwork-revolution/charcustom-station-spin.*
+assets/video/clockwork-revolution/newspaper-monarch.*
+assets/video/clockwork-revolution/newspaper-revolution.*

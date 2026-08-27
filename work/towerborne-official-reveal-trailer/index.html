@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Towerborne — Official Reveal Trailer — Adam Velazquez</title>
+  <meta name="description" content="Cinematic work on the Towerborne official reveal trailer, shown at the Xbox Games Showcase 2023, for Stoic Studio via Buddha Jones.">
+
+  <!-- TODO(setup): replace SITE_URL with the real domain once DNS is pointed. -->
+  <link rel="canonical" href="https://SITE_URL/work/towerborne-official-reveal-trailer/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Towerborne — Official Reveal Trailer — Adam Velazquez">
+  <meta property="og:description" content="Cinematic work on the Towerborne official reveal trailer, shown at the Xbox Games Showcase 2023, for Stoic Studio via Buddha Jones.">
+  <meta property="og:url" content="https://SITE_URL/work/towerborne-official-reveal-trailer/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!--
+    Apply the stored theme before first paint. This must stay inline and
+    blocking — deferring it causes a white flash for dark-theme visitors.
+  -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("av-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components/site-header.css">
+  <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/components/tool-chip.css">
+  <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/pages/piece.css">
+
+  <script type="module" src="/js/main.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-site-header>
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="/">
+        Adam Velazquez
+      </a>
+
+      <nav class="site-nav" data-nav aria-label="Main">
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="/work/">Work</a></li>
+          <li><a class="site-nav__link" href="/about/">About</a></li>
+          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="icon-button theme-toggle" type="button"
+                data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+
+        <button class="icon-button nav-toggle" type="button"
+                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
+                aria-label="Toggle menu">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================ HERO ============================ -->
+    <section class="piece-hero">
+      <div class="container">
+        <p class="piece-hero__kicker" data-reveal>Cinematic Work</p>
+
+        <!-- Split at the brief's own "|", same two-line treatment as the
+             Clockwork Revolution page. NOTE: the brief reads "Official Reveal
+             Tailer" — typo corrected to "Trailer" here. -->
+        <h1 class="piece-title piece-title--xlong" data-reveal data-reveal-delay="80">
+          <span class="piece-title__line">Towerborne &mdash; Official Reveal Trailer</span>
+          <span class="piece-title__line piece-title__line--soft">Xbox Games Showcase 2023</span>
+        </h1>
+
+        <ul class="piece-meta" role="list" data-reveal data-reveal-delay="160">
+          <li>
+            <span class="piece-meta__label">Client</span>
+            <span class="piece-meta__value">Stoic Studio</span>
+          </li>
+          <li>
+            <span class="piece-meta__label">Studio</span>
+            <span class="piece-meta__value">Buddha Jones</span>
+          </li>
+          <li>
+            <span class="piece-meta__label">Tools</span>
+            <ul class="tool-chips" role="list">
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="unreal-engine" aria-hidden="true"></span>
+                Unreal Engine
+              </li>
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="blender" aria-hidden="true"></span>
+                Blender
+              </li>
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="houdini" aria-hidden="true"></span>
+                Houdini
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ TRAILER ============================ -->
+    <div class="piece-media--bleed" data-reveal>
+      <div class="piece-embed">
+        <!-- youtube-nocookie: no tracking cookie until the viewer hits play. -->
+        <iframe src="https://www.youtube-nocookie.com/embed/_eSfwxNYKA4"
+                title="Towerborne — Official Reveal Trailer | Xbox Games Showcase 2023"
+                loading="lazy" allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+      </div>
+    </div>
+
+    <!-- ============================ SUMMARY ============================ -->
+    <section class="piece-section">
+      <div class="container piece-section__grid">
+        <div data-reveal data-reveal-delay="80">
+          <div class="piece-section__body">
+            <p class="piece-lede">
+              My first project with Buddha Jones, I created the cinematic shots and built out the environment in UE, including the Belfry tower itself which I modeled in Blender and textured in UE.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STORYBOARD FRAMES =====================
+         MediaPool/TowerBorne/Announce/1.png, 2.png, 3.png in that order, per
+         the brief. Sources are 1920x1080; exported at 1600px longest edge,
+         WebP q80 (88/126/110 KB). All three are exactly 16:9, so the
+         .piece-gallery aspect-ratio crops nothing.
+         ============================================================== -->
+    <section class="piece-section piece-section--sunken">
+      <div class="container">
+        <figure data-reveal>
+          <div class="piece-gallery">
+            <img src="/assets/img/towerborne/storyboard-1.webp"
+                 alt="Stylised world map of green islands and turquoise lakes under banked cloud, with three coloured location markers standing on it."
+                 width="1600" height="900" loading="lazy" decoding="async">
+            <img src="/assets/img/towerborne/storyboard-2.webp"
+                 alt="The camera high above the Belfry, a windmill-topped tower on an island in a turquoise lake."
+                 width="1600" height="900" loading="lazy" decoding="async">
+            <img src="/assets/img/towerborne/storyboard-3.webp"
+                 alt="A closer three-quarter view of the Belfry tower, its sails and green cupola against the coastline behind."
+                 width="1600" height="900" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="piece-media__caption">
+            WIP sketches used to communicate shots to the team.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================ RELATED ============================
+         The brief says "use placeholder"; both links below point at pages that
+         exist, which beats shipping a placeholder. The opening cinematic is
+         the natural first link — its own summary opens "After the reveal
+         trailer…", so the two pages read as a pair in that order. -->
+    <nav class="container piece-nav" aria-label="Related work">
+      <a class="piece-nav__item" href="/work/towerborne-opening-cinematic/">
+        <span class="piece-nav__label">Related work</span>
+        <span class="piece-nav__title">Towerborne &mdash; Opening Cinematic</span>
+      </a>
+      <a class="piece-nav__item" href="/work/state-of-decay-3-gameplay-trailer/">
+        <span class="piece-nav__label">Related work</span>
+        <span class="piece-nav__title">State of Decay 3 Gameplay Trailer</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div class="site-footer__pitch">
+          <h2>Let's work together.</h2>
+          <p>Open to commissions, collaborations, and full-time roles.</p>
+        </div>
+
+        <ul class="site-footer__links" role="list">
+          <!-- TODO(content): real profile URLs. -->
+          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">Instagram</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">ArtStation</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -58,3 +58,6 @@
 .tool-chip__logo[data-tool="maya"] {
   --tool-logo: url("/assets/img/tools/maya.svg");
 }
+.tool-chip__logo[data-tool="houdini"] {
+  --tool-logo: url("/assets/img/tools/houdini.svg");
+}

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Work — Adam Velazquez</title>
+  <meta name="description" content="Cinematic and titles work by Adam Velazquez for Obsidian Entertainment, InXile, Survios, and Undead Labs, made at Buddha Jones.">
+
+  <!-- TODO(setup): replace SITE_URL with the real domain once DNS is pointed. -->
+  <link rel="canonical" href="https://SITE_URL/work/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Work — Adam Velazquez">
+  <meta property="og:description" content="Cinematic and titles work by Adam Velazquez for Obsidian Entertainment, InXile, Survios, and Undead Labs, made at Buddha Jones.">
+  <meta property="og:url" content="https://SITE_URL/work/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!--
+    Apply the stored theme before first paint. This must stay inline and
+    blocking — deferring it causes a white flash for dark-theme visitors.
+  -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("av-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components/site-header.css">
+  <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/pages/work.css">
+
+  <script type="module" src="/js/main.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-site-header>
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="/">
+        Adam Velazquez
+      </a>
+
+      <nav class="site-nav" data-nav aria-label="Main">
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="/work/" aria-current="page">Work</a></li>
+          <li><a class="site-nav__link" href="/about/">About</a></li>
+          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="icon-button theme-toggle" type="button"
+                data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+
+        <button class="icon-button nav-toggle" type="button"
+                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
+                aria-label="Toggle menu">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================ GRID ============================ -->
+    <div class="container">
+
+      <!--
+        Hidden until filter.js adds .has-filter to <html>. The tally is a
+        polite live region so a screen reader hears the result of a press.
+      -->
+      <div class="work-filter" data-filter-group role="group" aria-label="Filter work by discipline">
+        <span class="eyebrow work-filter__label">Filter</span>
+        <button class="work-filter__button" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="work-filter__button" type="button" data-filter="cinematic" aria-pressed="false">Cinematic</button>
+        <button class="work-filter__button" type="button" data-filter="titles" aria-pressed="false">Titles</button>
+        <button class="work-filter__button" type="button" data-filter="gameplay" aria-pressed="false">Gameplay</button>
+        <p class="work-filter__count" data-filter-count aria-live="polite">9 pieces</p>
+      </div>
+
+      <ul class="work-grid" role="list" data-filter-grid>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/towerborne-official-reveal-trailer/" data-reveal>
+            <img class="work-card__image"
+                 src="/assets/img/towerborne/official-reveal-trailer.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Towerborne Official Reveal Trailer</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/obsidian-20th-anniversary-logo/" data-reveal data-reveal-delay="80">
+            <img class="work-card__image"
+                 src="/assets/img/obsidian-20th/logo.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Obsidian Entertainment 20th Anniversary Logo</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/towerborne-opening-cinematic/" data-reveal data-reveal-delay="160">
+            <img class="work-card__image"
+                 src="/assets/img/towerborne/opening-cinematic.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Towerborne Opening Cinematic</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/alien-rogue-incursion-story-reveal/" data-reveal>
+            <img class="work-card__image"
+                 src="/assets/img/alien-rogue-incursion/story-reveal.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Alien Rogue Incursion Story Reveal Trailer</h2>
+          </a>
+        </li>
+
+        <li data-discipline="gameplay">
+          <a class="work-card" href="/work/covenant/" data-reveal data-reveal-delay="80">
+            <img class="work-card__image"
+                 src="/assets/img/covenant/reveal-trailer.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Covenant</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/avowed-times-square-billboard/" data-reveal data-reveal-delay="160">
+            <img class="work-card__image"
+                 src="/assets/img/avowed/times-square.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Avowed Times Square Anamorphic Billboard</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/alien-rogue-incursion-announce/" data-reveal>
+            <img class="work-card__image"
+                 src="/assets/img/alien-rogue-incursion/announce.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Alien Rogue Incursion Evolved Edition Announce Trailer</h2>
+          </a>
+        </li>
+
+        <li data-discipline="titles">
+          <a class="work-card" href="/work/clockwork-revolution-heist/" data-reveal data-reveal-delay="80">
+            <img class="work-card__image"
+                 src="/assets/img/clockwork-revolution/heist.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Clockwork Revolution &mdash; The Heist</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/state-of-decay-3-gameplay-trailer/" data-reveal data-reveal-delay="160">
+            <img class="work-card__image"
+                 src="/assets/img/state-of-decay-3/gameplay.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">State of Decay 3 Gameplay Trailer</h2>
+          </a>
+        </li>
+
+      </ul>
+
+      <p class="work-empty" data-filter-empty hidden>Nothing in that discipline yet.</p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div class="site-footer__pitch">
+          <h2>Let's work together.</h2>
+          <p>Open to commissions, collaborations, and full-time roles.</p>
+        </div>
+
+        <ul class="site-footer__links" role="list">
+          <!-- TODO(content): real profile URLs. -->
+          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">Instagram</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">ArtStation</a></li>
+          <li><a class="button button--ghost" href="#" rel="me noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

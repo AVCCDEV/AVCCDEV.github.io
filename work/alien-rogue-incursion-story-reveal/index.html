@@ -140,7 +140,7 @@
         <div data-reveal data-reveal-delay="80">
           <div class="piece-section__body">
             <p class="piece-lede">
-              I was originally responsible for creating storyboards for this project but later brought on to create cinematic content for this trailer with using in-game content and custom animation.
+              I was originally responsible for creating storyboards for this project but later brought on to create cinematic content for this trailer using in-game content and custom animation.
             </p>
           </div>
         </div>
@@ -151,15 +151,19 @@
     <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
       <figure>
         <div class="piece-video">
-          <!-- Encoded by tools/media/compress.sh (preset: tiny — largely
-               static footage, capped to 30fps). webm first, mp4 fallback. -->
+          <!--
+            TODO(media): webm only (6.2 MB). Safari/iOS gained VP9 WebM support
+            some years back, but an mp4 fallback would still widen coverage on
+            older versions. One was encoded (10.2 MB) and deleted again on
+            2026-08-27, at Adam's direction, to keep the repo down — the same
+            trade as the Towerborne comparison. To restore it, uncomment the
+            entry in tools/media/manifest.tsv and re-run compress.sh.
+          -->
           <video controls playsinline preload="metadata"
                  poster="/assets/video/alien-rogue-incursion/storyboard-comparison.jpg"
                  aria-label="Storyboard to final shot comparison">
             <source src="/assets/video/alien-rogue-incursion/storyboard-comparison.webm" type="video/webm">
-            <source src="/assets/video/alien-rogue-incursion/storyboard-comparison.mp4" type="video/mp4">
-            <p>Your browser cannot play this video.
-               <a href="/assets/video/alien-rogue-incursion/storyboard-comparison.mp4">Download the mp4</a>.</p>
+            <p>Your browser cannot play this video.</p>
           </video>
         </div>
         <figcaption class="piece-media__caption">
