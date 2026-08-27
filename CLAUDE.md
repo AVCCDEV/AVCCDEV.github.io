@@ -129,7 +129,7 @@ AdamV_Art/                  workspace — not a repo
 ├── MediaPool/              raw artwork masters, never committed
 └── site/                   ← THE REPO. Its root is what Pages serves.
     ├── index.html          landing page
-    ├── CNAME               custom domain (TODO: add once the domain is known)
+    ├── CNAME               custom domain — adamv.art
     ├── .nojekyll           stops Pages running Jekyll over the repo
     ├── css/
     │   ├── tokens.css      design system variables — start here
@@ -207,3 +207,14 @@ A `file://` open will not work for the site at all — ES modules need a server.
 
 `git push origin main`. GitHub Pages serves `main` at the repo root; the live
 site updates in under a minute. There is no build and no Actions workflow.
+
+- **Remote:** `https://github.com/AVCCDEV/AVCCDEV.github.io.git`. It is a *user*
+  site, so it serves at the domain root — which is why the root-absolute paths
+  work. A project repo would serve under `/<repo>/` and 404 every stylesheet.
+- **Domain:** `adamv.art`, set by the `CNAME` file at the repo root. **Never
+  delete or rename it** — Pages drops the custom domain the moment it goes
+  missing, and canonical URLs across all 11 pages point at `https://adamv.art/`.
+- The remote's history is **unrelated** to this repo's: it began as an MVP
+  landing page built on the Pofo template, and this repo was started fresh.
+  Replacing it means a force-push, which discards those commits. Confirm with
+  Adam before doing that; a plain `git push` will be rejected.
