@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="/css/components/site-header.css">
   <link rel="stylesheet" href="/css/components/site-footer.css">
   <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/components/connect.css">
   <link rel="stylesheet" href="/css/pages/home.css">
 
   <script type="module" src="/js/main.js"></script>
@@ -51,18 +52,20 @@
         Adam Velazquez
       </a>
 
-      <nav class="site-nav" data-nav aria-label="Main">
-        <ul class="site-nav__list" role="list">
-          <li><a class="site-nav__link" href="/work/">Work</a></li>
-          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
-               for now"). The #about section was built from his resume and
-               removed with it; see docs/ROADMAP.md for what it held. Put this
-               line back when the section returns. -->
-          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
-        </ul>
-      </nav>
+      <!-- Two buttons, no nav list and no hamburger. Both destinations are
+           sections of the landing page rather than pages, and there are only
+           two of them, so they stay on the bar at every width and there is
+           nothing left to collapse. The off-canvas panel and its toggle went
+           out with the /work/ index on 2026-08-27 - see docs/ROADMAP.md.
 
+           Sizes step down at 48rem and 30rem instead of anything hiding;
+           site-header.css is where that ladder lives. -->
       <div class="site-header__actions">
+        <nav class="site-header__nav" aria-label="Main">
+          <a class="button button--ghost site-header__link" href="/#featured">Work</a>
+          <a class="button button--primary site-header__link" href="/#connect">Contact</a>
+        </nav>
+
         <button class="icon-button theme-toggle" type="button"
                 data-theme-toggle aria-label="Switch to dark theme">
           <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
@@ -76,17 +79,14 @@
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
           </svg>
         </button>
-
-        <button class="icon-button nav-toggle" type="button"
-                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
-                aria-label="Toggle menu">
-          <span class="nav-toggle__bars" aria-hidden="true"></span>
-        </button>
       </div>
     </div>
   </header>
 
-  <main id="main">
+  <!-- data-scroll-hint: js/modules/scrollHint.js nudges this down and back
+       once on open, so a strip of the work grid shows under the hero. The
+       landing page only — it is what the attribute selects on. -->
+  <main id="main" data-scroll-hint>
 
     <!-- ============================ HERO ============================
       Full-bleed cinematic backdrop with the name stacked over it, after the
@@ -162,7 +162,7 @@
         </p>
 
         <div class="hero__actions">
-          <a class="button button--primary" href="/work/">View the work</a>
+          <a class="button button--primary" href="#featured">View the work</a>
           <a class="button button--on-media" href="/#connect">Get in touch</a>
           <a class="button button--on-media" download
              href="/assets/docs/Adam_Velazquez_Resume.pdf">
@@ -186,15 +186,40 @@
       </a>
     </section>
 
-    <!-- ========================= FEATURED WORK =========================
-      Caleb's featured section: a section head, then large alternating rows
-      of artwork and copy, each ending in "View Breakdown". Every paragraph
-      below is verbatim from the matching piece page — Adam's own words.
+    <!-- ============================ WORK ============================
+      The site's only work listing. It was the landing page's "featured"
+      teaser sitting above a separate /work/ grid until 2026-08-27, when Adam
+      folded the two together: the grid page and its discipline filter are
+      gone, and the header's Work button scrolls here instead of navigating
+      away.
 
-      "View Breakdown" is the row's only link, named per row by its
-      visually-hidden suffix, and home.css stretches it over the whole row so
-      the artwork is clickable too. That keeps one tab stop per piece and
-      avoids a second, unnamed link on the artwork.
+      Cards carry artwork, client, year and title only. The summary paragraph
+      each one used to repeat from its piece page was dropped on 2026-08-27 —
+      that copy still lives on the piece page, which is what "See more" opens.
+      That link is the card's only link, named per card by its visually-hidden
+      suffix, and home.css stretches it over the whole card so the artwork is
+      clickable too. One tab stop per piece, and no second unnamed link on the
+      artwork.
+
+      ORDER IS CURATED, NOT CHRONOLOGICAL — Adam's call on 2026-08-28. The
+      first five are his pick, in his order: Alien Rogue Incursion Evolved
+      Edition Announce, Docked, Covenant, State of Decay 3, Avowed Times Square.
+      Everything after them keeps the by-upload-date run that used to govern
+      the whole list. So the years no longer descend down the page and are not
+      meant to — do not "fix" that. A new piece goes wherever Adam says; ask
+      rather than slotting it by date. Keep js/data/pieces.js in the same
+      order, which is the only other place the list exists.
+
+      The dates the tail is still in are in the table in docs/ROADMAP.md, and
+      two cards there print a year that is not their upload year because Adam
+      gave the year the work was done: Towerborne Opening Cinematic (2024,
+      uploaded 2025-05-04) and Docked (2025, uploaded 2026-02-26). Avowed Times
+      Square has no YouTube embed at all — it was slotted at February 2025, the
+      early-access launch the ad ran for.
+
+      The data-reveal-delay stagger repeats 0/80/160 straight down the list
+      regardless of column count, so inserting a piece mid-list reflows the
+      delays on every card after it.
     -->
     <section class="section featured" id="featured">
       <div class="container">
@@ -209,29 +234,44 @@
           <li class="feature" data-reveal>
             <div class="feature__media">
               <img class="feature__image"
-                   src="/assets/img/obsidian-20th/logo.webp"
+                   src="/assets/img/alien-rogue-incursion/announce.webp"
                    alt=""
                    width="800" height="450" loading="lazy" decoding="async">
             </div>
             <div class="feature__body">
-              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2023</span></p>
+              <p class="feature__client">Survios &amp; 20th Century Games &middot; <span class="feature__year">2025</span></p>
               <h3 class="feature__title">
-                <span class="feature__title-line">Obsidian Entertainment</span>
-                <span class="feature__title-line feature__title-line--soft">20th Anniversary Logo</span>
+                <span class="feature__title-line">Alien Rogue Incursion</span>
+                <span class="feature__title-line feature__title-line--soft">Evolved Edition Announce Trailer</span>
               </h3>
-              <p class="feature__text">
-                I am very proud to have worked on the 20th Anniversary Logo for
-                Obsidian that now plays as the intro logo for Avowed, Grounded 2,
-                and The Outer Worlds 2.
-              </p>
-              <a class="feature__link" href="/work/obsidian-20th-anniversary-logo/">
-                View Breakdown<span class="visually-hidden"> — Obsidian Entertainment 20th Anniversary Logo</span>
+              <a class="feature__link" href="/work/alien-rogue-incursion-announce/">
+                See more<span class="visually-hidden"> &mdash; Alien Rogue Incursion Evolved Edition Announce Trailer</span>
                 <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
               </a>
             </div>
           </li>
 
-          <li class="feature feature--flip" data-reveal>
+          <li class="feature" data-reveal data-reveal-delay="80">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/docked/life-on-the-docks.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Saber Interactive &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Docked</span>
+                <span class="feature__title-line feature__title-line--soft">Life on the Docks</span>
+              </h3>
+              <a class="feature__link" href="/work/docked-life-on-the-docks/">
+                See more<span class="visually-hidden"> &mdash; Docked, Life on the Docks</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal data-reveal-delay="160">
             <div class="feature__media">
               <img class="feature__image"
                    src="/assets/img/covenant/reveal-trailer.webp"
@@ -243,64 +283,8 @@
               <h3 class="feature__title">
                 <span class="feature__title-line">Covenant</span>
               </h3>
-              <p class="feature__text">
-                In 2024 I worked as a Gameplay animator at Legion Studios for
-                their upcoming first person Action RPG, Covenant. Some of my anim
-                work featured in the trailer are the slide, 1st person Kick,
-                traversal, and grappling.
-              </p>
               <a class="feature__link" href="/work/covenant/">
-                View Breakdown<span class="visually-hidden"> &mdash; Covenant</span>
-                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </li>
-
-          <li class="feature" data-reveal>
-            <div class="feature__media">
-              <img class="feature__image"
-                   src="/assets/img/avowed/times-square.webp"
-                   alt=""
-                   width="800" height="450" loading="lazy" decoding="async">
-            </div>
-            <div class="feature__body">
-              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2025</span></p>
-              <h3 class="feature__title">
-                <span class="feature__title-line">Avowed Times Square</span>
-                <span class="feature__title-line feature__title-line--soft">Anamorphic Billboard</span>
-              </h3>
-              <p class="feature__text">
-                At Buddha Jones I had the honor to create this Times Square ad
-                for the early access launch of Avowed. The ad was built in-engine
-                and I made custom animation with Maya.
-              </p>
-              <a class="feature__link" href="/work/avowed-times-square-billboard/">
-                View Breakdown<span class="visually-hidden"> — Avowed Times Square Anamorphic Billboard</span>
-                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </li>
-
-          <li class="feature feature--flip" data-reveal>
-            <div class="feature__media">
-              <img class="feature__image"
-                   src="/assets/img/alien-rogue-incursion/announce.webp"
-                   alt=""
-                   width="800" height="450" loading="lazy" decoding="async">
-            </div>
-            <div class="feature__body">
-              <p class="feature__client">Survios &amp; 20th Century Games &middot; <span class="feature__year">2025</span></p>
-              <h3 class="feature__title">
-                <span class="feature__title-line">Alien Rogue Incursion</span>
-                <span class="feature__title-line feature__title-line--soft">Evolved Edition Announce Trailer</span>
-              </h3>
-              <p class="feature__text">
-                It was a blast working in the world of Alien. I was responsible
-                for creating the cinematic for this trailer in-engine using
-                Survios' in-game assets.
-              </p>
-              <a class="feature__link" href="/work/alien-rogue-incursion-announce/">
-                View Breakdown<span class="visually-hidden"> — Alien Rogue Incursion Evolved Edition Announce Trailer</span>
+                See more<span class="visually-hidden"> &mdash; Covenant</span>
                 <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
               </a>
             </div>
@@ -319,72 +303,220 @@
                 <span class="feature__title-line">State of Decay 3</span>
                 <span class="feature__title-line feature__title-line--soft">Gameplay Trailer</span>
               </h3>
-              <p class="feature__text">
-                I worked on the boombox intro and endcard cinematics with Undead
-                Labs for the gameplay reveal trailer that premiered on the Xbox
-                Games Showcase.
-              </p>
               <a class="feature__link" href="/work/state-of-decay-3-gameplay-trailer/">
-                View Breakdown<span class="visually-hidden"> — State of Decay 3 Gameplay Trailer</span>
+                See more<span class="visually-hidden"> &mdash; State of Decay 3 Gameplay Trailer</span>
                 <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
               </a>
             </div>
           </li>
 
-        </ul>
+          <li class="feature" data-reveal data-reveal-delay="80">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/avowed/times-square.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Avowed Times Square</span>
+                <span class="feature__title-line feature__title-line--soft">Anamorphic Billboard</span>
+              </h3>
+              <a class="feature__link" href="/work/avowed-times-square-billboard/">
+                See more<span class="visually-hidden"> &mdash; Avowed Times Square Anamorphic Billboard</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
 
-        <p class="featured__all" data-reveal>
-          <a class="button button--ghost" href="/work/">View all work</a>
-        </p>
+          <li class="feature" data-reveal data-reveal-delay="160">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/clockwork-revolution/heist.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">InXile &middot; <span class="feature__year">2026</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Clockwork Revolution</span>
+                <span class="feature__title-line feature__title-line--soft">The Heist &mdash; Xbox Games Showcase 2026</span>
+              </h3>
+              <a class="feature__link" href="/work/clockwork-revolution-heist/">
+                See more<span class="visually-hidden"> &mdash; Clockwork Revolution, The Heist</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/clockwork-revolution/showcase-2025.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">InXile &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Clockwork Revolution</span>
+                <span class="feature__title-line feature__title-line--soft">Xbox Games Showcase 2025</span>
+              </h3>
+              <a class="feature__link" href="/work/clockwork-revolution-showcase-2025/">
+                See more<span class="visually-hidden"> &mdash; Clockwork Revolution, Xbox Games Showcase 2025</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal data-reveal-delay="80">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/magic-the-gathering/final-fantasy-trailer.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Wizards of the Coast &amp; Square Enix &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Magic: The Gathering &times; Final Fantasy</span>
+                <span class="feature__title-line feature__title-line--soft">Official Trailer</span>
+              </h3>
+              <a class="feature__link" href="/work/magic-the-gathering-final-fantasy/">
+                See more<span class="visually-hidden"> &mdash; Magic: The Gathering &times; Final Fantasy Official Trailer</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal data-reveal-delay="160">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/alien-rogue-incursion/gameplay-reveal.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Survios &amp; 20th Century Games &middot; <span class="feature__year">2025</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Alien Rogue Incursion</span>
+                <span class="feature__title-line feature__title-line--soft">PS5 &amp; PC Gameplay Reveal</span>
+              </h3>
+              <a class="feature__link" href="/work/alien-rogue-incursion-gameplay-reveal/">
+                See more<span class="visually-hidden"> &mdash; Alien Rogue Incursion PS5 &amp; PC Gameplay Reveal</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/towerborne/opening-cinematic.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Stoic Studio &middot; <span class="feature__year">2024</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Towerborne</span>
+                <span class="feature__title-line feature__title-line--soft">Opening Cinematic</span>
+              </h3>
+              <a class="feature__link" href="/work/towerborne-opening-cinematic/">
+                See more<span class="visually-hidden"> &mdash; Towerborne Opening Cinematic</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal data-reveal-delay="80">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/alien-rogue-incursion/story-reveal.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Survios &amp; 20th Century Games &middot; <span class="feature__year">2024</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Alien Rogue Incursion</span>
+                <span class="feature__title-line feature__title-line--soft">Story Reveal Trailer</span>
+              </h3>
+              <a class="feature__link" href="/work/alien-rogue-incursion-story-reveal/">
+                See more<span class="visually-hidden"> &mdash; Alien Rogue Incursion Story Reveal Trailer</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal data-reveal-delay="160">
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/obsidian-20th/logo.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Obsidian Entertainment &middot; <span class="feature__year">2023</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Obsidian Entertainment</span>
+                <span class="feature__title-line feature__title-line--soft">20th Anniversary Logo</span>
+              </h3>
+              <a class="feature__link" href="/work/obsidian-20th-anniversary-logo/">
+                See more<span class="visually-hidden"> &mdash; Obsidian Entertainment 20th Anniversary Logo</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="feature" data-reveal>
+            <div class="feature__media">
+              <img class="feature__image"
+                   src="/assets/img/towerborne/official-reveal-trailer.webp"
+                   alt=""
+                   width="800" height="450" loading="lazy" decoding="async">
+            </div>
+            <div class="feature__body">
+              <p class="feature__client">Stoic Studio &middot; <span class="feature__year">2023</span></p>
+              <h3 class="feature__title">
+                <span class="feature__title-line">Towerborne</span>
+                <span class="feature__title-line feature__title-line--soft">Official Reveal Trailer</span>
+              </h3>
+              <a class="feature__link" href="/work/towerborne-official-reveal-trailer/">
+                See more<span class="visually-hidden"> &mdash; Towerborne Official Reveal Trailer</span>
+                <span class="feature__link-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </li>
+
+</ul>
 
       </div>
     </section>
 
     <!-- =========================== CONNECT ===========================
-      Caleb closes on a "Let's talk!" band above a bare copyright bar. The
-      footer therefore renders in its --minimal form on this page only, so the
-      pitch is not stated twice.
+      The closing band. Its markup lives in js/modules/connectBand.js, which
+      replaces everything inside this placeholder — one copy of the block for
+      all fourteen pages instead of fourteen that drift apart. The fallback
+      below is what a visitor with JS off gets: the pitch and a working mailto,
+      but no form. See that module's header for why it is built that way.
+
+      The id stays "connect" — the header's Contact button and the hero's
+      "Get in touch" both point at /#connect.
+
+      The footer on this page renders --minimal so the pitch is not made twice.
     -->
-    <section class="section connect" id="connect">
+    <section class="section connect" id="connect" data-connect-band>
       <div class="container connect__inner">
-        <p class="eyebrow">Connect</p>
-        <h2 class="connect__title">Let's talk.</h2>
-        <p class="connect__lede measure">
-          Open to commissions, collaborations, and full-time roles. Reach me at
-          <a class="connect__email" href="mailto:adam.casey.velazquez@gmail.com">adam.casey.velazquez@gmail.com</a>.
-        </p>
-
-        <ul class="connect__links" role="list">
-          <!-- The Email button read "Contact" and pointed at /contact/, which
-               does not exist. It cannot point at #connect either — that is the
-               band it sits in — so it became the mail link, matching the Email
-               button in the full footer on every other page.
-
-               Instagram and ArtStation are still missing: they were removed on
-               2026-08-27 for being href="#", and Adam has not supplied those
-               URLs yet. Add them here alongside LinkedIn when he does. -->
-          <li><a class="button button--primary" href="mailto:adam.casey.velazquez@gmail.com">Email me</a></li>
-          <li>
-            <a class="button button--ghost" download
-               href="/assets/docs/Adam_Velazquez_Resume.pdf">
-              <svg class="button__icon" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                   stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
-              </svg>
-              Resume<span class="visually-hidden"> (PDF)</span>
-            </a>
-          </li>
-          <li>
-            <a class="button button--ghost" rel="noopener"
-               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
-              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
-              </svg>
-              LinkedIn
-            </a>
-          </li>
-        </ul>
+        <div class="connect__pitch">
+          <h2 class="connect__title">Let&rsquo;s make something great!</h2>
+          <p class="connect__lede">
+            Open to commissions, collaborations, and full-time roles.
+            <a href="mailto:adam.casey.velazquez@gmail.com">Email me</a> and
+            I&rsquo;ll get back to you.
+          </p>
+        </div>
       </div>
     </section>
 

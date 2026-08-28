@@ -5,8 +5,9 @@
    so a single monochrome file works in both themes and needs no duplicate
    light/dark artwork. Files live in assets/img/tools/ (see the README there).
 
-   Adding a tool: drop a wordmark-free monochrome SVG in assets/img/tools/,
-   then add one selector to the list at the bottom of this file.
+   Adding a tool: drop a monochrome mark in assets/img/tools/, then add one
+   selector to the list at the bottom of this file. SVG or PNG both work —
+   only the alpha channel is read either way.
    ========================================================================== */
 
 .tool-chips {
@@ -35,8 +36,19 @@
 .tool-chip__logo {
   display: none;
   flex: none;
-  width: 1.15rem;
-  height: 1.15rem;
+  width: var(--tool-logo-size, 1.15rem);
+  height: var(--tool-logo-size, 1.15rem);
+}
+
+/* Comes down with the company marks on a phone. Note this trims width, not
+   height: a chip is as tall as its text plus padding, and the logo is already
+   smaller than that, so shrinking it does not reclaim vertical space. */
+@media (max-width: 48rem) {
+  .tool-chips { --tool-logo-size: 1rem; }
+}
+
+@media (max-width: 30rem) {
+  .tool-chips { --tool-logo-size: 0.9rem; }
 }
 
 @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
@@ -53,11 +65,11 @@
   --tool-logo: url("/assets/img/tools/unreal-engine.svg");
 }
 .tool-chip__logo[data-tool="blender"] {
-  --tool-logo: url("/assets/img/tools/blender.svg");
+  --tool-logo: url("/assets/img/tools/blender.png");
 }
 .tool-chip__logo[data-tool="maya"] {
-  --tool-logo: url("/assets/img/tools/maya.svg");
+  --tool-logo: url("/assets/img/tools/maya.png");
 }
 .tool-chip__logo[data-tool="houdini"] {
-  --tool-logo: url("/assets/img/tools/houdini.svg");
+  --tool-logo: url("/assets/img/tools/houdini.png");
 }

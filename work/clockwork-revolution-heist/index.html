@@ -37,7 +37,10 @@
   <link rel="stylesheet" href="/css/components/site-header.css">
   <link rel="stylesheet" href="/css/components/site-footer.css">
   <link rel="stylesheet" href="/css/components/tool-chip.css">
+  <link rel="stylesheet" href="/css/components/company-mark.css">
   <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/components/related-work.css">
+  <link rel="stylesheet" href="/css/components/connect.css">
   <link rel="stylesheet" href="/css/pages/piece.css">
 
   <script type="module" src="/js/main.js"></script>
@@ -50,18 +53,20 @@
         Adam Velazquez
       </a>
 
-      <nav class="site-nav" data-nav aria-label="Main">
-        <ul class="site-nav__list" role="list">
-          <li><a class="site-nav__link" href="/work/">Work</a></li>
-          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
-               for now"). The #about section was built from his resume and
-               removed with it; see docs/ROADMAP.md for what it held. Put this
-               line back when the section returns. -->
-          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
-        </ul>
-      </nav>
+      <!-- Two buttons, no nav list and no hamburger. Both destinations are
+           sections of the landing page rather than pages, and there are only
+           two of them, so they stay on the bar at every width and there is
+           nothing left to collapse. The off-canvas panel and its toggle went
+           out with the /work/ index on 2026-08-27 - see docs/ROADMAP.md.
 
+           Sizes step down at 48rem and 30rem instead of anything hiding;
+           site-header.css is where that ladder lives. -->
       <div class="site-header__actions">
+        <nav class="site-header__nav" aria-label="Main">
+          <a class="button button--ghost site-header__link" href="/#featured">Work</a>
+          <a class="button button--primary site-header__link" href="/#connect">Contact</a>
+        </nav>
+
         <button class="icon-button theme-toggle" type="button"
                 data-theme-toggle aria-label="Switch to dark theme">
           <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
@@ -74,12 +79,6 @@
                stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
           </svg>
-        </button>
-
-        <button class="icon-button nav-toggle" type="button"
-                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
-                aria-label="Toggle menu">
-          <span class="nav-toggle__bars" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -100,11 +99,24 @@
         <ul class="piece-meta" role="list" data-reveal data-reveal-delay="160">
           <li>
             <span class="piece-meta__label">Client</span>
-            <span class="piece-meta__value">InXile</span>
+            <span class="piece-meta__value">
+              <span class="company-marks">
+                <span class="company-mark" data-company="inxile-entertainment">InXile</span>
+                <span class="company-marks__amp">&amp;</span>
+                <span class="company-mark company-mark--labelled" data-company="xbox-game-studios">
+                  <span class="company-mark__logo" aria-hidden="true"></span>
+                  Xbox Game Studios
+                </span>
+              </span>
+            </span>
           </li>
           <li>
             <span class="piece-meta__label">Studio</span>
-            <span class="piece-meta__value">Buddha Jones</span>
+            <span class="piece-meta__value">
+              <span class="company-marks">
+                <span class="company-mark">Buddha Jones</span>
+              </span>
+            </span>
           </li>
           <li>
             <span class="piece-meta__label">Tools</span>
@@ -165,45 +177,46 @@
       </figure>
     </div>
 
-    <!-- ============================ RELATED ============================ -->
-    <nav class="container piece-nav" aria-label="Related work">
-      <a class="piece-nav__item" href="/work/state-of-decay-3-gameplay-trailer/">
-        <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">State of Decay 3 Gameplay Trailer</span>
-      </a>
-      <a class="piece-nav__item" href="/work/obsidian-20th-anniversary-logo/">
-        <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">Obsidian Entertainment 20th Anniversary Logo</span>
-      </a>
-    </nav>
+    <!-- ============================ RELATED ============================
+         Built by js/modules/relatedWork.js from js/data/pieces.js. It picks
+         the pieces worth offering from this one — same project first, then
+         same client, then the catalogue's neighbours — so shipping a piece is
+         one entry in that file, not an edit to every page that might link to
+         it. Pin specific pieces with data-related-work="slug-a slug-b" and
+         change the count with data-related-count.
+
+         The fallback inside is what a visitor with JS off gets.
+    -->
+    <section class="container related-work" data-related-work>
+      <h2 class="related-work__title">Related work</h2>
+      <p class="related-work__fallback">
+        <a href="/#featured">See all work</a>
+      </p>
+    </section>
+
+    <!-- =========================== CONNECT ============================
+         Markup lives in js/modules/connectBand.js — one copy for every page.
+         The fallback inside is the no-JS path: pitch plus a working mailto.
+         The footer below renders --minimal because this band already makes
+         the pitch.
+    -->
+    <section class="section connect" id="connect" data-connect-band>
+      <div class="container connect__inner">
+        <div class="connect__pitch">
+          <h2 class="connect__title">Let&rsquo;s make something great!</h2>
+          <p class="connect__lede">
+            Open to commissions, collaborations, and full-time roles.
+            <a href="mailto:adam.casey.velazquez@gmail.com">Email me</a> and
+            I&rsquo;ll get back to you.
+          </p>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer site-footer--minimal">
     <div class="container">
-      <div class="site-footer__top">
-        <div class="site-footer__pitch">
-          <h2>Let's work together.</h2>
-          <p>Open to commissions, collaborations, and full-time roles.</p>
-        </div>
-
-        <ul class="site-footer__links" role="list">
-          <!-- Instagram and ArtStation are still missing: removed on
-               2026-08-27 for being href="#", and Adam has not supplied those
-               URLs yet. Add them here alongside LinkedIn when he does. -->
-          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
-          <li>
-            <a class="button button--ghost" rel="noopener"
-               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
-              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
-              </svg>
-              LinkedIn
-            </a>
-          </li>
-        </ul>
-      </div>
-
       <div class="site-footer__bottom">
         <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
       </div>

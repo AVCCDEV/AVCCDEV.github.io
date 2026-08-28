@@ -1,0 +1,165 @@
+/* ==========================================================================
+   related-work.css — the "Related work" grid at the foot of a piece page.
+   Depends on: tokens.css, base.css
+
+   Built by js/modules/relatedWork.js from js/data/pieces.js. It replaced
+   .piece-nav, which was a hand-written pair of links per page plus a
+   slug -> thumbnail map in pages/piece.css: two edits on thirteen pages every
+   time a piece shipped, and nothing to stop either going stale.
+
+   DELIBERATELY QUIET. This block sits under the piece's own work and must not
+   compete with it, so every dimension here is a step down from the landing
+   grid's card: a small caps label instead of a display heading, and a card
+   that is artwork plus two lines of type with no "See more" row.
+
+   THREE CARDS, AND THEY NEVER GET BIGGER. The phone layout — two columns, so
+   three cards are a pair and a single — is the size the card is meant to be at
+   every width. Past a phone the row goes to three columns and every extra
+   pixel of viewport is spent on the gap between them, never on the cards. That
+   is why the columns are capped in rem rather than being 1fr: 1fr would hand
+   the whole 84rem container to three cards and hand the block back the
+   prominence it is built to give up.
+   ========================================================================== */
+
+.related-work {
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--color-border);
+}
+
+/* A label, not a display heading — same treatment as .piece-section__label, so
+   it reads as a signpost under the content rather than a new chapter. */
+.related-work__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+/* Phone: two columns, so the three cards are a pair over a single. */
+.related-work__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
+  margin-top: var(--space-4);
+  list-style: none;
+}
+
+/* Everything above a phone is one row of three, and the row grows by spreading
+   rather than by inflating.
+
+   The four parts work together, so change them together:
+   - minmax(0, 17rem) caps a card at 272px. The 0 floor lets the tracks shrink
+     below that when the container is narrow, so this same rule covers 640px
+     and 1440px without another breakpoint.
+   - column-gap is the FLOOR, for the widths where there is no spare room.
+   - justify-content: space-between hands every spare pixel to the two gaps, so
+     the row always spans the container edge to edge, lining its outer cards up
+     with the artwork and rules above it. The cards hold at 272px from about
+     1000px up while the gaps open to ~216px at the container's 84rem cap,
+     which is what bounds this — no max-width of its own to keep in sync.
+   -------------------------------------------------------------------------- */
+@media (min-width: 40rem) {
+  .related-work__list {
+    grid-template-columns: repeat(3, minmax(0, 17rem));
+    column-gap: var(--space-4);
+    justify-content: space-between;
+  }
+}
+
+/* The <a> is the card — see the note in relatedWork.js. No stretched
+   pseudo-element any more, because there is nothing left for it to stretch
+   over. */
+.related-work__item { display: flex; }
+
+.related-work__link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+.related-work__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* radius-sm, not the card radius the landing grid uses — at ~250px wide a
+   16px corner eats a visible slice of a 140px-tall thumbnail. */
+.related-work__media {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-sunken);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur-med) var(--ease-out);
+}
+
+.related-work__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+/* Driven from the link, which is the whole card, so hovering the type lights
+   the artwork too and a keyboard focus gets the same cue. */
+.related-work__link:hover .related-work__media,
+.related-work__link:focus-visible .related-work__media {
+  box-shadow: var(--shadow-md);
+}
+.related-work__link:hover .related-work__image,
+.related-work__link:focus-visible .related-work__image {
+  transform: scale(1.04);
+}
+
+/* tracking-wide, not tracking-caps: at five across, a long credit like
+   "SURVIOS & 20TH CENTURY GAMES · 2024" is already at the column's width and
+   the extra 0.06em pushes it onto a third line. */
+.related-work__client {
+  margin-top: var(--space-3);
+  /* Reserve two lines. Across a row, "STOIC STUDIO - 2023" sits on one
+     line and "SURVIOS & 20TH CENTURY GAMES - 2024" on two, which started every
+     title at a different height and made the row look broken. min-height, not
+     height, so a credit that needs a third line still gets it. */
+  min-height: calc(var(--text-xs) * var(--leading-snug) * 2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.related-work__year {
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.related-work__name {
+  margin-top: var(--space-1);
+  font-family: var(--font-display-alt);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.related-work__link:hover .related-work__name { color: var(--color-accent); }
+.related-work__name-line { display: block; }
+/* Second line sits lighter, so the stack has hierarchy — as on the landing
+   cards and in the piece title. */
+.related-work__name-line--soft { color: var(--color-text-muted); }
+
+/* --- No-JS fallback --------------------------------------------------------
+   The placeholder ships with a plain link to the landing page's work grid,
+   which relatedWork.js replaces. Without JS it is what stays, so a piece page
+   is still navigable back into the rest of the work.
+   -------------------------------------------------------------------------- */
+.related-work__fallback {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}

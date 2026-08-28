@@ -116,6 +116,53 @@ for `placeholder` too, and never let one reach production.
 script, but that script is gone and Adam edits these files directly. Edit the
 HTML by hand; never regenerate, or you will silently revert his changes.
 
+**Two blocks are built by JS, not written in HTML: the connect band
+(`js/modules/connectBand.js`) and the related-work grid
+(`js/modules/relatedWork.js`).** Both render into a `data-` placeholder that
+any page can carry, and both replaced markup that had been pasted into all
+fourteen pages by hand. This is a no-build site, so a block shared across
+pages either lives in one JS template or drifts — there is no third option.
+Each placeholder keeps a **static fallback inside it** for the JS-off path (a
+mailto link; a "See all work" link), which the module replaces wholesale. Edit
+the template, never the fallback, when you change what the block says.
+
+**A page carrying the connect band uses `.site-footer--minimal`**, or it makes
+the same pitch twice running.
+
+**`js/data/pieces.js` is the piece catalogue** — slug, title, client, year,
+thumbnail and a `group`. `relatedWork.js` **draws from it at random** (Adam's
+call, 2026-08-28, replacing a group → client → neighbours ranking that showed
+every visitor the same three cards forever); pins via `data-related-work` still
+come first. `group` is therefore unread — keep it accurate anyway, it is the
+only record of which pieces belong together. Adding a piece is an entry there
+plus a card in the landing grid in `index.html`; the landing grid stays
+hand-written markup because it is the one listing that must work with JS off.
+
+**The work order is curated, not chronological**, and lives in those same two
+files, which must match. Adam names where a new piece goes — do not slot it by
+year or upload date, and do not "fix" the years for not descending. See
+`docs/ROADMAP.md`.
+
+**The contact form posts to Web3Forms** (`https://api.web3forms.com/submit`),
+the landing page's closing band. It is the second external request the site
+makes, after Google Fonts, and Adam approved it on 2026-08-27 — a static Pages
+site cannot send mail on its own. The form is built by `connectBand.js`, and
+`js/modules/contactForm.js` binds the submit and posts it with fetch. Without
+JS there is no form — the band falls back to its mailto link, which is the
+deliberate trade for having one copy of the markup.
+
+**The access key is public by design and lives in `connectBand.js`** (supplied
+2026-08-28). It names the form, not the account — it cannot read submissions
+or change where they are delivered — so it belongs in the committed source.
+**Do not "fix" it into an environment variable or rotate it as a leaked
+secret.** And note the free plan **refuses non-browser requests** (curl gets a
+403), so the form can only ever be tested by submitting it from a real page.
+
+**`ul[role="list"]` in base.css resets `padding: 0`, and that attribute
+selector outranks any single class.** Padding set on a list in `pages/` or
+`components/` is silently dropped — `.feature-list` carried a dead
+`padding-block` for weeks. Use margin on list elements.
+
 **Titles longer than ~35 characters need `.piece-title--long`.** At full
 display size they wrap to four lines and push the trailer below the fold.
 

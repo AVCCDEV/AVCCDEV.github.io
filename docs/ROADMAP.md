@@ -16,13 +16,31 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
       `alien-rogue-incursion-announce`, `alien-rogue-incursion-story-reveal`.
       Shared template `css/pages/piece.css`. Shape follows the briefs exactly:
       anything a brief did not ask for was removed, not stubbed.
-- [ ] **3 — Work index** ← NEXT — `/work/`: grid linking each piece, lazy
-      thumbnails, filter by project.
+- [x] **3 — Work index** — built as `/work/` (grid, lazy thumbnails,
+      discipline filter), then **retired on 2026-08-27**: the listing moved
+      onto the landing page as the only work section. See the Decisions note
+      "One work section, on the landing page".
 - [ ] **4 — About** — was built as a landing-page section and **pulled again
       on 2026-08-27** at Adam's direction. It is not lost: see the Decisions
       note below for what it held and how to put it back.
-- [ ] **5 — Contact** — static form (Formspree or `mailto:`; Pages has no
-      backend), socials, availability.
+- [x] **5 — Contact** — the landing page's closing band, rebuilt 2026-08-27.
+      Copy is now "Let's make something great!" (the "Connect / Let's talk."
+      eyebrow-and-title pair is gone; the `#connect` id stays, because the
+      header's Contact button and the hero's "Get in touch" both point at it).
+      A three-field form posts to **Web3Forms** — Adam's pick over Formspree —
+      beside the pitch, with Email me / Resume / LinkedIn still under the copy.
+      Became a reusable block on 2026-08-28 — see module 8, and **went live
+      the same day** when Adam supplied the Web3Forms access key. See the
+      Decisions note "The contact form is live".
+- [x] **8 — Related work + shared connect band** — 2026-08-28. Both are now
+      JS-built modules rendering into a placeholder, so a piece page carries
+      `<section data-related-work>` and `<section data-connect-band>` and
+      nothing else. Related work reads `js/data/pieces.js` and ranks by group,
+      then client, then catalogue neighbours; it replaced `.piece-nav`, two
+      hand-written links per page plus a slug -> thumbnail map in CSS. All
+      thirteen piece pages now close on the same contact band as the landing
+      page, with `.site-footer--minimal` under it.
+
 - [ ] **6 — Landing finish** — hero copy, featured pieces, social links,
       the "logo garden" of flippable cards from Adam's sketch.
 - [ ] **7 — Deploy & polish** — `CNAME`, real canonical/OG URLs, 404,
@@ -33,6 +51,10 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
 
 - **Domain** — for `CNAME` and the `SITE_URL` placeholders.
 - **Repo URL** — to add the remote and push.
+- ~~**Web3Forms access key**~~ — **done 2026-08-28.** See the Decisions note
+  "The contact form is live". One item remains on it: Adam still has to send
+  one real message through the form and confirm it arrives, because the free
+  plan refuses non-browser requests and there is no other way to test it.
 - **Social links** — Instagram and ArtStation. **LinkedIn is done**
   (supplied 2026-08-27, live in the connect band and every page footer);
   the other two are still `href="#"`-shaped holes. The markup comment
@@ -42,6 +64,135 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
   so ask first.
 
 ## Decisions
+
+- **One work section, on the landing page.** Adam merged the landing page's
+  five-piece "Featured work" teaser and the thirteen-card `/work/` grid into a
+  single section on 2026-08-27. `#featured` on `index.html` now holds every
+  piece; `work/index.html`, `css/pages/work.css` and `js/modules/filter.js`
+  were deleted, and `initFilter` came out of `main.js`. The `work/<slug>/`
+  piece pages are untouched — only the index above them is gone, so every
+  existing piece URL, canonical and OG tag still resolves.
+
+  **The layout changed shape, not styling.** It was full-width rows alternating
+  artwork and copy side to side; it is now a card grid that steps 1 → 2 → 3
+  columns at 46rem and 70rem, each card stacking artwork over copy. Three
+  across the 84rem container is a ~26rem card, which is the narrowest that
+  reads well — pick breakpoints off the card width, not the viewport, if you
+  retune it. The `.feature--flip` modifier went with the rows, and the
+  "View all work" button under the list went with the page it pointed at.
+
+  Two knock-on details worth not rediscovering. Display type could no longer be
+  a single `vw` clamp — 1.8vw is comfortable in one column and absurd in three
+  at the same viewport — so each breakpoint sets its own `--feature-title-size`
+  on `.feature`. And cards in a row need `View Breakdown` on a common baseline,
+  which is why `.feature__body` is `flex: 1` in a column and the link takes
+  `margin-top: auto`; its gap above the paragraph is `padding-top`, not margin,
+  or the auto margin would lose.
+
+  **Cards carry no body copy.** Each repeated its piece page's summary
+  paragraph for about an hour before Adam cut them the same day — a card is now
+  artwork, client, year, title and the link. The copy is untouched on the piece
+  pages, which is what the link opens, so nothing was lost. Its label is
+  **"See more"**; it was "View Breakdown" until the same pass.
+
+  **The fade-in and the stretched card link are unchanged.** `data-reveal`
+  still drives the scroll-in, and `.feature__link::after` still stretches over
+  the whole card so each piece is one link and one tab stop.
+
+- **The header is two buttons and no hamburger, at every width.** Same day,
+  same call. With `/work/` retired both destinations are landing-page sections,
+  so Adam asked for Work to scroll to `#featured` the way Contact scrolls to
+  `#connect`, and for both to stay on the bar at all sizes. That removed the
+  `.site-nav` list, the off-canvas panel, `.nav-toggle` and its bar-to-X
+  animation. Nothing in the bar hides below a breakpoint any more — the sizes
+  step down instead, at 48rem and again at 30rem. The 320px budget is written
+  out in a comment on that second block in `site-header.css`; recheck it there
+  before adding a third button, because a third does not fit.
+
+  **`js/modules/nav.js` lost two of its three functions.** `initMobileMenu`
+  had no markup left to drive, and `initCurrentLink` had no page-valued link
+  left to mark — both bar links carry a hash, which that function skips by
+  design. Only `initScrolledState` remains. If a real second page ever returns
+  to the bar, restore the `aria-current` marker from git history rather than
+  rewriting it; the matching `.site-nav__link[aria-current="page"]` styling
+  went out of `site-header.css` at the same time.
+
+  The hero's "View the work" button was repointed from `/work/` to `#featured`
+  in the same pass. `grep -rn 'href="/work/"'` should return nothing.
+
+- **Clockwork Revolution — Xbox Games Showcase 2025 finally has summary copy.**
+  Adam added it to `Reference/DetailPages/Cobalt/ClockworkRevolution - Games
+  Showcase 2025.md` on 2026-08-27; it is on the landing card verbatim. **The
+  piece page itself still has no `.piece-lede`** — it was built before the copy
+  existed and is hand-maintained, so it needs the same paragraph added by hand.
+  That brief also now lists After Effects in its Logo Garden, which the page's
+  Tools row does not carry.
+
+- **Clients and studios print as their own wordmarks, not as text.** Adam chose
+  this on 2026-08-27 over the alternative of a separate credits band lower down
+  the page. `css/components/company-mark.css` + `assets/img/companies/`; nine
+  marks, 73 KB all in. Same `mask-image` + `currentColor` trick as the tool
+  chips, so one file serves both themes.
+
+  **On a standalone mark the name is the element's text, not a sibling span.**
+  It is pushed out of the box by `text-indent`, so it stays in the accessibility
+  tree and in the page text, and it is what renders when `mask-image` is
+  unsupported — every rule that turns it into a logo lives inside `@supports`.
+  A labelled mark needs none of that: its name is already visible, and its logo
+  child is `display: none` until `@supports` turns it on.
+
+  **Three companies still print as text** because no mark was supplied:
+  **Buddha Jones** (the studio on 12 of 13 pieces, so this is the conspicuous
+  one), **Square Enix**, and **20th Century Games**. The component handles that
+  by design — omit `data-company`. Drop a mark in and add one selector.
+
+  **A mark only replaces the name if it actually says the name.** Adam added
+  this rule on 2026-08-27: marks that are square-ish (ratio < 1.5) or carry no
+  lettering take `.company-mark--labelled` and print the name beside the logo —
+  Xbox Game Studios, Undead Labs, Legion Studios. The rest stand alone. Base
+  height went to 1.92em the same day, up from 1.6em.
+
+  **Do not set the standalone marks to a single box height.** They run from a
+  5.3:1 wordmark to a stacked crest, and at equal box height the crest reads
+  about a third the weight. Each carries a `--company-scale` derived from its
+  own ink area; the arithmetic is in the folder's README. Re-crop a mark and
+  both its numbers have to be recomputed. Labelled marks bypass this and use
+  the base height flat — their name is printed in real type, so there is no
+  baked-in lettering to rescue.
+
+  **The marks step down on small screens** (2026-08-27) — 1.92em, then 1.5em
+  under 48rem, then 1.3em under 30rem. On a phone the meta block sits directly
+  above the trailer, so its height is what pushes the video down the page, and
+  at full size these are the tallest thing in it at roughly twice the body
+  text. One knob does it: `--company-mark-base` on `.company-marks`. Checked
+  down to 320px — nothing overflows, and `.company-marks` wraps anyway.
+
+  The tool-chip logos come down with them (1.15rem to 1rem to 0.9rem), but
+  that is cosmetic only: a chip is as tall as its text plus padding, and the
+  logo is already smaller than that, so it reclaims no vertical space.
+
+  **Width is spelled out, not left to `aspect-ratio`** — a flex item sizes from
+  its content first, and the content here is a long company name.
+
+  Sources were black-on-transparent. Marks with internal white detail (Undead
+  Labs' skull, Stoic's wave, the Xbox sphere) were **knocked out rather than
+  flattened**, so they survive and still invert correctly in light theme.
+
+- **Maya, Houdini, and Blender are Adam's own badge conversions**, swapped in
+  on 2026-08-27 for the traced/extracted SVGs that preceded them. They are the
+  real product badges — Maya's sheet with the letterforms knocked out of it,
+  Houdini's plate with the spiral knocked out — not isolated glyphs, so they
+  read heavier than what they replaced. That is intended; do not "fix" it back.
+  The old `maya.svg`, `houdini.svg`, and `blender.svg` were deleted.
+  `unreal-engine.svg` is untouched, as `MediaPool/Logos/` has no art for it.
+
+- **The tool marks are still incomplete: Unity, After Effects, and Photoshop
+  have no logo** and print as text chips, on `/work/docked-life-on-the-docks/`,
+  `/work/alien-rogue-incursion-gameplay-reveal/`, and
+  `/work/magic-the-gathering-final-fantasy/` respectively. All three appear in
+  Adam's briefs' Logo Gardens. `MediaPool/Logos/` has no art for them, and
+  pulling marks off the web is Adam's call, not ours. If art turns up, the
+  conversion recipe is in `assets/img/tools/README.md`.
 
 - **The landing hero backdrop is Adam's reel, played near-sharp.**
   `MediaPool/SiteReels/Reel_LandingPageBackground.mp4` (229 MB, 159 s,
@@ -120,7 +271,8 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
   `#aboutme` / `#connect`. Adam asked for the same on 2026-08-27, so Contact
   is a **section of `index.html`** rather than a `/contact/` page. Modules 4
   and 5 were originally scoped as separate pages; that is no longer the plan.
-  The nav is now just `/work/` · `/#connect`, byte-identical on all 11 pages.
+  As of 2026-08-27 **every** bar destination is a landing-page section:
+  `/#featured` · `/#connect`, byte-identical on all 14 pages.
 
 - **The About section was built, then pulled the same day.** Adam asked for it
   ("like Caleb's"), reviewed it, and said "let's get rid of About for now" on
@@ -159,37 +311,71 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
   2026-08-27. Never read, list, copy from, or ship anything inside one —
   `Documents/DNU/` is the current instance.
 
-- **Work is ordered chronologically, oldest first**, on `/` and on `/work/`.
-  Adam supplied the years on 2026-08-26; they are not in the briefs, so this
-  table is the only record. The landing rows show the year next to the client;
-  the `/work/` cards stay text-free, so there the order alone carries it.
+- **Work order is curated, not chronological (2026-08-28).** Adam picked the
+  first five by hand and named them in this order: **Alien Rogue Incursion
+  Evolved Edition Announce, Docked, Covenant, State of Decay 3, Avowed Times
+  Square.** (The PS5 & PC Gameplay Reveal led it for a few minutes on the same
+  day; he swapped the two Alien Rogue trailers, so the announce leads and the
+  gameplay reveal sits at 9.) Everything after them keeps the by-upload-date run that used to
+  govern the whole list, so the tail still descends and the head does not.
+  **The years no longer run monotonically down the page and are not meant to.**
 
-  | Piece | Year | Built |
-  | --- | --- | --- |
-  | Towerborne Official Reveal Trailer | 2023 | scaffold |
-  | Obsidian 20th Anniversary Logo | 2023 | yes |
-  | Towerborne Opening Cinematic | 2024 | scaffold |
-  | Alien Rogue Incursion Story Reveal | 2024 | yes |
-  | Covenant | 2024 | yes |
-  | Avowed Times Square | 2025 | yes |
-  | Clockwork Revolution — Games Showcase 2025 | 2025 | yes |
-  | Alien Rogue Incursion PS5 & PC Gameplay Reveal | 2025 | yes |
-  | Alien Rogue Incursion Evolved Edition | 2025 | yes |
-  | Docked — Life on the Docks | 2025 | yes |
-  | Magic: The Gathering × Final Fantasy | 2025? | yes, with gaps |
-  | Clockwork Revolution — Games Showcase 2026 | 2026 | yes |
-  | State of Decay 3 | 2026 | yes |
+  A new piece goes wherever Adam says — ask, do not slot it by date. The list
+  exists in two places and they must match: the grid in `index.html` and
+  `js/data/pieces.js`. Nothing *reads* the catalogue order any more (related
+  work draws at random since the same day), so it is there to mirror the grid.
 
-  Ties within a year keep the order above. Any new piece slots in by year in
-  both `index.html` and `work/index.html`; on `/work/` the reveal stagger
-  (`data-reveal-delay` 0/80/160) repeats every three cards regardless, and on
-  `/` the `feature--flip` modifier alternates row by row. Inserting a piece
-  mid-list therefore reflows both of those on every row after it.
+  Ordering ran by year, oldest first, until 2026-08-27, when Adam reversed it
+  and changed the key to each piece's YouTube upload date. Those dates are
+  below and still govern rows 6-13. They were read off the `watch` pages
+  (`"uploadDate"` in the page JSON); they are a property of the video, so
+  re-read one rather than guess. The **Year** column is separate — it is what
+  the card prints, and it is the year Adam gave for the *work*, which is not
+  always the year the video went up.
 
-- **Disciplines on the `/work/` filter are `cinematic`, `titles`, and
-  `gameplay`.** Covenant added the third on 2026-08-27 — it is animation work,
-  not a cinematic. The filter buttons are hand-written, so a new discipline
-  means a new button plus the `data-discipline` on the card.
+  | Piece | Uploaded | Year | Built |
+  | --- | --- | --- | --- |
+  | Clockwork Revolution — The Heist | 2026-06-07 | 2026 | yes |
+  | State of Decay 3 | 2026-06-07 | 2026 | yes |
+  | Docked — Life on the Docks | **2026-02-26** | 2025 | yes |
+  | Alien Rogue Incursion PS5 & PC Gameplay Reveal | 2025-07-25 | 2025 | yes |
+  | Clockwork Revolution — Games Showcase 2025 | 2025-06-08 | 2025 | yes |
+  | Magic: The Gathering × Final Fantasy | 2025-05-10 | 2025 | yes, with gaps |
+  | Alien Rogue Incursion Evolved Edition Announce | 2025-05-08 | 2025 | yes |
+  | Towerborne Opening Cinematic | **2025-05-04** | 2024 | scaffold |
+  | Avowed Times Square | *no embed* — 2025-02 | 2025 | yes |
+  | Covenant | 2024-12-06 | 2024 | yes |
+  | Alien Rogue Incursion Story Reveal | 2024-11-18 | 2024 | yes |
+  | Obsidian 20th Anniversary Logo | 2023-06-12 | 2023 | yes |
+  | Towerborne Official Reveal Trailer | 2023-06-11 | 2023 | scaffold |
+
+  **The table is in upload-date order, which is no longer page order** — see
+  the curated order above for what the page actually shows. The reveal stagger
+  (`data-reveal-delay` 0/80/160) repeats straight down the list regardless of
+  how many columns are showing, so inserting a piece mid-list reflows the
+  delays on every card after it.
+
+  **Two rows are bolded because their upload year and their printed year
+  disagree.** Adam supplied 2024 for Towerborne Opening Cinematic (its brief is
+  filed as "2024" and says he was brought on "the following year" after the
+  2023 reveal) and 2025 for Docked; both videos went up later than the work.
+  This mattered when the page ran strictly by upload date and seated a 2024
+  card above a 2025 one. It matters less now the head of the list is curated
+  and the years jump about anyway, but the discrepancy is still real — if the
+  labels are ever wanted monotonic, the fix is to print the upload year on
+  those two cards, not to reorder.
+
+  **Avowed Times Square is the only piece with no YouTube embed** — its page
+  self-hosts the video. It is slotted at February 2025: the ad ran for the
+  Avowed early-access launch, which is also when the Bluesky post its brief
+  links was made.
+
+- **The discipline filter is gone.** Its three values were `cinematic`,
+  `titles`, and `gameplay` (Covenant added the third on 2026-08-27 — it is
+  animation work, not a cinematic). It was removed later the same day with the
+  `/work/` page: `js/modules/filter.js`, the `data-discipline` attributes and
+  the button row all went. Nothing else read those values. If filtering comes
+  back on the landing grid, the module is one `git show` away.
 
 - **The last three unbuilt briefs were built 2026-08-27**, taking `/work/`
   from nine cards to twelve: `clockwork-revolution-showcase-2025`,
@@ -331,12 +517,11 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
   first. Studio `Buddha Jones` was inferred from the resume before the copy
   arrived and turned out correct, but do not treat that as licence to guess.
 
-  **Houdini now has a mark (2026-08-27).** `assets/img/tools/houdini.svg`,
-  traced from the Commons PNG icon because Commons has no Houdini badge in
-  vector form — only a 1606x284 wordmark, wrong shape for a chip and redundant
-  next to the printed name. Method and the IoU check are written up in
-  `assets/img/tools/README.md`. The `[data-tool="houdini"]` rule is at the
-  bottom of `tool-chip.css` and the reveal page's chip now carries its logo.
+  **Houdini now has a mark (2026-08-27).** Originally `houdini.svg`, traced
+  from the Commons PNG icon; **superseded later the same day** by
+  `houdini.png`, Adam's own conversion of the real badge — see the tool-mark
+  decision above. The `[data-tool="houdini"]` rule is at the bottom of
+  `tool-chip.css` and the reveal page's chip carries its logo.
   Nothing in the file hardcodes a colour, so the "never orange" rule holds by
   construction — the mask paints `currentColor`.
 
@@ -376,3 +561,200 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
 - Red accent, Fraunces display + Inter UI, both themes first-class.
   **Never orange** — too close to the Buddha Jones mark.
 - Trailers are YouTube embeds, never committed files.
+
+- **The page closes tight, on purpose.** Before 2026-08-27 the landing page put
+  ~16rem of empty background between the last work card and the connect band —
+  a full `--section-y` under `.featured` plus another over `.connect` — which
+  read as the end of the document a screen early. `.featured` now has no bottom
+  padding, `.feature-list` carries a short bottom margin, and the band's own
+  padding is the only other gap; its sunken background and top border do the
+  separating. The measured gap from last card to band is 42px at 1440, 27px at
+  900, 24px at 500. Restoring either padding brings the dead space back.
+
+- **`.feature-list`'s `padding-block` never applied.** base.css resets
+  `ul[role="list"] { padding: 0 }`, and that attribute selector outranks the
+  class, so the grid's declared padding had been dead since it was written.
+  Found and replaced with margin on 2026-08-27. Check for this any time a list
+  in `pages/` or `components/` ignores its padding.
+
+- **The whole site scrunched vertically on 2026-08-28**, at Adam's direction:
+  he wanted the next section visible before the current one runs out, so a
+  visitor always knows there is more to scroll to. `--section-y` went from
+  `clamp(3rem, 7vw, 8rem)` to `clamp(2rem, 5vw, 6rem)` — one token, and
+  `.section`, `.piece-section`, `.related-work` and the connect band all
+  followed. The piece hero's lead-in and the landing section head came down
+  with it. A piece page lost roughly 500px of empty background.
+
+- **Related work is deliberately downplayed.** Adam's call on 2026-08-28,
+  after seeing it at three fat columns: it must not read as a second portfolio
+  under the piece's own work.
+
+  **Three cards, and the card never grows.** Two columns on a phone (a pair and
+  a single), three columns above 40rem, and that is the end of it. The columns
+  are capped at 17rem and `justify-content: space-between` spends every extra
+  pixel of viewport on the two gaps instead — measured, the card holds at 272px
+  from ~1000px up while the gaps open from 16px to 216px, and the row spans the
+  container so its outer cards line up with the artwork above. `1fr` columns
+  would hand the whole 84rem container to three cards and give the block back
+  the prominence it exists to give up.
+
+  The card also lost its "See more" row (the whole card is one link now), the
+  heading is a small caps label rather than display type, and the credit line
+  reserves two lines so the titles align across a row. If you make any of this
+  bigger again, you have undone the point of the block.
+
+- **Related work is data-driven now.** `js/data/pieces.js` is the catalogue and
+  the only place a new piece has to be registered for every other page to be
+  able to link to it. Its order is the same "newest by upload date" order as
+  the landing grid, and the two must be kept in step by hand — the landing grid
+  stays static markup so the work listing survives with JS off.
+
+- **Module 9 — landing polish and deferred media (2026-08-28).** Six changes
+  Adam asked for in one pass.
+
+  **Featured work is curated at the head** — see the ordering decision above.
+
+  **The featured grid got bigger on desktop, keeping three columns.** Offered
+  two big columns or three tighter ones, Adam took three. `home.css`'s 70rem
+  block now runs `.featured > .container` to `min(112rem, 100%)` on a
+  `--space-6` gutter and halves the column gap to `--space-4`; the row gap goes
+  flat at `--space-6` instead of clamping to its 4rem ceiling. Nearly all the
+  extra width is the container, not the gap: at 1440 the 84rem page container
+  was already narrower than the viewport, so the gap alone bought ~5%, while at
+  1920 it had been leaving ~290px of dead margin down each side. Artwork goes
+  from 240px tall to ~330px there, and a row is a little under half a 16:9
+  screen. **112rem is `.piece-media--bleed`'s number**, deliberately — the site
+  has one idea of "wider than the text column".
+
+  **`.featured` carries a NEGATIVE `scroll-margin-top`** (`--space-6`, desktop
+  only) so the header's Work button lands with the second row peeking rather
+  than flush on the first, which read as "that is the whole list". It comes out
+  of the section's own top padding, which is empty, so nothing visible is cut.
+  ~75px of peek at 1366x768 and more on anything larger. **Not below 70rem** —
+  `--section-y` is down to 2rem on a phone and there is no padding to spend.
+
+  **`js/modules/scrollHint.js` is new**: on the landing page only, `<main>`
+  translates up ~7% of the viewport (max 64px) and bounces back once, 1.1s
+  after load. Chosen over animating `window.scrollY`, which fights the
+  visitor's own input and pollutes scroll restoration; a transform changes no
+  scroll position, and the header is a sibling of `<main>` so it stays put and
+  the page reads as peeking under it. Bails on `prefers-reduced-motion`, on any
+  hash or non-zero scroll, on a page that does not overflow, and on the first
+  wheel/touch/pointer/key/scroll event. Selected by `data-scroll-hint`, which
+  only `index.html` carries.
+
+  **Related work now draws at random** (`relatedWork.js`). The group → client
+  → neighbours ranking is gone: it was deterministic, so every visitor saw the
+  same three cards on a given page forever, and the Alien Rogue and Clockwork
+  pages could only ever offer each other. Pins (`data-related-work`) still come
+  first, in order. **`group` in `pieces.js` is now unread** — kept as the only
+  record of which pieces belong together, and because re-ranking is a dozen
+  lines if it is ever wanted back.
+
+  **Obsidian 20th: the two videos swapped slots.** The self-hosted isolated
+  logo is now the featured media directly under the hero, and the YouTube
+  release is the sample below the summary. Adam's call — the isolated cut is
+  the piece itself, with no third-party chrome.
+
+  **Docked's storyboard comparison shipped.** The encode had been sitting in
+  `assets/video/docked/` since 2026-08-27; only the markup was missing. Unlike
+  the Towerborne and Alien Rogue comparisons this one keeps its mp4 fallback.
+
+- **The Alien Rogue internal cards are on the GAMEPLAY REVEAL page, not the
+  story reveal (2026-08-28).** Six title-card clips (`Midnight_ARIE_IC_*.mp4`,
+  0.4-3.0 s each, 1920x1080 59.94) encoded at `loop` into
+  `assets/video/alien-rogue-incursion/card-*` — 2.3 MB for all six, both
+  sources kept.
+
+  **It was eight until Adam combined three of them.** He supplied
+  `Midnight_ARIE_IC_FaceYourFear.mp4` later the same day and asked for it in
+  place of the separate Face / Your / FEAR cards; those three encodes were
+  deleted (never committed) and their manifest lines replaced by one.
+
+  **Two captions are taken off the posters, not the filenames**: the card reads
+  "Re-envisioned Features", hyphenated, over a two-line subtitle.
+
+  **That combined clip was re-cut four times in the hour it landed, and the
+  markup never changed once** — each export re-encoded straight from the
+  manifest. Worth recording because it is the pipeline working exactly as
+  intended: the piece page names an *output*, not a master, so a re-export is
+  `./compress.sh` and nothing else. Repointing to a differently-named master
+  (`..._Intercut.mp4`) was likewise one field in `manifest.tsv`.
+
+  The shipping cut is the fourth, **`Midnight_ARIE_IC_FaceYourFear_Intercut.mp4`,
+  4.72 s: FACE → xenomorph → YOUR → action → FEAR → gameplay, then black.** The
+  history, because two of these files are still sitting in MediaPool: the first
+  export was missing its FACE beat entirely (opened on "YOUR" at frame 0,
+  1.5 s); the second ran 2.72 s; the third is the tight 1.77 s cut still there
+  as `Midnight_ARIE_IC_FaceYourFear.mp4` — **superseded, not deleted.**
+
+  **The black tail is deliberate.** `blackdetect` puts solid black over the last
+  half second (4.204 → 4.705) plus gaps at 3.203-3.420 and 3.687-3.954, so this
+  loop sits dark for about a second before repeating while the other five cards
+  keep moving. Flagged to Adam; he asked to keep it. **Do not trim it back.**
+
+  **Check a supplied clip rather than trusting its filename.** The missing beat
+  was caught by stepping the master, and the check is one command:
+
+  ```sh
+  ffmpeg -i <clip> -frames:v 1 -vf \
+    "fps=8,scale=400:-2,drawtext=text='%{pts\:hms}',tile=5x3" sheet.png
+  ```
+
+  **Its poster is hand-picked, and on this cut it has to be.** `compress.sh`
+  always grabs 40% in, which here is t=1.89 s — *inside* one of the black
+  windows above. That produced a 9 KB near-black poster on a card whose whole
+  job is its lettering, in a grid where **the other five posters all carry
+  theirs.** Taken at t=0.30 s ("FACE", where the loop starts) with the script's
+  own scale and quality flags. **A `compress.sh --force` overwrites it and
+  nothing warns you** — the restore is a single line in `manifest.tsv` beside
+  that entry. This override came and went twice while the cut was changing; it
+  is needed for as long as the master ends on black.
+
+  **Adam named the story reveal trailer first and corrected it the same day.**
+  Worth recording, because the trap will recur: the files live under
+  `MediaPool/AlienRogueIncursion/ARIE/`, and ARIE is the *Evolved Edition*. The
+  cards read "THE NEXT EVOLUTION" and "REENVISIONED FEATURES"; the story reveal
+  trailer went up 2024-11-18, before that edition existed. **Go by the copy on
+  the card, not the folder it arrived in** — and the gameplay reveal's brief is
+  the one that asks for "placeholders for the 1x1 graphic internal cards".
+
+  They ship as `.piece-loops--dense` (new in `piece.css`): eight clips two-up
+  is four rows for content that is one word each, so it is `auto-fit` off a
+  17rem minimum instead. **That rule has to stay below the 48rem `.piece-loops`
+  block** — one class each, so only source order decides.
+
+  **Half of that page's deferred media is now closed.** What is left is the raw
+  BG plates (`_1x1_2997_BG_BGPlate_AlienBokeh*.mov`, still unencoded) and,
+  before they can be built as the brief's side-by-side comparison, knowing
+  which plate goes under which card. Ask Adam.
+
+- **The contact form is live (2026-08-28).** Adam supplied the Web3Forms access
+  key and it is in `js/modules/connectBand.js`. `grep -rn "TODO(setup)"` now
+  returns nothing across the whole site, which was the gate on shipping the
+  landing page.
+
+  **The key is public by design — do not treat it as a leaked secret.** It
+  names the form, not the account: it cannot read past submissions, change the
+  delivery address, or do anything but post to this one form. Web3Forms is
+  built to have it sitting in client-side markup, and this is a no-build site
+  with nowhere else to put it. So it belongs in the commit, it does not need
+  rotating, and it must not be moved into an environment variable by a future
+  pass trying to be careful.
+
+  **It cannot be tested from a shell.** The free plan refuses non-browser
+  requests — a curl to the endpoint returns `403 {"success": false, "message":
+  "This method is not allowed. Use our API in client side ..."}` no matter how
+  well-formed the payload is. That is not a bug in our request and not a bad
+  key; it is the plan. **The only valid test is a real submission from a real
+  page in a browser**, so this is one of the few things a session genuinely
+  cannot verify for itself.
+
+  **The plumbing was audited when the key went in** and needed no changes: the
+  fields are named `name` / `email` / `message`, which is what Web3Forms
+  expects and what makes replies go back to the sender; `subject` and
+  `from_name` are set; the `botcheck` honeypot is wired per their docs.
+
+  **`contactForm.js` keeps its missing-key guard** (`key.value.includes("TODO")`
+  → `console.warn`). It is dormant now and worth leaving that way — it is what
+  catches the key being dropped in a future refactor.

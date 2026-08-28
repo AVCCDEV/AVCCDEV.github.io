@@ -4,8 +4,9 @@
    Depends on: tokens.css, base.css, components/reveal.css
 
    Layout follows the Caleb Moore reference: a full-bleed cinematic hero with
-   the name stacked over it, then large alternating artwork/copy rows each
-   ending in "View Breakdown", then a closing connect band.
+   the name stacked over it, then the work grid, then a closing connect band.
+   The grid was alternating full-width artwork/copy rows until 2026-08-27; it
+   is now a 1/2/3-column card grid holding every piece on the site.
 
    Styling stays with what the piece pages established: very large uppercase
    Montserrat (--font-display-alt) for display type, small muted body copy,
@@ -192,7 +193,7 @@
 
 /* --- Section head --------------------------------------------------------- */
 .section-head {
-  padding-bottom: clamp(var(--space-6), 5vw, var(--space-8));
+  padding-bottom: clamp(var(--space-5), 3vw, var(--space-6));
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -212,40 +213,110 @@
   color: var(--color-text-muted);
 }
 
-/* --- Featured rows --------------------------------------------------------
-   One column on narrow screens, two from 56rem up, with every second row
-   flipped so the artwork alternates sides down the page.
+/* --- Featured grid --------------------------------------------------------
+   This is the site's only work listing since 2026-08-27 — all thirteen pieces
+   live here, newest first, and the separate /work/ grid is gone.
+
+   It was two large alternating artwork/copy rows per screen; it is now a card
+   grid that steps 1 -> 2 -> 3 columns. Each card stacks artwork over copy at
+   every width, so the .feature--flip modifier that swapped sides row by row is
+   gone with it. Column counts are chosen off the card, not the viewport: three
+   across the 84rem container is a ~26rem card, which is about the narrowest a
+   16:9 still plus a three-line paragraph reads well at.
    -------------------------------------------------------------------------- */
 .feature-list {
   display: grid;
-  gap: clamp(var(--space-7), 8vw, var(--space-9));
-  padding-block: clamp(var(--space-7), 7vw, var(--space-9));
+  grid-template-columns: 1fr;
+  /* Row gap is generous, column gap is not — cards need air above and below
+     more than beside, and a wide column gap eats card width at three across. */
+  gap: clamp(var(--space-6), 5vw, var(--space-8)) var(--space-6);
+  /* MARGIN, not padding. base.css resets `ul[role="list"] { padding: 0 }`,
+     and an attribute selector outranks this class — a padding here is silently
+     dropped, which is what happened to the padding-block this replaced.
+     Asymmetric on purpose: see the closing-the-page note above .connect. The
+     grid needs air under the section head, not under its last row. */
+  margin-top: clamp(var(--space-5), 3vw, var(--space-7));
+  margin-bottom: clamp(var(--space-5), 3vw, var(--space-7));
   list-style: none;
-  margin: 0;
 }
 
-/* Positioned so .feature__link::after can stretch across the whole row. */
+/* Positioned so .feature__link::after can stretch across the whole card.
+   Column, not grid: the body has to be able to grow and push the link down. */
 .feature {
   position: relative;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-5);
-  align-items: center;
+
+  /* Display type has to shrink as the cards multiply, and vw alone cannot see
+     the column count — a 1.8vw title is comfortable in one column and far too
+     large in three at the same viewport. So each breakpoint sets its own. */
+  --feature-title-size: clamp(1.5rem, 5.5vw, 2.2rem);
 }
 
-@media (min-width: 56rem) {
-  .feature {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(var(--space-6), 5vw, var(--space-9));
+@media (min-width: 46rem) {
+  .feature-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature { --feature-title-size: clamp(1.4rem, 2.6vw, 2rem); }
+}
+
+/* --- Desktop: bigger cards, tighter grid -----------------------------------
+   Adam's call on 2026-08-28. Still three columns — he chose that over dropping
+   to two — but the band goes wider than the rest of the page, the gutter and
+   the column gap come in, and the width that frees up goes into the artwork:
+   at 1920 the stills go from 240px tall to ~330px, and a row is a little under
+   half the height of a 16:9 screen.
+
+   The extra width is almost all from the container, not the gap. At 1440 the
+   84rem page container is already narrower than the viewport, so tightening
+   the gap alone bought about 5%; letting the band run to 112rem is what makes
+   the difference on a 1920 screen, where 84rem had been leaving ~290px of
+   empty margin down each side.
+
+   112rem is not a new number — it is what .piece-media--bleed uses on the
+   piece pages, so the whole site agrees on how wide "wider than the text
+   column" is.
+   -------------------------------------------------------------------------- */
+@media (min-width: 70rem) {
+  .feature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* Wider cards can carry more display type than the old three-across could. */
+  .feature { --feature-title-size: clamp(1.45rem, 2vw, 1.95rem); }
+
+  .featured > .container {
+    max-width: min(112rem, 100%);
+    padding-inline: var(--space-6);
   }
-  /* Both children are placed into row 1 explicitly, so the flip is a swap of
-     columns rather than a reversal of source order — the copy still follows
-     its artwork for a screen reader. */
-  .feature--flip .feature__media { grid-row: 1; grid-column: 2; }
-  .feature--flip .feature__body  { grid-row: 1; grid-column: 1; }
+
+  /* Column gap halves. The row gap comes down too but not as far — cards still
+     need more air above and below than beside — and it goes flat rather than
+     staying a clamp, because at this width the vw term was pinning it to its
+     4rem ceiling anyway and 4rem of dead space between rows is most of what
+     was keeping the second row off the screen. */
+  .feature-list {
+    gap: var(--space-6) var(--space-4);
+    margin-top: var(--space-5);
+  }
+
+  /* Landing the header's Work button here should show that the grid carries on
+     below the fold. A screen that ends flush on the first row reads as the
+     whole list, which is what this section looked like before.
+
+     html{scroll-padding-top} clears the sticky header; a NEGATIVE scroll
+     margin pulls the landing a further --space-6 down the page. That comes out
+     of this section's own top padding, which is empty space, so nothing
+     visible is cut off — and it is enough to put ~75px of the second row's
+     artwork on screen at 1366x768, the tightest 16:9 laptop worth designing
+     for. Wider or taller screens get more.
+
+     Desktop only. At phone widths --section-y is down to 2rem, and there is no
+     empty padding to spend — the same rule would clip the eyebrow.
+     ---------------------------------------------------------------------- */
+  .featured { scroll-margin-top: calc(-1 * var(--space-6)); }
 }
 
-/* Artwork, mirroring the /work/ card: 16:9, soft corners, slow hover zoom.
-   Not a link itself — .feature__link is stretched over the row, so a click
+/* Artwork: 16:9, soft corners, slow hover zoom — the treatment the retired
+   /work/ card used, kept because it is what the piece pages echo.
+   Not a link itself — .feature__link is stretched over the card, so a click
    here still opens the piece without adding a second, unnamed tab stop. */
 .feature__media {
   overflow: hidden;
@@ -263,7 +334,7 @@
   transition: transform var(--dur-slow) var(--ease-out);
 }
 
-/* Driven from the whole row, so hovering the copy lights the artwork too, and
+/* Driven from the whole card, so hovering the copy lights the artwork too, and
    :focus-within gives keyboard users the same cue when the link takes focus. */
 .feature:hover .feature__media,
 .feature:focus-within .feature__media {
@@ -272,6 +343,15 @@
 .feature:hover .feature__image,
 .feature:focus-within .feature__image {
   transform: scale(1.04);
+}
+
+/* Grows to fill the card so "See more" can sit on the bottom edge — without
+   this, a row whose titles wrap to one, two and three lines puts its links at
+   three different heights. */
+.feature__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .feature__client {
@@ -283,7 +363,7 @@
   color: var(--color-accent);
 }
 
-/* The rows run oldest to newest. Without a visible year that ordering reads
+/* The cards run newest to oldest. Without a visible year that ordering reads
    as arbitrary, so the client label carries the year, set back a step so the
    client still leads. */
 .feature__year {
@@ -294,7 +374,7 @@
 .feature__title {
   margin-top: var(--space-3);
   font-family: var(--font-display-alt);
-  font-size: clamp(1.6rem, 3.1vw, 2.6rem);
+  font-size: var(--feature-title-size);
   font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.03em;
@@ -305,17 +385,17 @@
 /* Second line sits lighter, so the stack has hierarchy — as on piece pages. */
 .feature__title-line--soft { color: var(--color-text-muted); }
 
-.feature__text {
-  max-width: 34rem;
-  margin-top: var(--space-4);
-  color: var(--color-text-muted);
-}
-
+/* margin-top:auto pins it to the bottom of the card, which is what keeps the
+   links level across a row when titles wrap to different depths. align-self
+   keeps the underline the width of its own text rather than the whole column,
+   and the gap above it is padding, not margin, or the auto margin would lose. */
 .feature__link {
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-5);
+  margin-top: auto;
+  padding-top: var(--space-4);
   padding-bottom: var(--space-1);
   border-bottom: 1px solid var(--color-border-strong);
   font-size: var(--text-sm);
@@ -332,8 +412,8 @@
 }
 
 /* The stretched hit area. The link stays static so this resolves against
-   .feature, which makes the whole row — artwork included — clickable while
-   the row keeps exactly one link and one tab stop. The focus ring still draws
+   .feature, which makes the whole card — artwork included — clickable while
+   the card keeps exactly one link and one tab stop. The focus ring still draws
    on the visible link text, not on this. */
 .feature__link::after {
   content: "";
@@ -349,45 +429,14 @@
   transform: translateX(var(--space-1));
 }
 
-.featured__all {
-  padding-top: clamp(var(--space-5), 4vw, var(--space-7));
-  border-top: 1px solid var(--color-border);
-  text-align: center;
-}
+/* --- Closing the page -----------------------------------------------------
+   The landing page ends tight on purpose. It used to close on ~16rem of empty
+   background — a full --section-y under .featured plus another over the connect
+   band — which read as "the document ended" a screen and a half early.
+   .featured now contributes no bottom padding and the grid carries a short
+   bottom margin; the band's own padding and its sunken background do the rest.
 
-/* --- Connect band --------------------------------------------------------- */
-.connect {
-  background-color: var(--color-bg-sunken);
-  border-top: 1px solid var(--color-border);
-}
-
-.connect__title {
-  margin-top: var(--space-3);
-  font-family: var(--font-display-alt);
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
-}
-
-.connect__lede {
-  margin-top: var(--space-5);
-  font-size: var(--text-lg);
-  color: var(--color-text-muted);
-}
-
-.connect__email {
-  color: var(--color-text);
-  font-weight: 500;
-  text-decoration-color: var(--color-accent);
-}
-
-.connect__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-6);
-  list-style: none;
-  padding: 0;
-}
+   The band itself lives in css/components/connect.css — it is on every piece
+   page too since 2026-08-28.
+   -------------------------------------------------------------------------- */
+.featured { padding-bottom: 0; }

@@ -1,6 +1,14 @@
 /* ==========================================================================
-   site-header.css — sticky top bar: wordmark, nav, theme toggle, mobile menu.
-   Behaviour lives in js/modules/nav.js and js/modules/theme.js
+   site-header.css — sticky top bar: wordmark, Work/Contact buttons, theme
+   toggle. Behaviour lives in js/modules/nav.js and js/modules/theme.js
+
+   There is no mobile menu. Both links point at a section of the landing page
+   rather than a page of their own, and there are only two of them, so they
+   stay on the bar at every width and the off-canvas panel and its hamburger
+   were removed on 2026-08-27 along with the /work/ index. Nothing in this bar
+   hides below a breakpoint — the sizes step down instead, at 48rem and again
+   at 30rem, and the arithmetic that keeps it on one line at 320px is noted on
+   the narrow block at the bottom of this file.
    ========================================================================== */
 
 .site-header {
@@ -40,48 +48,26 @@
 }
 .site-header__brand:hover { color: var(--color-accent); }
 
-/* --- Navigation ----------------------------------------------------------- */
-.site-nav__list {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.site-nav__link {
-  position: relative;
-  display: inline-block;
-  padding-block: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-text-muted);
-  text-decoration: none;
-}
-.site-nav__link:hover { color: var(--color-text); }
-
-/* Underline that grows from the left on hover and stays for the current page. */
-.site-nav__link::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: 2px;
-  background-color: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-med) var(--ease-out);
-}
-.site-nav__link:hover::after,
-.site-nav__link[aria-current="page"]::after { transform: scaleX(1); }
-.site-nav__link[aria-current="page"] { color: var(--color-text); }
-
-/* --- Right-hand controls -------------------------------------------------- */
+/* --- Right-hand controls --------------------------------------------------
+   Everything interactive sits here, always visible. flex:none so the group
+   is never squashed to save the wordmark — the wordmark gives way instead.
+   -------------------------------------------------------------------------- */
 .site-header__actions {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  flex: none;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* A shade tighter than a body button so the bar keeps its height. */
+.site-header__link {
+  padding: var(--space-2) var(--space-4);
 }
 
 .icon-button {
@@ -114,65 +100,37 @@
   :root:not([data-theme="light"]) .theme-toggle__moon { display: block; }
 }
 
-/* --- Mobile menu ---------------------------------------------------------- */
-.nav-toggle { display: none; }
-
-/* Hamburger that morphs into an X when the panel is open. */
-.nav-toggle__bars,
-.nav-toggle__bars::before,
-.nav-toggle__bars::after {
-  display: block;
-  width: 1.15rem;
-  height: 2px;
-  background-color: currentColor;
-  border-radius: var(--radius-full);
-  transition: transform var(--dur-med) var(--ease-out),
-              opacity var(--dur-fast) var(--ease-out);
-}
-.nav-toggle__bars::before,
-.nav-toggle__bars::after { content: ""; position: absolute; }
-.nav-toggle__bars::before { transform: translateY(-6px); }
-.nav-toggle__bars::after  { transform: translateY(6px); }
-
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars { background-color: transparent; }
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: rotate(45deg); }
-.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after  { transform: rotate(-45deg); }
-
+/* --- Narrow widths --------------------------------------------------------
+   Four things share one line down here — wordmark, two buttons, toggle — so
+   the room comes back out of the gaps and the buttons' side padding.
+   -------------------------------------------------------------------------- */
 @media (max-width: 48rem) {
-  .nav-toggle { display: inline-grid; position: relative; }
+  .site-header__inner { gap: var(--space-3); }
+  .site-header__link  { padding-inline: var(--space-3); }
 
-  /* Off-canvas panel. Hidden from assistive tech and tab order until opened. */
-  .site-nav {
-    position: fixed;
-    inset: var(--header-h) 0 auto 0;
-    padding: var(--space-5) var(--gutter) var(--space-7);
-    background-color: var(--color-bg-raised);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-8px);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform var(--dur-med) var(--ease-out),
-                opacity var(--dur-med) var(--ease-out),
-                visibility 0s linear var(--dur-med);
+  /* The name ellipsises rather than pushing the bar past the viewport. */
+  .site-header__brand {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .site-nav.is-open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
+}
+
+/* Phones. Budget at a 320px viewport, the narrowest worth designing for:
+   32px of gutter, ~47px Work, ~64px Contact, 36px toggle and 12px of gaps
+   leaves ~129px for the wordmark, which sets at about 108px here. It fits,
+   with the ellipsis above still standing as the guard. */
+@media (max-width: 30rem) {
+  .site-header__inner   { gap: var(--space-2); }
+  .site-header__actions { gap: var(--space-1); }
+  .site-header__nav     { gap: var(--space-1); }
+  .site-header__brand   { font-size: var(--text-base); }
+
+  .site-header__link {
+    padding-inline: var(--space-2);
+    font-size: var(--text-xs);
   }
 
-  .site-nav__list {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-  .site-nav__link {
-    padding-block: var(--space-4);
-    font-size: var(--text-lg);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .site-nav__link::after { display: none; }
-  .site-nav__link[aria-current="page"] { color: var(--color-accent); }
+  .icon-button     { width: 2.25rem; height: 2.25rem; }
+  .icon-button svg { width: 1.1rem; height: 1.1rem; }
 }

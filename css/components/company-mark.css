@@ -1,0 +1,164 @@
+/* ==========================================================================
+   company-mark.css — a client or studio printed as its own wordmark.
+
+   Same masking trick as tool-chip.css: the logo is a mask filled with
+   currentColor, so one monochrome file serves both themes. The marks are
+   PNG rather than SVG because they came from raster sources — only the
+   alpha channel is read, so the white pixels in those files are incidental.
+   Files live in assets/img/companies/ (see the README there).
+
+   Two shapes, picked by what the mark itself says:
+
+   - A wide wordmark already prints the company's name, so it stands alone.
+     The name is the element's text content, pushed out of the box rather
+     than hidden, so it stays in the accessibility tree and in the page's
+     text for search — and it is what renders without mask support, since
+     every rule that turns it into a logo lives inside @supports.
+
+   - A mark that is square-ish, or carries no lettering at all, cannot do
+     that job. Those take --labelled: the logo moves to a child span and the
+     name is printed beside it, the same lockup as a tool chip.
+
+   Adding a company: export the mark, then add one selector to the list at
+   the bottom of this file. A .company-mark with no data-company stays plain
+   text, which is how Buddha Jones and Square Enix currently print.
+   ========================================================================== */
+
+.company-marks {
+  /* The one size knob. Every mark derives from it, so the breakpoints below
+     move the whole set with a single declaration. */
+  --company-mark-base: 1.92em;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  line-height: 1;
+}
+
+/* On a phone the meta block sits directly above the trailer, so every pixel
+   it spends pushes the video down the page. These marks are the tallest thing
+   in it — roughly twice the body text at full size — so they come down first.
+   Matches the breakpoint where the header collapses to the mobile nav. */
+@media (max-width: 48rem) {
+  .company-marks { --company-mark-base: 1.5em; }
+}
+
+@media (max-width: 30rem) {
+  .company-marks { --company-mark-base: 1.3em; }
+}
+
+/* Separates two companies on one line. Real text, not aria-hidden, so the
+   value still reads as "Obsidian Entertainment and Xbox Game Studios". */
+.company-marks__amp {
+  font-weight: 400;
+  color: var(--color-text-subtle);
+}
+
+/* Logo plus printed name. The name is real text here, so nothing is clipped. */
+.company-mark--labelled {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Hidden by default so a browser without mask support shows the name alone
+   rather than a solid currentColor rectangle. */
+.company-mark__logo {
+  display: none;
+  flex: none;
+}
+
+@supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+  /* data-company always sits on the .company-mark, even when the logo is
+     painted on the child — the --company-* values are custom properties, so
+     they inherit down and one set of selectors below serves both shapes. */
+  .company-mark[data-company]:not(.company-mark--labelled),
+  .company-mark--labelled > .company-mark__logo {
+    flex: none;
+
+    /* Marks are optically matched, not box-matched. A stacked crest and a
+       long wordmark set to one box height look nothing alike, so each
+       carries a scale derived from its own ink area — see the README.
+
+       Width is spelled out rather than left to `aspect-ratio`, which loses:
+       a flex item's automatic size comes from its content first, and the
+       content here is the company's name. */
+    --company-height: calc(var(--company-mark-base) * var(--company-scale, 1));
+    height: var(--company-height);
+    width: calc(var(--company-height) * var(--company-ratio));
+
+    background-color: currentColor;
+    -webkit-mask: var(--company-logo) center / contain no-repeat;
+            mask: var(--company-logo) center / contain no-repeat;
+  }
+
+  .company-mark[data-company]:not(.company-mark--labelled) {
+    display: block;
+
+    /* Image replacement: shove the name out of the box, keep it in the tree.
+       `overflow: hidden` is load-bearing twice over — it clips the name, and
+       it drops the flex item's automatic minimum size to zero so the longest
+       word in that name cannot stretch the box back open. */
+    text-indent: 110%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .company-mark--labelled > .company-mark__logo {
+    display: block;
+
+    /* Declared on the child, so it beats the value inherited from the parent
+       whatever that selector's specificity. The optical scale exists to rescue
+       lettering baked into a mark; these print their name in real type beside
+       it, so they want the plain base height. */
+    --company-scale: 1;
+  }
+}
+
+/* --- The companies themselves --------------------------------------------- */
+.company-mark[data-company="obsidian-entertainment"] {
+  --company-logo: url("/assets/img/companies/obsidian-entertainment.png");
+  --company-ratio: 4.506;
+  --company-scale: 0.86;
+}
+.company-mark[data-company="xbox-game-studios"] {
+  --company-logo: url("/assets/img/companies/xbox-game-studios.png");
+  --company-ratio: 1;
+  --company-scale: 1.09;
+}
+.company-mark[data-company="inxile-entertainment"] {
+  --company-logo: url("/assets/img/companies/inxile-entertainment.png");
+  --company-ratio: 1.993;
+  --company-scale: 1;
+}
+.company-mark[data-company="saber-interactive"] {
+  --company-logo: url("/assets/img/companies/saber-interactive.png");
+  --company-ratio: 3.462;
+  --company-scale: 0.91;
+}
+.company-mark[data-company="stoic-studio"] {
+  --company-logo: url("/assets/img/companies/stoic-studio.png");
+  --company-ratio: 4.963;
+  --company-scale: 0.95;
+}
+.company-mark[data-company="survios"] {
+  --company-logo: url("/assets/img/companies/survios.png");
+  --company-ratio: 5.3;
+  --company-scale: 0.85;
+}
+.company-mark[data-company="undead-labs"] {
+  --company-logo: url("/assets/img/companies/undead-labs.png");
+  --company-ratio: 0.926;
+  --company-scale: 1.42;
+}
+.company-mark[data-company="wizards-of-the-coast"] {
+  --company-logo: url("/assets/img/companies/wizards-of-the-coast.png");
+  --company-ratio: 1.693;
+  --company-scale: 1.02;
+}
+.company-mark[data-company="legion-studios"] {
+  --company-logo: url("/assets/img/companies/legion-studios.png");
+  --company-ratio: 1.108;
+  --company-scale: 1.45;
+}

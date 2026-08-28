@@ -9,12 +9,15 @@
    body copy, uppercase letter-spaced micro-labels, full-bleed media, fade-in.
    ========================================================================== */
 
-/* The scroll-in fade moved to css/components/reveal.css when /work/ started
-   using it too. Every piece page links that file before this one. */
+/* The scroll-in fade lives in css/components/reveal.css, shared with the
+   landing page. Every piece page links that file before this one. */
 
 /* --- Hero ----------------------------------------------------------------- */
 .piece-hero {
-  padding-block: clamp(var(--space-7), 9vw, var(--space-9)) var(--space-6);
+  /* Was 9vw up to 6rem on top. The title is display-sized and the sticky
+     header already sets it off, so the extra lead-in only pushed the video
+     below the fold. */
+  padding-block: clamp(var(--space-6), 5vw, var(--space-8)) var(--space-5);
 }
 
 .piece-hero__kicker {
@@ -243,118 +246,12 @@
 .placeholder p { font-size: var(--text-sm); margin: 0; }
 .placeholder--media { aspect-ratio: 16 / 9; min-height: 0; }
 
-/* --- Related work --------------------------------------------------------- */
-.piece-nav {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* Matches the /work/ grid's gutter, so the two read as the same family. */
-  gap: clamp(var(--space-5), 3vw, var(--space-7));
-  padding-block: var(--section-y);
-  border-top: 1px solid var(--color-border);
-}
-@media (min-width: 48rem) {
-  .piece-nav { grid-template-columns: 1fr 1fr; }
-}
-
-/* Each item is a smaller sibling of the /work/ grid card: the linked piece's
-   own thumbnail shown sharp and full width, with the type sitting *below* the
-   artwork on the page background rather than on top of it.
-
-   That is the whole point of the restyle. The previous treatment blurred the
-   thumbnail to 16px behind a 58% scrim, which left the destination
-   unrecognisable — the opposite of what the artwork was there for — and put a
-   pair of dark slabs at the foot of an otherwise light page. Moving the type
-   off the image drops the scrim, the blur and the two-layer text-shadow with
-   it, and lets the label and title use the ordinary theme text colors, so the
-   block inverts with the rest of the page instead of fighting it.
-
-   ::before is the thumbnail. An item whose slug has no entry in the map at the
-   end of this file falls back to the sunken background — a plain empty tile,
-   never a broken image. */
-.piece-nav__item {
-  display: block;
-  text-decoration: none;
-}
-
-.piece-nav__item::before {
-  content: "";
-  display: block;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-md);
-  background-color: var(--color-bg-sunken);
-  background-image: var(--nav-thumb, none);
-  background-position: center;
-  /* Sized in percentages rather than `cover` so the hover zoom below has two
-     interpolatable values to animate between — `cover` → a length is a
-     discrete jump, not a transition. Every thumbnail in the map is 800×450,
-     the same 16:9 file the /work/ grid uses, so 100% 100% is exactly `cover`
-     with no distortion. Keep new thumbnails 16:9 and this stays true. */
-  background-size: 100% 100%;
-  box-shadow: var(--shadow-sm);
-  transition: background-size var(--dur-slow) var(--ease-out),
-              box-shadow var(--dur-med) var(--ease-out);
-}
-
-/* Zooming the background rather than transforming the element keeps the crop
-   inside the tile's own box — no overflow clipping needed, so the lift shadow
-   survives. */
-.piece-nav__item:hover::before {
-  background-size: 104% 104%;
-  box-shadow: var(--shadow-md);
-}
-
-.piece-nav__item:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-}
-
-.piece-nav__label {
-  display: block;
-  margin-top: var(--space-4);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-}
-.piece-nav__title {
-  display: block;
-  margin-top: var(--space-2);
-  font-family: var(--font-display-alt);
-  font-size: var(--text-xl);
-  font-weight: 600;
-  line-height: var(--leading-snug);
-  color: var(--color-text);
-  transition: color var(--dur-fast) var(--ease-out);
-}
-.piece-nav__item:hover .piece-nav__title,
-.piece-nav__item:focus-visible .piece-nav__title {
-  color: var(--color-accent);
-}
-
-/* --- Slug → thumbnail map -------------------------------------------------
-   Keyed on href so a related link picks up the right artwork with no extra
-   markup and no per-page style attribute. Add a line when a new piece ships;
-   the thumbnails are the same files the /work/ grid uses.
+/* --- Related work --------------------------------------------------------
+   Moved out on 2026-08-28. The block is now css/components/related-work.css,
+   built by js/modules/relatedWork.js from js/data/pieces.js — .piece-nav and
+   its slug -> thumbnail map are gone, along with the per-page hand-editing
+   they cost. Piece pages carry a <section data-related-work> placeholder.
    -------------------------------------------------------------------------- */
-.piece-nav__item[href="/work/alien-rogue-incursion-announce/"] {
-  --nav-thumb: url("/assets/img/alien-rogue-incursion/announce.webp");
-}
-.piece-nav__item[href="/work/alien-rogue-incursion-story-reveal/"] {
-  --nav-thumb: url("/assets/img/alien-rogue-incursion/story-reveal.webp");
-}
-.piece-nav__item[href="/work/avowed-times-square-billboard/"] {
-  --nav-thumb: url("/assets/img/avowed/times-square.webp");
-}
-.piece-nav__item[href="/work/clockwork-revolution-heist/"] {
-  --nav-thumb: url("/assets/img/clockwork-revolution/heist.webp");
-}
-.piece-nav__item[href="/work/obsidian-20th-anniversary-logo/"] {
-  --nav-thumb: url("/assets/img/obsidian-20th/logo.webp");
-}
-.piece-nav__item[href="/work/state-of-decay-3-gameplay-trailer/"] {
-  --nav-thumb: url("/assets/img/state-of-decay-3/gameplay.webp");
-}
 
 /* --- Looping clips (the GIF replacement) ----------------------------------
    A short, silent, autoplaying loop. It reads as a moving still rather than a
@@ -375,6 +272,20 @@
 .piece-section__label + .piece-loops { margin-top: var(--space-4); }
 @media (min-width: 48rem) {
   .piece-loops { grid-template-columns: 1fr 1fr; }
+}
+
+/* --dense: for a run of short title cards rather than a pair of gameplay
+   clips. Eight of them two-up is four rows and about 1200px of page for
+   content that is a single word each; auto-fit off a 17rem minimum puts three
+   or four across on a desktop and still collapses to one on a phone. The
+   clips are 1920x1080 masters, so they hold up at a third of the width.
+
+   It has to stay BELOW the 48rem block above: both selectors are one class, so
+   the media query buys no specificity and only source order decides which
+   grid-template-columns wins. Move this up and the two-up rule takes it back. */
+.piece-loops--dense {
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: var(--space-4);
 }
 
 .piece-video--loop {

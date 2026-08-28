@@ -37,7 +37,10 @@
   <link rel="stylesheet" href="/css/components/site-header.css">
   <link rel="stylesheet" href="/css/components/site-footer.css">
   <link rel="stylesheet" href="/css/components/tool-chip.css">
+  <link rel="stylesheet" href="/css/components/company-mark.css">
   <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/components/related-work.css">
+  <link rel="stylesheet" href="/css/components/connect.css">
   <link rel="stylesheet" href="/css/pages/piece.css">
 
   <script type="module" src="/js/main.js"></script>
@@ -50,18 +53,20 @@
         Adam Velazquez
       </a>
 
-      <nav class="site-nav" data-nav aria-label="Main">
-        <ul class="site-nav__list" role="list">
-          <li><a class="site-nav__link" href="/work/">Work</a></li>
-          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
-               for now"). The #about section was built from his resume and
-               removed with it; see docs/ROADMAP.md for what it held. Put this
-               line back when the section returns. -->
-          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
-        </ul>
-      </nav>
+      <!-- Two buttons, no nav list and no hamburger. Both destinations are
+           sections of the landing page rather than pages, and there are only
+           two of them, so they stay on the bar at every width and there is
+           nothing left to collapse. The off-canvas panel and its toggle went
+           out with the /work/ index on 2026-08-27 - see docs/ROADMAP.md.
 
+           Sizes step down at 48rem and 30rem instead of anything hiding;
+           site-header.css is where that ladder lives. -->
       <div class="site-header__actions">
+        <nav class="site-header__nav" aria-label="Main">
+          <a class="button button--ghost site-header__link" href="/#featured">Work</a>
+          <a class="button button--primary site-header__link" href="/#connect">Contact</a>
+        </nav>
+
         <button class="icon-button theme-toggle" type="button"
                 data-theme-toggle aria-label="Switch to dark theme">
           <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
@@ -74,12 +79,6 @@
                stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
           </svg>
-        </button>
-
-        <button class="icon-button nav-toggle" type="button"
-                data-nav-toggle aria-expanded="false" aria-controls="site-nav"
-                aria-label="Toggle menu">
-          <span class="nav-toggle__bars" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -100,11 +99,21 @@
         <ul class="piece-meta" role="list" data-reveal data-reveal-delay="160">
           <li>
             <span class="piece-meta__label">Client</span>
-            <span class="piece-meta__value">Survios &amp; 20th Century Games</span>
+            <span class="piece-meta__value">
+              <span class="company-marks">
+                <span class="company-mark" data-company="survios">Survios</span>
+                <span class="company-marks__amp">&amp;</span>
+                <span class="company-mark">20th Century Games</span>
+              </span>
+            </span>
           </li>
           <li>
             <span class="piece-meta__label">Studio</span>
-            <span class="piece-meta__value">Buddha Jones</span>
+            <span class="piece-meta__value">
+              <span class="company-marks">
+                <span class="company-mark">Buddha Jones</span>
+              </span>
+            </span>
           </li>
           <li>
             <span class="piece-meta__label">Tools</span>
@@ -153,57 +162,194 @@
       </div>
     </section>
 
+    <!-- ========================= INTERNAL CARDS =========================
+         The trailer's title graphics — the "1x1 graphic internal cards" the
+         brief asks for. Adam supplied the masters on 2026-08-27
+         (MediaPool/AlienRogueIncursion/ARIE/Midnight_ARIE_IC_*.mp4, 1920x1080
+         59.94) and they went on the page on 2026-08-28.
+
+         SIX CLIPS, NOT EIGHT. Adam replaced the three separate Face / Your /
+         FEAR cards with one combined Midnight_ARIE_IC_FaceYourFear.mp4 on
+         2026-08-28. The three singles are still in MediaPool, unencoded and
+         off the page — do not put them back without asking.
+
+         Adam re-cut that combined clip four times in the hour it landed. The
+         shipping one is Midnight_ARIE_IC_FaceYourFear_Intercut.mp4, 4.72 s:
+         FACE -> xenomorph -> YOUR -> action -> FEAR -> gameplay, then black.
+         Markup never changed across any of the four — the manifest names an
+         output, not a master, so each re-export was one compress.sh run.
+
+         THE BLACK TAIL IS DELIBERATE. The clip ends on half a second of solid
+         black, with two more black gaps just before it, so this loop sits dark
+         for about a second before repeating while the other five cards keep
+         moving. Flagged to Adam and he asked to keep it. Do not trim it.
+
+         ITS POSTER IS HAND-PICKED, and has to be. compress.sh always grabs 40%
+         in, which on this cut is t=1.89 s — inside one of those black windows,
+         giving a 9 KB near-black poster on a card whose whole job is its
+         lettering. Taken at t=0.30 s ("FACE", where the loop starts) with the
+         same scale and quality flags the script uses. A `compress.sh --force`
+         overwrites it; the restore line is in tools/media/manifest.tsv beside
+         this entry.
+
+         THEY ARE ON THIS PAGE, NOT THE STORY REVEAL. Adam first named the
+         story reveal trailer and corrected it the same day: the cards carry
+         Evolved Edition copy ("THE NEXT EVOLUTION", "REENVISIONED FEATURES"),
+         and the story reveal went up in November 2024, before that edition
+         existed. This page's brief is also the one that asks for them. Go by
+         the copy on a card, not by the folder it arrived in.
+
+         Encoded at the `loop` preset: silent, 1280 wide, autoplayed only while
+         on screen by js/modules/loopVideo.js. All six together are 5.8 MB, of
+         which this one clip is 3.2 MB — it is by far the longest at 4.72 s.
+         Both sources ship — the mp4s are ~200-1800 KB each, so there was no
+         weight argument for dropping the fallback the way the long storyboard
+         comparisons did.
+
+         .piece-loops--dense rather than plain .piece-loops: these are short
+         cards carrying a few words each, not a pair of gameplay clips two-up.
+         See piece.css.
+
+         Captions repeat the words on the card. That is the point — they are
+         the text alternative for an animation, and the aria-label on each
+         <video> says the same thing at more length.
+         ================================================================== -->
+    <section class="piece-section">
+      <div class="container">
+        <h2 class="piece-section__label" data-reveal>Title graphics</h2>
+        <div class="piece-loops piece-loops--dense" data-reveal data-reveal-delay="80">
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-survios.jpg"
+                     aria-label="Internal card reading &ldquo;Survios&rdquo;, over a cinematic background plate">
+                <source src="/assets/video/alien-rogue-incursion/card-survios.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-survios.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">Survios</figcaption>
+          </figure>
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-20th-century-games.jpg"
+                     aria-label="Internal card reading &ldquo;20th Century Games&rdquo;, over a cinematic background plate">
+                <source src="/assets/video/alien-rogue-incursion/card-20th-century-games.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-20th-century-games.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">20th Century Games</figcaption>
+          </figure>
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-the-next-evolution.jpg"
+                     aria-label="Internal card reading &ldquo;The Next Evolution&rdquo;, over a cinematic background plate">
+                <source src="/assets/video/alien-rogue-incursion/card-the-next-evolution.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-the-next-evolution.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">The Next Evolution</figcaption>
+          </figure>
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-of-alien-combat.jpg"
+                     aria-label="Internal card reading &ldquo;Of Alien Combat&rdquo;, over a cinematic background plate">
+                <source src="/assets/video/alien-rogue-incursion/card-of-alien-combat.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-of-alien-combat.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">Of Alien Combat</figcaption>
+          </figure>
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-reenvisioned-features.jpg"
+                     aria-label="Internal card reading &ldquo;Re-envisioned Features: elevated visuals, immersive environments&rdquo;, over a cinematic background plate">
+                <source src="/assets/video/alien-rogue-incursion/card-reenvisioned-features.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-reenvisioned-features.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">Re-envisioned Features</figcaption>
+          </figure>
+
+          <figure>
+            <div class="piece-video piece-video--loop">
+              <video muted loop playsinline preload="metadata" data-loop-video
+                     poster="/assets/video/alien-rogue-incursion/card-face-your-fear.jpg"
+                     aria-label="Internal card reading &ldquo;Face&rdquo;, then &ldquo;Your&rdquo;, then &ldquo;Fear&rdquo;, intercut with gameplay and cinematic shots">
+                <source src="/assets/video/alien-rogue-incursion/card-face-your-fear.webm" type="video/webm">
+                <source src="/assets/video/alien-rogue-incursion/card-face-your-fear.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption class="piece-media__caption">Face Your Fear</figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
     <!-- ============================ BG PLATES ============================
          TODO(media): the brief asks for the raw background plates as
          side-by-side autoplaying webm galleries, from
          MediaPool/AlienRogueIncursion/ARIE/ (the _1x1_2997_BG_BGPlate_AlienBokeh
-         prefix). Two things are outstanding before this can ship: the masters
-         need a pass through tools/media/compress.sh at the `loop` preset, and
-         the brief says to "use placeholders for the 1x1 graphic internal
-         cards" — Adam has not supplied those cards, so ask him what goes
-         beside each plate. Use the .piece-loops block from /work/covenant/ as
-         the shape; it is already wired to js/modules/loopVideo.js.
+         prefix). The masters still need a pass through tools/media/compress.sh
+         at the `loop` preset. Use the .piece-loops block above as the shape;
+         it is already wired to js/modules/loopVideo.js.
+
+         The other half of this is now DONE: the brief's "placeholders for the
+         1x1 graphic internal cards" are the real cards, on the page above.
+         What is left is pairing each plate with the card that sits on it, so
+         the comparison the brief describes actually reads as one — ask Adam
+         which plate goes with which card before building it.
          ===================================================================== -->
 
-    <!-- ============================ RELATED ============================ -->
-    <nav class="container piece-nav" aria-label="Related work">
-      <a class="piece-nav__item" href="/work/alien-rogue-incursion-announce/">
-        <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">Alien Rogue Incursion Evolved Edition Announce Trailer</span>
-      </a>
-      <a class="piece-nav__item" href="/work/alien-rogue-incursion-story-reveal/">
-        <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">Alien Rogue Incursion Story Reveal Trailer</span>
-      </a>
-    </nav>
+    <!-- ============================ RELATED ============================
+         Built by js/modules/relatedWork.js from js/data/pieces.js. It picks
+         the pieces worth offering from this one — same project first, then
+         same client, then the catalogue's neighbours — so shipping a piece is
+         one entry in that file, not an edit to every page that might link to
+         it. Pin specific pieces with data-related-work="slug-a slug-b" and
+         change the count with data-related-count.
+
+         The fallback inside is what a visitor with JS off gets.
+    -->
+    <section class="container related-work" data-related-work>
+      <h2 class="related-work__title">Related work</h2>
+      <p class="related-work__fallback">
+        <a href="/#featured">See all work</a>
+      </p>
+    </section>
+
+    <!-- =========================== CONNECT ============================
+         Markup lives in js/modules/connectBand.js — one copy for every page.
+         The fallback inside is the no-JS path: pitch plus a working mailto.
+         The footer below renders --minimal because this band already makes
+         the pitch.
+    -->
+    <section class="section connect" id="connect" data-connect-band>
+      <div class="container connect__inner">
+        <div class="connect__pitch">
+          <h2 class="connect__title">Let&rsquo;s make something great!</h2>
+          <p class="connect__lede">
+            Open to commissions, collaborations, and full-time roles.
+            <a href="mailto:adam.casey.velazquez@gmail.com">Email me</a> and
+            I&rsquo;ll get back to you.
+          </p>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer site-footer--minimal">
     <div class="container">
-      <div class="site-footer__top">
-        <div class="site-footer__pitch">
-          <h2>Let's work together.</h2>
-          <p>Open to commissions, collaborations, and full-time roles.</p>
-        </div>
-
-        <ul class="site-footer__links" role="list">
-          <!-- Instagram and ArtStation are still missing: removed on
-               2026-08-27 for being href="#", and Adam has not supplied those
-               URLs yet. Add them here alongside LinkedIn when he does. -->
-          <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
-          <li>
-            <a class="button button--ghost" rel="noopener"
-               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
-              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
-              </svg>
-              LinkedIn
-            </a>
-          </li>
-        </ul>
-      </div>
-
       <div class="site-footer__bottom">
         <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
       </div>

@@ -27,6 +27,13 @@
   --accent-400: #ff6b5e;   /* dark-theme accent */
   --accent-600: #b8241c;   /* light-theme accent */
 
+  /* Green — the only non-red hue in the system. It exists solely so a form
+     can say "sent" without borrowing the accent, which on this site means
+     "link" everywhere else. Contrast-checked on --color-bg-sunken: 600 on
+     light 5.7:1, 400 on dark 9.7:1. */
+  --green-600: #15683d;
+  --green-400: #4fd18b;
+
   /* --- Semantic colors: light theme (default) --------------------------- */
   --color-bg:            var(--ink-050);
   --color-bg-raised:     var(--white);
@@ -42,17 +49,24 @@
   --color-overlay:       rgb(11 11 13 / 0.55);
   --color-header-bg:     rgb(246 246 248 / 0.82);
 
+  /* Form feedback. --color-danger is deliberately the accent red: an invalid
+     field and a link share a hue here, so error text is always paired with an
+     icon-free but explicit word ("Something went wrong"), never colour alone. */
+  --color-success:       var(--green-600);
+  --color-danger:        var(--color-accent);
+
   /* --- Ink over artwork --------------------------------------------------
      These sit on top of a photograph, not on the page background, so they
      are the one group that is deliberately NOT redefined per theme: the
      image underneath does not get lighter in light mode. Defining them once
      here is intentional — do not "fix" it by adding dark-theme overrides.
 
-     Currently only --color-media-scrim and --color-on-media have consumers
-     (the /work/ card's play badge). The other four went idle when .piece-nav
-     stopped setting type over artwork; they are kept because the next page
-     that puts a caption on an image will want them. Delete them if that never
-     happens.
+     --color-media-scrim, --color-media-scrim-soft, --color-on-media and
+     --color-on-media-muted all dress the landing hero, whose type sits over a
+     blurred reel. The rest went idle when .piece-nav stopped setting type over
+     artwork and when the /work/ card and its play badge were retired; they are
+     kept because the next page that puts a caption on an image will want them.
+     Delete them if that never happens.
      ---------------------------------------------------------------------- */
   --color-media-scrim:      rgb(11 11 13 / 0.86);
   /* Softer variant for artwork that is meant to stay visible through the
@@ -119,8 +133,15 @@
   --space-9:  6rem;
   --space-10: 8rem;
 
-  /* Vertical rhythm between full-width page sections */
-  --section-y: clamp(var(--space-7), 7vw, var(--space-10));
+  /* Vertical rhythm between full-width page sections.
+     Tightened on 2026-08-28 from clamp(3rem, 7vw, 8rem). At 1440 that put
+     8rem above and 8rem below every boundary — 16rem of empty background
+     between two sections, enough that the next one was off screen and the
+     page read as finished. 5vw lands ~4.5rem at 1440 and ~2.7rem at 900, so
+     the top of the next section is always in view before the current one
+     stops. Change it here and the whole site moves together: .section,
+     .piece-section, .related-work and the connect band all read this. */
+  --section-y: clamp(var(--space-6), 5vw, var(--space-9));
 
   /* --- Layout ----------------------------------------------------------- */
   --width-page:  84rem;   /* outer max width  */
@@ -176,6 +197,8 @@
     --color-on-accent:     var(--ink-950);
     --color-overlay:       rgb(0 0 0 / 0.70);
     --color-header-bg:     rgb(11 11 13 / 0.78);
+    --color-success:       var(--green-400);
+    --color-danger:        var(--color-accent);
 
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.40);
     --shadow-md: 0 4px 10px rgb(0 0 0 / 0.45), 0 12px 28px rgb(0 0 0 / 0.35);
@@ -197,6 +220,8 @@
   --color-on-accent:     var(--ink-950);
   --color-overlay:       rgb(0 0 0 / 0.70);
   --color-header-bg:     rgb(11 11 13 / 0.78);
+  --color-success:       var(--green-400);
+  --color-danger:        var(--color-accent);
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.40);
   --shadow-md: 0 4px 10px rgb(0 0 0 / 0.45), 0 12px 28px rgb(0 0 0 / 0.35);

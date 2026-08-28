@@ -10,9 +10,12 @@
 import { initTheme } from "./modules/theme.js";
 import { initNav } from "./modules/nav.js";
 import { initReveal } from "./modules/reveal.js";
-import { initFilter } from "./modules/filter.js";
 import { initLoopVideo } from "./modules/loopVideo.js";
 import { initHeroVideo } from "./modules/heroVideo.js";
+import { initScrollHint } from "./modules/scrollHint.js";
+import { initConnectBand } from "./modules/connectBand.js";
+import { initContactForm } from "./modules/contactForm.js";
+import { initRelatedWork } from "./modules/relatedWork.js";
 
 /** Keeps the footer copyright year correct without an annual edit. */
 function initCurrentYear() {
@@ -26,9 +29,13 @@ function boot() {
   initTheme();
   initNav();
   initReveal();
-  initFilter();
   initLoopVideo();
   initHeroVideo();
+  initScrollHint();
+  initRelatedWork();
+  // Order matters: the band builds the form, contactForm.js then binds to it.
+  initConnectBand();
+  initContactForm();
   initCurrentYear();
 }
 

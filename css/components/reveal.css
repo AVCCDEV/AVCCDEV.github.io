@@ -1,5 +1,6 @@
 /* ==========================================================================
-   reveal.css — the shared scroll-in fade, used by piece pages and /work/.
+   reveal.css — the shared scroll-in fade, used by the piece pages and by
+   the landing page's work grid.
    Depends on: tokens.css
 
    js/modules/reveal.js adds .has-reveal to <html> only when it is safe to
