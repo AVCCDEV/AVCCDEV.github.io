@@ -139,12 +139,17 @@
     <div class="piece-media--bleed" data-reveal>
       <figure>
         <div class="piece-video">
-          <!-- Encoded by tools/media/compress.sh (preset: web). webm first,
-               mp4 as the universal fallback. -->
+          <!-- Encoded by tools/media/compress.sh (preset: tiny).
+
+               mp4 ONLY, deliberately. The webm was pruned in commit bde9d2c
+               but this markup kept listing it as a <source> until 2026-08-28,
+               so every visit to this page 404'd before falling through to the
+               mp4. If the webm is ever wanted back, re-run compress.sh with
+               --force (the mp4 is newer than the master, so a bare run skips
+               this entry) and add the source line above the mp4. -->
           <video controls playsinline preload="metadata"
                  poster="/assets/video/avowed/times-square.jpg"
                  aria-label="The Avowed anamorphic billboard running in Times Square">
-            <source src="/assets/video/avowed/times-square.webm" type="video/webm">
             <source src="/assets/video/avowed/times-square.mp4" type="video/mp4">
             <p>Your browser cannot play this video.
                <a href="/assets/video/avowed/times-square.mp4">Download the mp4</a>.</p>
