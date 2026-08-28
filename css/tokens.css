@@ -69,6 +69,17 @@
   /* Blur radius for a backdrop image sitting behind type. */
   --blur-media: 16px;
 
+  /* Blur for the landing hero's backdrop reel — the default for the knob the
+     markup overrides per page (see the hero block in index.html).
+
+     UNITLESS on purpose. home.css feeds this one number into two places: the
+     blur radius, and the scale that hides the transparent edge a CSS blur
+     leaves behind. Those have to move together or a heavy blur shows bare
+     corners, and CSS cannot divide one length by another to derive the second
+     from the first — so the number carries no unit and each use multiplies it
+     into what it needs. Set it as a plain integer: 16, not 16px. */
+  --hero-blur: 16;
+
   /* --- Typography ------------------------------------------------------- */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
                "Segoe UI", Roboto, Helvetica, Arial, sans-serif;

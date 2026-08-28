@@ -53,8 +53,11 @@
       <nav class="site-nav" data-nav aria-label="Main">
         <ul class="site-nav__list" role="list">
           <li><a class="site-nav__link" href="/work/">Work</a></li>
-          <li><a class="site-nav__link" href="/about/">About</a></li>
-          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
+               for now"). The #about section was built from his resume and
+               removed with it; see docs/ROADMAP.md for what it held. Put this
+               line back when the section returns. -->
+          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
         </ul>
       </nav>
 
@@ -208,10 +211,19 @@
         </div>
 
         <ul class="site-footer__links" role="list">
-          <!-- Instagram / ArtStation / LinkedIn buttons were removed on
-               2026-08-27: they were all href="#". Re-add them here when
-               the real profile URLs exist. -->
+          <!-- Instagram and ArtStation are still missing: removed on
+               2026-08-27 for being href="#", and Adam has not supplied those
+               URLs yet. Add them here alongside LinkedIn when he does. -->
           <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li>
+            <a class="button button--ghost" rel="noopener"
+               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
+              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
         </ul>
       </div>
 

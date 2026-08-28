@@ -54,8 +54,11 @@
       <nav class="site-nav" data-nav aria-label="Main">
         <ul class="site-nav__list" role="list">
           <li><a class="site-nav__link" href="/work/" aria-current="page">Work</a></li>
-          <li><a class="site-nav__link" href="/about/">About</a></li>
-          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
+               for now"). The #about section was built from his resume and
+               removed with it; see docs/ROADMAP.md for what it held. Put this
+               line back when the section returns. -->
+          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
         </ul>
       </nav>
 
@@ -98,7 +101,7 @@
         <button class="work-filter__button" type="button" data-filter="cinematic" aria-pressed="false">Cinematic</button>
         <button class="work-filter__button" type="button" data-filter="titles" aria-pressed="false">Titles</button>
         <button class="work-filter__button" type="button" data-filter="gameplay" aria-pressed="false">Gameplay</button>
-        <p class="work-filter__count" data-filter-count aria-live="polite">9 pieces</p>
+        <p class="work-filter__count" data-filter-count aria-live="polite">13 pieces</p>
       </div>
 
       <ul class="work-grid" role="list" data-filter-grid>
@@ -164,7 +167,27 @@
         </li>
 
         <li data-discipline="cinematic">
-          <a class="work-card" href="/work/alien-rogue-incursion-announce/" data-reveal>
+          <a class="work-card" href="/work/clockwork-revolution-showcase-2025/" data-reveal>
+            <img class="work-card__image"
+                 src="/assets/img/clockwork-revolution/showcase-2025.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Clockwork Revolution &mdash; Xbox Games Showcase 2025</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/alien-rogue-incursion-gameplay-reveal/" data-reveal data-reveal-delay="80">
+            <img class="work-card__image"
+                 src="/assets/img/alien-rogue-incursion/gameplay-reveal.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Alien Rogue Incursion PS5 &amp; PC Gameplay Reveal</h2>
+          </a>
+        </li>
+
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/alien-rogue-incursion-announce/" data-reveal data-reveal-delay="160">
             <img class="work-card__image"
                  src="/assets/img/alien-rogue-incursion/announce.webp"
                  alt=""
@@ -173,8 +196,28 @@
           </a>
         </li>
 
+        <li data-discipline="cinematic">
+          <a class="work-card" href="/work/docked-life-on-the-docks/" data-reveal>
+            <img class="work-card__image"
+                 src="/assets/img/docked/life-on-the-docks.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Docked &mdash; Life on the Docks</h2>
+          </a>
+        </li>
+
         <li data-discipline="titles">
-          <a class="work-card" href="/work/clockwork-revolution-heist/" data-reveal data-reveal-delay="80">
+          <a class="work-card" href="/work/magic-the-gathering-final-fantasy/" data-reveal data-reveal-delay="80">
+            <img class="work-card__image"
+                 src="/assets/img/magic-the-gathering/final-fantasy-trailer.webp"
+                 alt=""
+                 width="800" height="450" loading="lazy" decoding="async">
+            <h2 class="visually-hidden">Magic: The Gathering &times; Final Fantasy Official Trailer</h2>
+          </a>
+        </li>
+
+        <li data-discipline="titles">
+          <a class="work-card" href="/work/clockwork-revolution-heist/" data-reveal data-reveal-delay="160">
             <img class="work-card__image"
                  src="/assets/img/clockwork-revolution/heist.webp"
                  alt=""
@@ -184,7 +227,7 @@
         </li>
 
         <li data-discipline="cinematic">
-          <a class="work-card" href="/work/state-of-decay-3-gameplay-trailer/" data-reveal data-reveal-delay="160">
+          <a class="work-card" href="/work/state-of-decay-3-gameplay-trailer/" data-reveal>
             <img class="work-card__image"
                  src="/assets/img/state-of-decay-3/gameplay.webp"
                  alt=""
@@ -192,7 +235,6 @@
             <h2 class="visually-hidden">State of Decay 3 Gameplay Trailer</h2>
           </a>
         </li>
-
       </ul>
 
       <p class="work-empty" data-filter-empty hidden>Nothing in that discipline yet.</p>
@@ -209,10 +251,19 @@
         </div>
 
         <ul class="site-footer__links" role="list">
-          <!-- Instagram / ArtStation / LinkedIn buttons were removed on
-               2026-08-27: they were all href="#". Re-add them here when
-               the real profile URLs exist. -->
+          <!-- Instagram and ArtStation are still missing: removed on
+               2026-08-27 for being href="#", and Adam has not supplied those
+               URLs yet. Add them here alongside LinkedIn when he does. -->
           <li><a class="button button--ghost" href="mailto:adam.casey.velazquez@gmail.com">Email</a></li>
+          <li>
+            <a class="button button--ghost" rel="noopener"
+               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
+              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
         </ul>
       </div>
 

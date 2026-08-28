@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Towerborne — Opening Cinematic — Adam Velazquez</title>
-  <meta name="description" content="Storyboarding the Towerborne opening cinematic, for Stoic Studio via Buddha Jones.">
+  <title>Magic: The Gathering × Final Fantasy — Official Trailer — Adam Velazquez</title>
+  <meta name="description" content="Titles work on the Magic: The Gathering × Final Fantasy official trailer for Wizards of the Coast and Square Enix via Buddha Jones.">
 
-  <link rel="canonical" href="https://adamv.art/work/towerborne-opening-cinematic/">
+  <link rel="canonical" href="https://adamv.art/work/magic-the-gathering-final-fantasy/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Towerborne — Opening Cinematic — Adam Velazquez">
-  <meta property="og:description" content="Storyboarding the Towerborne opening cinematic, for Stoic Studio via Buddha Jones.">
-  <meta property="og:url" content="https://adamv.art/work/towerborne-opening-cinematic/">
+  <meta property="og:title" content="Magic: The Gathering × Final Fantasy — Official Trailer — Adam Velazquez">
+  <meta property="og:description" content="Titles work on the Magic: The Gathering × Final Fantasy official trailer for Wizards of the Coast and Square Enix via Buddha Jones.">
+  <meta property="og:url" content="https://adamv.art/work/magic-the-gathering-final-fantasy/">
   <meta name="twitter:card" content="summary_large_image">
 
   <!--
@@ -44,8 +44,6 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
   <header class="site-header" data-site-header>
     <div class="container site-header__inner">
       <a class="site-header__brand" href="/">
@@ -92,16 +90,17 @@
     <!-- ============================ HERO ============================ -->
     <section class="piece-hero">
       <div class="container">
-        <p class="piece-hero__kicker" data-reveal>Cinematic Work</p>
+        <p class="piece-hero__kicker" data-reveal>Titles Work</p>
 
-        <h1 class="piece-title" data-reveal data-reveal-delay="80">
-          Towerborne &mdash; Opening Cinematic
+        <h1 class="piece-title piece-title--long" data-reveal data-reveal-delay="80">
+          <span class="piece-title__line">Magic: The Gathering &times; Final Fantasy</span>
+          <span class="piece-title__line piece-title__line--soft">Official Trailer</span>
         </h1>
 
         <ul class="piece-meta" role="list" data-reveal data-reveal-delay="160">
           <li>
             <span class="piece-meta__label">Client</span>
-            <span class="piece-meta__value">Stoic Studio</span>
+            <span class="piece-meta__value">Wizards of the Coast &amp; Square Enix</span>
           </li>
           <li>
             <span class="piece-meta__label">Studio</span>
@@ -110,9 +109,15 @@
           <li>
             <span class="piece-meta__label">Tools</span>
             <ul class="tool-chips" role="list">
+              <!-- No logo span: assets/img/tools/ has no Photoshop mark, and a
+                   data-tool with no matching selector paints a solid square.
+                   The chip reads as text-only without one. -->
               <li class="tool-chip">
-                <span class="tool-chip__logo" data-tool="blender" aria-hidden="true"></span>
-                Blender
+                Photoshop
+              </li>
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="houdini" aria-hidden="true"></span>
+                Houdini
               </li>
             </ul>
           </li>
@@ -124,8 +129,8 @@
     <div class="piece-media--bleed" data-reveal>
       <div class="piece-embed">
         <!-- youtube-nocookie: no tracking cookie until the viewer hits play. -->
-        <iframe src="https://www.youtube-nocookie.com/embed/_7Wlmk4pOtE"
-                title="Towerborne — Opening Cinematic"
+        <iframe src="https://www.youtube-nocookie.com/embed/VSDvLerVcNU"
+                title="FINAL FANTASY | Official Trailer | Magic: The Gathering"
                 loading="lazy" allowfullscreen
                 referrerpolicy="strict-origin-when-cross-origin"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
@@ -137,58 +142,23 @@
       <div class="container piece-section__grid">
         <div data-reveal data-reveal-delay="80">
           <div class="piece-section__body">
-            <!-- Adam's copy verbatim, except "Xbox games studios" set as the
-                 proper noun "Xbox Game Studios". Revert if deliberate. -->
             <p class="piece-lede">
-              After the reveal trailer, I was brought on the following year to storyboard the opening cinematic for the game Towerborne for Stoic and Xbox Game Studios.
+              Storyboarding and Animation for the card moments.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== STORYBOARD COMPARISON ====================
-         MediaPool/TowerBorne/Intro Cinematic/Belfry_Opening_StoryboardComparison.mp4
-         Encoded by tools/media/compress.sh (preset: tiny — same as the Alien
-         Rogue and Docked comparisons; the master is 477.8 MB of 1080p60 at
-         38.8 Mbps, nowhere near a web encode already).
-
-         TODO(media): webm only (27.2 MB). The 37.3 MB mp4 fallback was deleted
-         on 2026-08-27, at Adam's direction, to keep the repo down — this one
-         clip was 64.6 MB of a 186 MB working tree. Same trade as the Alien
-         Rogue comparison, which is also webm-only. VP9 WebM covers current
-         Safari/iOS, but an mp4 would still widen coverage on older versions.
-         To restore it, uncomment the entry in tools/media/manifest.tsv and
-         re-run compress.sh — the whole 103 s re-encodes, since staleness is
-         keyed on the mp4's presence.
-         =============================================================== -->
-    <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
-      <figure>
-        <div class="piece-video">
-          <video controls playsinline preload="metadata"
-                 poster="/assets/video/towerborne/opening-storyboard-comparison.jpg"
-                 aria-label="Storyboard to final shot comparison for the Towerborne opening cinematic">
-            <source src="/assets/video/towerborne/opening-storyboard-comparison.webm" type="video/webm">
-            <p>Your browser cannot play this video.</p>
-          </video>
-        </div>
-        <figcaption class="piece-media__caption">
-          Storyboard to final shot comparison.
-        </figcaption>
-      </figure>
-    </div>
-
-    <!-- ============================ RELATED ============================
-         The brief says "use placeholder"; both links below point at pages that
-         exist, which beats shipping a placeholder. -->
+    <!-- ============================ RELATED ============================ -->
     <nav class="container piece-nav" aria-label="Related work">
-      <a class="piece-nav__item" href="/work/towerborne-official-reveal-trailer/">
+      <a class="piece-nav__item" href="/work/obsidian-20th-anniversary-logo/">
         <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">Towerborne &mdash; Official Reveal Trailer</span>
+        <span class="piece-nav__title">Obsidian Entertainment 20th Anniversary Logo</span>
       </a>
-      <a class="piece-nav__item" href="/work/state-of-decay-3-gameplay-trailer/">
+      <a class="piece-nav__item" href="/work/docked-life-on-the-docks/">
         <span class="piece-nav__label">Related work</span>
-        <span class="piece-nav__title">State of Decay 3 Gameplay Trailer</span>
+        <span class="piece-nav__title">Docked &mdash; Life on the Docks</span>
       </a>
     </nav>
 

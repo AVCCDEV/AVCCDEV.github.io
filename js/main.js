@@ -12,6 +12,7 @@ import { initNav } from "./modules/nav.js";
 import { initReveal } from "./modules/reveal.js";
 import { initFilter } from "./modules/filter.js";
 import { initLoopVideo } from "./modules/loopVideo.js";
+import { initHeroVideo } from "./modules/heroVideo.js";
 
 /** Keeps the footer copyright year correct without an annual edit. */
 function initCurrentYear() {
@@ -27,6 +28,7 @@ function boot() {
   initReveal();
   initFilter();
   initLoopVideo();
+  initHeroVideo();
   initCurrentYear();
 }
 

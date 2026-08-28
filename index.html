@@ -54,8 +54,11 @@
       <nav class="site-nav" data-nav aria-label="Main">
         <ul class="site-nav__list" role="list">
           <li><a class="site-nav__link" href="/work/">Work</a></li>
-          <li><a class="site-nav__link" href="/about/">About</a></li>
-          <li><a class="site-nav__link" href="/contact/">Contact</a></li>
+          <!-- About pulled 2026-08-27 at Adam's direction ("get rid of About
+               for now"). The #about section was built from his resume and
+               removed with it; see docs/ROADMAP.md for what it held. Put this
+               line back when the section returns. -->
+          <li><a class="site-nav__link" href="/#connect">Contact</a></li>
         </ul>
       </nav>
 
@@ -87,23 +90,60 @@
 
     <!-- ============================ HERO ============================
       Full-bleed cinematic backdrop with the name stacked over it, after the
-      Caleb Moore reference. The backdrop is an existing committed thumbnail,
-      blurred and scrimmed: every trailer frame we ship has burned-in title
-      type, and --blur-media over --color-media-scrim dissolves that into
-      abstract texture so it reads as a plate rather than as someone else's
-      logo. Swapping the src for a cleaner still is a one-line change.
+      Caleb Moore reference. The backdrop is Adam's landing reel, blurred and
+      scrimmed: every trailer frame we ship has burned-in title type, and the
+      blur over --color-media-scrim dissolves that into abstract colour and
+      motion, so it reads as a plate rather than as someone else's logo.
+
+      Two stacked layers, both aria-hidden — this is decoration, not content:
+
+        1. the poster still, which paints immediately and is the whole
+           backdrop when JS is off, when the visitor asked for reduced motion,
+           when they are on a metered connection, or when autoplay is refused;
+        2. the reel, which js/modules/heroVideo.js starts and fades in over it.
+
+      >>> TUNE THE BLUR HERE <<<  The --hero-blur below is the knob. The reel
+      ships sharp and is blurred by the browser, so this is a reload, not a
+      re-encode, and each page that grows a hero can set its own. It is a
+      plain number, no unit: home.css multiplies it into both the blur radius
+      and the scale that keeps the blurred edge off screen. Roughly —
+
+          6    shots stay legible, almost a slideshow
+          16   current: colour and movement, subject still readable  (default)
+          28   abstract wash of colour
+          40+  barely more than a moving gradient
+
+      Deleting the style attribute falls back to --hero-blur in tokens.css.
 
       Hero type uses the --color-on-media group, which tokens.css defines once
       and deliberately does not redefine per theme — the artwork underneath
       does not get lighter in light mode.
     -->
     <section class="hero">
-      <div class="hero__backdrop" aria-hidden="true">
+      <div class="hero__backdrop" aria-hidden="true" style="--hero-blur: 2">
         <img class="hero__backdrop-image"
-             src="/assets/img/obsidian-20th/logo.webp"
+             src="/assets/video/home/landing-backdrop.jpg"
              alt=""
-             width="800" height="450"
+             width="1280" height="720"
              fetchpriority="high" decoding="async">
+
+        <!-- No autoplay attribute and preload="none" on purpose: the module
+             decides whether the reel ever downloads, so a visitor who gets
+             the still never pays for it. That matters a lot here — the reel
+             ships near-sharp to suit --hero-blur: 2, and a blur is
+             thrown-away detail, so not throwing it away costs real bytes.
+
+             WEBM ONLY, no mp4 fallback — dropped 2026-08-27 at Adam's
+             direction, same call as the Towerborne and Alien Rogue clips. At
+             these settings the H.264 twin was 34.6 MB, and every browser that
+             can run this page's ES modules can also decode VP9. Anything that
+             cannot simply keeps the poster still above, which is the designed
+             fallback anyway. -->
+        <video class="hero__backdrop-video" data-hero-video
+               muted loop playsinline preload="none"
+               width="1280" height="720" tabindex="-1">
+          <source src="/assets/video/home/landing-backdrop.webm" type="video/webm">
+        </video>
       </div>
 
       <div class="container hero__inner">
@@ -123,7 +163,16 @@
 
         <div class="hero__actions">
           <a class="button button--primary" href="/work/">View the work</a>
-          <a class="button button--on-media" href="/contact/">Get in touch</a>
+          <a class="button button--on-media" href="/#connect">Get in touch</a>
+          <a class="button button--on-media" download
+             href="/assets/docs/Adam_Velazquez_Resume.pdf">
+            <svg class="button__icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+            </svg>
+            Resume<span class="visually-hidden"> (PDF)</span>
+          </a>
         </div>
       </div>
 
@@ -302,15 +351,39 @@
         <h2 class="connect__title">Let's talk.</h2>
         <p class="connect__lede measure">
           Open to commissions, collaborations, and full-time roles. Reach me at
-          <a class="connect__email" href="mailto:adam.casey.velazquez@gmail.com">adam.casey.velazquez@gmail.com</a>,
-          or use the contact page.
+          <a class="connect__email" href="mailto:adam.casey.velazquez@gmail.com">adam.casey.velazquez@gmail.com</a>.
         </p>
 
         <ul class="connect__links" role="list">
-          <!-- Instagram / ArtStation / LinkedIn buttons were removed on
-               2026-08-27: they were all href="#". Re-add them here when
-               the real profile URLs exist. -->
-          <li><a class="button button--primary" href="/contact/">Contact</a></li>
+          <!-- The Email button read "Contact" and pointed at /contact/, which
+               does not exist. It cannot point at #connect either — that is the
+               band it sits in — so it became the mail link, matching the Email
+               button in the full footer on every other page.
+
+               Instagram and ArtStation are still missing: they were removed on
+               2026-08-27 for being href="#", and Adam has not supplied those
+               URLs yet. Add them here alongside LinkedIn when he does. -->
+          <li><a class="button button--primary" href="mailto:adam.casey.velazquez@gmail.com">Email me</a></li>
+          <li>
+            <a class="button button--ghost" download
+               href="/assets/docs/Adam_Velazquez_Resume.pdf">
+              <svg class="button__icon" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+              </svg>
+              Resume<span class="visually-hidden"> (PDF)</span>
+            </a>
+          </li>
+          <li>
+            <a class="button button--ghost" rel="noopener"
+               href="https://www.linkedin.com/in/adam-velazquez-b1151494">
+              <svg class="button__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
         </ul>
       </div>
     </section>

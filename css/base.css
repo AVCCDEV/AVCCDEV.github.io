@@ -183,6 +183,15 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   color: var(--color-accent);
 }
 
+/* A logo or glyph sitting before a button's label. .button is already an
+   inline-flex row with a gap, so this only has to size the SVG: em units so
+   it tracks the label, and flex:none so a long label cannot squash it. */
+.button__icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+
 /* --- Motion preference ----------------------------------------------------
    Honour the OS "reduce motion" setting globally. Scroll-driven reveals in
    js/modules/ check this too, so content still appears without animating.

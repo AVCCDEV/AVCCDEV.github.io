@@ -48,17 +48,40 @@
   z-index: -1;
 }
 
-/* Every trailer frame we ship has burned-in title type. Blurring the plate
-   turns that into abstract texture; the scale compensates for the soft edge
-   blur leaves behind, and the 800px source is deliberate — it is never shown
-   sharp, so there is no reason to commit a larger one. */
-.hero__backdrop-image {
+/* Two stacked plates: the poster still, and the reel that fades in over it.
+   Both are shipped sharp and blurred here, at display time, so the amount is
+   a one-number edit rather than a re-encode — index.html sets --hero-blur on
+   .hero__backdrop, and tokens.css holds the default.
+
+   That one number drives two properties that must stay in step. A CSS blur
+   samples past the element's edge, so it leaves a transparent border roughly
+   1.5x the radius wide; the scale grows the plate enough to push that border
+   outside the hero. 0.008 per unit of blur is about double what the geometry
+   needs at hero proportions, so there is margin to turn the blur well up
+   before any corner goes bare. */
+.hero__backdrop-image,
+.hero__backdrop-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: blur(var(--blur-media)) saturate(1.1);
-  transform: scale(1.12);
+  filter: blur(calc(var(--hero-blur) * 1px)) saturate(1.1);
+  transform: scale(calc(1 + var(--hero-blur) * 0.008));
+}
+
+/* The reel sits above the still and is revealed only once it is actually
+   playing — heroVideo.js sets data-hero-video="playing". Until then the still
+   shows through, so there is never a black or empty box. */
+.hero__backdrop-video {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.hero__backdrop-video[data-hero-video="playing"] { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__backdrop-video { transition: none; }
 }
 
 /* Two layers: a flat darkening pass for contrast, and a bottom-weighted
