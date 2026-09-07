@@ -27,8 +27,6 @@ node_modules/
 # committed blob is permanent: once in, deleting the file later does not shrink
 # a clone. Delete the matching rule when the page lands, then commit them.
 #
-# Docked — brief exists at Reference/DetailPages/Docked/Docked.md, no page yet.
-assets/video/docked/
 # Clockwork Revolution "Hooligan example gallery" — for the Games Showcase 2026
 # page. heist-endcard.* is in use and deliberately NOT ignored.
 assets/video/clockwork-revolution/cards-cidt.*
