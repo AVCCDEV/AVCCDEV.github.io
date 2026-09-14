@@ -35,7 +35,12 @@
   --green-400: #4fd18b;
 
   /* --- Semantic colors: light theme (default) --------------------------- */
-  --color-bg:            var(--ink-050);
+  /* Backgrounds, header and buttons were tuned by eye by Adam on 2026-09-14
+     and applied as-is: the raw hexes below that sit off the ink ramp are his
+     picks, not strays to normalise. Known trade-offs he accepted then: the
+     light bg matches --color-border (dividers vanish), and white on the
+     button hovers is ~4.3:1. */
+  --color-bg:            #d6d6d6;
   --color-bg-raised:     var(--white);
   --color-bg-sunken:     var(--ink-100);
   --color-text:          var(--ink-900);
@@ -47,7 +52,22 @@
   --color-accent-hover:  var(--accent-500);
   --color-on-accent:     var(--white);
   --color-overlay:       rgb(11 11 13 / 0.55);
-  --color-header-bg:     rgb(246 246 248 / 0.82);
+
+  /* Header bar. Its own group so the bar can be tuned apart from the page. */
+  --color-header-bg:          rgb(214 214 214 / 0.78);
+  --color-header-brand:       var(--ink-900);
+  --color-header-brand-hover: var(--accent-600);
+  --color-header-icon:        var(--ink-500);
+  --color-header-border:      var(--ink-200);
+
+  /* Buttons. Separate from --color-accent so a button can change without
+     recolouring every link and the text selection. */
+  --color-button-primary-bg:    #db0b00;
+  --color-button-primary-text:  var(--white);
+  --color-button-primary-hover: var(--accent-500);
+  --color-button-ghost-border:  var(--ink-300);
+  --color-button-ghost-text:    #050505;
+  --color-button-ghost-hover:   var(--accent-600);
 
   /* Form feedback. --color-danger is deliberately the accent red: an invalid
      field and a link share a hue here, so error text is always paired with an
@@ -74,6 +94,15 @@
   --color-media-scrim-soft: rgb(11 11 13 / 0.58);
   --color-on-media:         var(--white);
   --color-on-media-muted:   rgb(255 255 255 / 0.78);
+
+  /* Landing hero buttons, over the reel — same in both themes like the rest
+     of this group. The outline buttons' hover label is near-black on a black
+     fill (1.07:1) and reads as blank; Adam chose to ship it as tuned. */
+  --color-hero-button-bg:          #fd3c2b;
+  --color-hero-button-text:        var(--white);
+  --color-hero-button-hover:       var(--accent-500);
+  --color-hero-outline-hover-bg:   #000000;
+  --color-hero-outline-hover-text: var(--ink-950);
 
   /* Drop shadow for type over artwork: a tight dark edge for letter definition
      plus a wide soft haze to hold the text together over a bright patch. */
@@ -184,9 +213,9 @@
    -------------------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg:            var(--ink-950);
-    --color-bg-raised:     var(--ink-850);
-    --color-bg-sunken:     var(--ink-900);
+    --color-bg:            #212121;
+    --color-bg-raised:     #4f4f4f;
+    --color-bg-sunken:     #341818;
     --color-text:          var(--ink-050);
     --color-text-muted:    var(--ink-400);
     --color-text-subtle:   var(--ink-500);
@@ -196,7 +225,17 @@
     --color-accent-hover:  var(--accent-500);
     --color-on-accent:     var(--ink-950);
     --color-overlay:       rgb(0 0 0 / 0.70);
-    --color-header-bg:     rgb(11 11 13 / 0.78);
+    --color-header-bg:          rgb(0 0 0 / 0.83);
+    --color-header-brand:       var(--ink-050);
+    --color-header-brand-hover: #f36a5e;
+    --color-header-icon:        #757575;
+    --color-header-border:      #616161;
+    --color-button-primary-bg:    #e61300;
+    --color-button-primary-text:  var(--white);
+    --color-button-primary-hover: var(--accent-500);
+    --color-button-ghost-border:  var(--white);
+    --color-button-ghost-text:    var(--ink-050);
+    --color-button-ghost-hover:   #d95145;
     --color-success:       var(--green-400);
     --color-danger:        var(--color-accent);
 
@@ -207,9 +246,9 @@
 }
 
 :root[data-theme="dark"] {
-  --color-bg:            var(--ink-950);
-  --color-bg-raised:     var(--ink-850);
-  --color-bg-sunken:     var(--ink-900);
+  --color-bg:            #212121;
+  --color-bg-raised:     #4f4f4f;
+  --color-bg-sunken:     #341818;
   --color-text:          var(--ink-050);
   --color-text-muted:    var(--ink-400);
   --color-text-subtle:   var(--ink-500);
@@ -219,7 +258,17 @@
   --color-accent-hover:  var(--accent-500);
   --color-on-accent:     var(--ink-950);
   --color-overlay:       rgb(0 0 0 / 0.70);
-  --color-header-bg:     rgb(11 11 13 / 0.78);
+  --color-header-bg:          rgb(0 0 0 / 0.83);
+  --color-header-brand:       var(--ink-050);
+  --color-header-brand-hover: #f36a5e;
+  --color-header-icon:        #757575;
+  --color-header-border:      #616161;
+  --color-button-primary-bg:    #e61300;
+  --color-button-primary-text:  var(--white);
+  --color-button-primary-hover: var(--accent-500);
+  --color-button-ghost-border:  var(--white);
+  --color-button-ghost-text:    var(--ink-050);
+  --color-button-ghost-hover:   #d95145;
   --color-success:       var(--green-400);
   --color-danger:        var(--color-accent);
 

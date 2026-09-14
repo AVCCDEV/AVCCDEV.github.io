@@ -25,7 +25,7 @@
 
 /* js/modules/nav.js adds this once the page is scrolled off the top. */
 .site-header.is-scrolled {
-  border-bottom-color: var(--color-border);
+  border-bottom-color: var(--color-header-border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -45,8 +45,9 @@
   letter-spacing: var(--tracking-tight);
   text-decoration: none;
   white-space: nowrap;
+  color: var(--color-header-brand);
 }
-.site-header__brand:hover { color: var(--color-accent); }
+.site-header__brand:hover { color: var(--color-header-brand-hover); }
 
 /* --- Right-hand controls --------------------------------------------------
    Everything interactive sits here, always visible. flex:none so the group
@@ -79,7 +80,7 @@
   background: none;
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  color: var(--color-text-muted);
+  color: var(--color-header-icon);
   cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out),

@@ -41,6 +41,11 @@
   --color-accent:       var(--accent-400);
   --color-accent-hover: var(--accent-500);
   --color-on-accent:    var(--ink-950);
+
+  /* "View the work" takes the hero's own button colors, not the theme's. */
+  --color-button-primary-bg:    var(--color-hero-button-bg);
+  --color-button-primary-text:  var(--color-hero-button-text);
+  --color-button-primary-hover: var(--color-hero-button-hover);
 }
 
 .hero__backdrop {
@@ -186,9 +191,9 @@
   color: var(--color-on-media);
 }
 .button--on-media:hover {
-  background-color: var(--color-on-media);
-  border-color: var(--color-on-media);
-  color: var(--ink-950);
+  background-color: var(--color-hero-outline-hover-bg);
+  border-color: var(--color-hero-outline-hover-bg);
+  color: var(--color-hero-outline-hover-text);
 }
 
 /* --- Section head --------------------------------------------------------- */

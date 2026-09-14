@@ -165,22 +165,22 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 .button:active { transform: translateY(1px); }
 
 .button--primary {
-  background-color: var(--color-accent);
-  color: var(--color-on-accent);
+  background-color: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
 }
 .button--primary:hover {
-  background-color: var(--color-accent-hover);
-  color: var(--color-on-accent);
+  background-color: var(--color-button-primary-hover);
+  color: var(--color-button-primary-text);
 }
 
 .button--ghost {
   background-color: transparent;
-  border-color: var(--color-border-strong);
-  color: var(--color-text);
+  border-color: var(--color-button-ghost-border);
+  color: var(--color-button-ghost-text);
 }
 .button--ghost:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-button-ghost-hover);
+  color: var(--color-button-ghost-hover);
 }
 
 /* A logo or glyph sitting before a button's label. .button is already an
