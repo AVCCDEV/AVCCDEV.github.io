@@ -66,16 +66,18 @@
   gap: var(--space-2);
 }
 
-/* A shade tighter than a body button so the bar keeps its height. */
+/* A shade tighter than a body button so the bar keeps its height. The 0.98
+   is Adam's tuner pick (2026-09-14); the narrow blocks below still step down. */
 .site-header__link {
-  padding: var(--space-2) var(--space-4);
+  padding: calc(var(--space-2) * 0.98) calc(var(--space-4) * 0.98);
+  font-size: calc(var(--text-sm) * 0.98);
 }
 
 .icon-button {
   display: inline-grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.45rem;
+  height: 2.45rem;
   padding: 0;
   background: none;
   border: 1px solid transparent;
@@ -90,7 +92,7 @@
   background-color: var(--color-bg-sunken);
   color: var(--color-text);
 }
-.icon-button svg { width: 1.25rem; height: 1.25rem; }
+.icon-button svg { width: 1.225rem; height: 1.225rem; }
 
 /* Theme toggle shows one icon at a time, chosen by the active theme. */
 .theme-toggle__moon { display: none; }

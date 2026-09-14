@@ -98,6 +98,7 @@
   /* Landing hero buttons, over the reel — same in both themes like the rest
      of this group. The outline buttons' hover label is near-black on a black
      fill (1.07:1) and reads as blank; Adam chose to ship it as tuned. */
+  --color-hero-role:               rgb(255 255 255 / 0.65);
   --color-hero-button-bg:          #fd3c2b;
   --color-hero-button-text:        var(--white);
   --color-hero-button-hover:       var(--accent-500);
@@ -170,13 +171,15 @@
      the top of the next section is always in view before the current one
      stops. Change it here and the whole site moves together: .section,
      .piece-section, .related-work and the connect band all read this. */
-  --section-y: clamp(var(--space-6), 5vw, var(--space-9));
+  --section-y: clamp(var(--space-4), 2.5vw, var(--space-7));
+  /* Halved again by Adam on 2026-09-14, from clamp(space-6, 5vw, space-9),
+     in the theme tuner. It is site-wide: piece pages tighten with it. */
 
   /* --- Layout ----------------------------------------------------------- */
-  --width-page:  84rem;   /* outer max width  */
+  --width-page:  79rem;   /* outer max width; 84rem until 2026-09-14 */
   --width-text:  42rem;   /* comfortable reading measure */
   --gutter:      clamp(var(--space-4), 4vw, var(--space-7));
-  --header-h:    4.5rem;
+  --header-h:    4.25rem;
 
   /* --- Borders, radii, elevation ---------------------------------------- */
   --radius-sm:   4px;

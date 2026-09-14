@@ -25,11 +25,13 @@
   isolation: isolate;
   overflow: hidden;
   /* The sticky header is in flow above this, so the hero only has to fill the
-     rest: 88svh plus --header-h lands just about one screen. */
-  min-height: min(88svh, 52rem);
+     rest. Height, cap and padding were tuned by eye by Adam on 2026-09-14
+     (from 88svh / 52rem / 4rem 8rem): 80svh leaves a strip of the work grid
+     in view, and the 98rem cap means it effectively never stops growing. */
+  min-height: min(80svh, 98rem);
   /* Bottom padding reserves the scroll cue's lane; align-content centres the
      copy in what is left, which seats it a little above the optical middle. */
-  padding-block: var(--space-8) var(--space-10);
+  padding-block: var(--space-7) 7.5rem;
   background-color: var(--ink-950);
   color: var(--color-on-media);
 
@@ -72,7 +74,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  /* Framing, tuned 2026-09-14: pinned to the left edge and a touch above
+     centre, so the crop on wide screens keeps the left of the reel. Retune
+     this when the reel changes — it is chosen for Webpage_BG_02_3. */
+  object-position: 0% 45%;
   filter: blur(calc(var(--hero-blur) * 1px)) saturate(1.1);
   transform: scale(calc(1 + var(--hero-blur) * 0.008));
 }
@@ -118,7 +123,9 @@
 .hero__title {
   margin-top: var(--space-4);
   font-family: var(--font-display-alt);
-  font-size: clamp(2.8rem, 9.5vw, 8rem);
+  /* 1.16x the original clamp(2.8rem, 9.5vw, 8rem), tuned 2026-09-14. The
+     3.25rem floor is what a phone gets; "VELAZQUEZ" is the line to watch. */
+  font-size: clamp(3.25rem, 11vw, 9.3rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.035em;
@@ -128,10 +135,10 @@
 .hero__title-line { display: block; }
 
 .hero__role {
-  max-width: 34rem;
+  max-width: 32.3rem;
   margin-top: var(--space-5);
-  font-size: var(--text-lg);
-  color: var(--color-on-media-muted);
+  font-size: calc(var(--text-lg) * 0.95);
+  color: var(--color-hero-role);
   text-shadow: var(--shadow-text);
 }
 
@@ -140,6 +147,12 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-6);
+}
+
+/* Hero buttons run 1.11x a body button (Adam, 2026-09-14). */
+.hero__actions .button {
+  padding: calc(var(--space-3) * 1.11) calc(var(--space-5) * 1.11);
+  font-size: calc(var(--text-sm) * 1.11);
 }
 
 /* --- Scroll cue -----------------------------------------------------------
@@ -277,9 +290,9 @@
    the difference on a 1920 screen, where 84rem had been leaving ~290px of
    empty margin down each side.
 
-   112rem is not a new number — it is what .piece-media--bleed uses on the
-   piece pages, so the whole site agrees on how wide "wider than the text
-   column" is.
+   It was 112rem, matching .piece-media--bleed on the piece pages. Adam opened
+   it to 160rem on 2026-09-14, so the landing grid now runs wider than piece
+   media does — deliberate, not drift.
    -------------------------------------------------------------------------- */
 @media (min-width: 70rem) {
   .feature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -288,7 +301,7 @@
   .feature { --feature-title-size: clamp(1.45rem, 2vw, 1.95rem); }
 
   .featured > .container {
-    max-width: min(112rem, 100%);
+    max-width: min(160rem, 100%);
     padding-inline: var(--space-6);
   }
 
@@ -313,10 +326,14 @@
      artwork on screen at 1366x768, the tightest 16:9 laptop worth designing
      for. Wider or taller screens get more.
 
-     Desktop only. At phone widths --section-y is down to 2rem, and there is no
+     Desktop only. At phone widths --section-y is down to 1rem, and there is no
      empty padding to spend — the same rule would clip the eyebrow.
+
+     Capped at --section-y since it was halved on 2026-09-14: at 70rem the
+     padding is now only ~1.75rem, less than --space-6, and an uncapped pull
+     would eat into the eyebrow.
      ---------------------------------------------------------------------- */
-  .featured { scroll-margin-top: calc(-1 * var(--space-6)); }
+  .featured { scroll-margin-top: calc(-1 * min(var(--space-6), var(--section-y))); }
 }
 
 /* Artwork: 16:9, soft corners, slow hover zoom — the treatment the retired
