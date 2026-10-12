@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cinematic 3rdPerson Game — Adam Velazquez</title>
+  <meta name="description" content="Breakdown of a seamless cutscene to gameplay transition system, with locomotion, combat and enemy AI, built in Unreal Engine and Maya.">
+
+  <!--
+    Unlisted (Adam, 2026-10-12): deliberately absent from js/data/pieces.js
+    and from the landing grid, so nothing on the site links here. It lives at
+    /cine2game/ rather than /work/<slug>/ for the same reason.
+
+    Content is Adam's own, ripped from his old Wix breakdown page; the masters
+    and a verbatim transcript are in ../MediaPool/Cine2Game/ (content.md).
+  -->
+  <link rel="canonical" href="https://adamv.art/cine2game/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cinematic 3rdPerson Game — Adam Velazquez">
+  <meta property="og:description" content="Breakdown of a seamless cutscene to gameplay transition system, with locomotion, combat and enemy AI, built in Unreal Engine and Maya.">
+  <meta property="og:url" content="https://adamv.art/cine2game/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!--
+    Apply the stored theme before first paint. This must stay inline and
+    blocking — deferring it causes a white flash for dark-theme visitors.
+  -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("av-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components/site-header.css">
+  <link rel="stylesheet" href="/css/components/site-footer.css">
+  <link rel="stylesheet" href="/css/components/tool-chip.css">
+  <link rel="stylesheet" href="/css/components/reveal.css">
+  <link rel="stylesheet" href="/css/components/related-work.css">
+  <link rel="stylesheet" href="/css/components/connect.css">
+  <link rel="stylesheet" href="/css/components/lightbox.css">
+  <link rel="stylesheet" href="/css/pages/piece.css">
+  <link rel="stylesheet" href="/css/pages/cine2game.css">
+
+  <script type="module" src="/js/main.js"></script>
+</head>
+
+<body>
+  <header class="site-header" data-site-header>
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="/">
+        Adam Velazquez
+      </a>
+
+      <div class="site-header__actions">
+        <nav class="site-header__nav" aria-label="Main">
+          <a class="button button--ghost site-header__link" href="/#featured">Work</a>
+          <a class="button button--primary site-header__link" href="/#connect">Contact</a>
+        </nav>
+
+        <button class="icon-button theme-toggle" type="button"
+                data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================ HERO ============================ -->
+    <section class="piece-hero">
+      <div class="container">
+        <p class="piece-hero__kicker" data-reveal>Breakdown</p>
+
+        <h1 class="piece-title" data-reveal data-reveal-delay="80">
+          Cinematic 3rdPerson Game
+        </h1>
+
+        <ul class="piece-meta" role="list" data-reveal data-reveal-delay="160">
+          <li>
+            <span class="piece-meta__label">Project</span>
+            <span class="piece-meta__value">College project</span>
+          </li>
+          <li>
+            <span class="piece-meta__label">Tools</span>
+            <ul class="tool-chips" role="list">
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="unreal-engine" aria-hidden="true"></span>
+                Unreal Engine
+              </li>
+              <li class="tool-chip">
+                <span class="tool-chip__logo" data-tool="maya" aria-hidden="true"></span>
+                Maya
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ GAME DEMO ============================
+         Every clip on this page is webm only, encoded at the `lean` preset
+         (tools/media/manifest.tsv): 1280/30fps, silent. preload="none" with a
+         poster, because there are twenty of them on one page.
+         ==================================================================== -->
+    <div class="piece-media--bleed" data-reveal>
+      <figure>
+        <div class="piece-video">
+          <video controls playsinline preload="none" width="1920" height="1080"
+                 poster="/assets/video/cine2game/game-demo.jpg"
+                 aria-label="Game demo: the cutscene hands off seamlessly to gameplay">
+            <source src="/assets/video/cine2game/game-demo.webm" type="video/webm">
+          </video>
+        </div>
+        <figcaption class="piece-media__caption">Game Demo</figcaption>
+      </figure>
+    </div>
+
+    <!-- ============================ INTRO ============================ -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <p class="piece-lede">
+            I was inspired by a game about a made up god tustling with other gods to try making my own seamless cutscene to gameplay transition system. This was my first foray into making cinematic, locomotion, and attack systems for a game. All animations and systems made by me. All rigs and models gathered from the internet or personal friends.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/editor-cutscene-and-blueprint.webp">
+              <img src="/assets/img/cine2game/editor-cutscene-and-blueprint.webp"
+                   alt="Unreal Editor split view: the cutscene playing on the left, the third person character's cutscene-to-gameplay Blueprint on the right"
+                   width="1914" height="1024" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            Credit to Casey Mcdermott and Mauricio Hoffman for their mentorship in game animation and Taylor Whitset for his mntorship in Unreal Animation systems.
+          </p>
+
+          <ul class="piece-list" role="list">
+            <li>Thor Rig by Agora Studio</li>
+            <li>Thor Hammer Rig by Agora Studio</li>
+            <li>Ystra Astral Witch Rig by Christof Schoch</li>
+            <li>Spear Rain and Ground Impact Effects by Phung Tran</li>
+            <li>Fantasy Cave Environment Set by Denys Rutkovskyi</li>
+          </ul>
+
+          <p class="breakdown__note">Blueprint Samples are best viewed on a desktop</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CUTSCENE ============================ -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <h2 class="piece-section__heading" data-reveal>Cutscene Animation</h2>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1280" height="720"
+                   poster="/assets/video/cine2game/cutscene-animation.jpg"
+                   aria-label="The finished cutscene animation">
+              <source src="/assets/video/cine2game/cutscene-animation.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <h3 class="breakdown__subhead">WiP Animation Sequence</h3>
+
+          <p>
+            The camera work and character animation for the cutscene was handled completely in Maya an then blended together with the gameplay.
+          </p>
+
+          <!-- Short silent loops, driven by js/modules/loopVideo.js. -->
+          <div class="breakdown__loops">
+            <video muted loop playsinline preload="metadata" data-loop-video width="1280" height="720"
+                   poster="/assets/video/cine2game/wip-animation-sequence-1.jpg"
+                   aria-label="Work in progress animation from the cutscene, part 1">
+              <source src="/assets/video/cine2game/wip-animation-sequence-1.webm" type="video/webm">
+            </video>
+            <video muted loop playsinline preload="metadata" data-loop-video width="1280" height="720"
+                   poster="/assets/video/cine2game/wip-animation-sequence-2.jpg"
+                   aria-label="Work in progress animation from the cutscene, part 2">
+              <source src="/assets/video/cine2game/wip-animation-sequence-2.webm" type="video/webm">
+            </video>
+            <video muted loop playsinline preload="metadata" data-loop-video width="1280" height="720"
+                   poster="/assets/video/cine2game/wip-animation-sequence-3.jpg"
+                   aria-label="Work in progress animation from the cutscene, part 3">
+              <source src="/assets/video/cine2game/wip-animation-sequence-3.webm" type="video/webm">
+            </video>
+            <video muted loop playsinline preload="metadata" data-loop-video width="1280" height="720"
+                   poster="/assets/video/cine2game/wip-animation-sequence-4.jpg"
+                   aria-label="Work in progress animation from the cutscene, part 4">
+              <source src="/assets/video/cine2game/wip-animation-sequence-4.webm" type="video/webm">
+            </video>
+          </div>
+
+          <p>
+            Though the cutscene is a self contained sequence, I decided to animate portions of the sequence as discrete animations and cycles that would then be combined into the final cutscene. Working modularly helped keep up the pace of production while also keeping animation assets on hand for reuse in gameplay later.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CUTSCENE TO GAMEPLAY BLUEPRINT ===================== -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <h2 class="piece-section__heading" data-reveal>Cutscene to Gameplay Blueprint</h2>
+
+          <p>
+            The Blueprint For the Cutscene to Gameplay Transition System can be viewed <a href="https://blueprintue.com/blueprint/fgxet0z1/" target="_blank" rel="noopener">here</a> (ctrl+Scroll to zoom, ctrl+RightClick+Drag to pan)
+          </p>
+
+          <p>
+            For Debug, I made a gui to provide the choice of playing the cutscene or jumping straight into gameplay. If the cutscene is chosen then the event to start the cutscene will be called
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/start-menu-debug-gui.webp">
+              <img src="/assets/img/cine2game/start-menu-debug-gui.webp"
+                   alt="Blueprint: the start menu widget, with branches to start the cutscene or go straight to gameplay"
+                   width="2000" height="690" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-1.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-step-1.webp"
+                   alt="Blueprint: cutscene to gameplay, step 1"
+                   width="2000" height="312" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <div class="breakdown__pair">
+            <figure class="breakdown__figure">
+              <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-2.webp">
+                <img src="/assets/img/cine2game/cutscene-to-gameplay-step-2.webp"
+                     alt="Blueprint: cutscene to gameplay, step 2"
+                     width="1604" height="912" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="breakdown__figure">
+              <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/root-motion-dummy.webp">
+                <img src="/assets/img/cine2game/root-motion-dummy.webp"
+                     alt="In engine: Thor facing Ystra, with the root motion dummy's transform gizmo at his feet"
+                     width="862" height="570" loading="lazy" decoding="async">
+              </a>
+            </figure>
+          </div>
+
+          <p>
+            I originally tried to make the character's traversal through space dependant on Unreal's built in Root Motion system. This proved to provide very finnacky results, however. I was able to solve this with a method that nulifies the character's movement system and teleports the character actor to an attach point on the root of an anim instance for the cutscene that is located in world space. I took to calling them "RootMotion Dummies"
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-3.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-step-3.webp"
+                   alt="Blueprint: cutscene to gameplay, step 3"
+                   width="1450" height="240" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-3a.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-step-3a.webp"
+                   alt="Blueprint: cutscene to gameplay, step 3a, spawning and playing the level sequence"
+                   width="2000" height="678" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            When the character and camera is successfully teleported to the root motion dummy the character bp would spawn and play a level sequence for the cutscene.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/sequence-duration-to-playrate.webp">
+              <img src="/assets/img/cine2game/sequence-duration-to-playrate.webp"
+                   alt="Blueprint: the Sequence Duration to playrate function"
+                   width="1708" height="596" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            Because I wanted to use cinecameras for the character follow camera in order to control depth of field and exposure during the cutscene I made a function called Sequence Duration to playrate. This way whatever settings I use that are not directly controlled by the sequence would only last for as long as the sequence does, plus or minus an arbitrary length of time.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-3b.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-step-3b.webp"
+                   alt="Blueprint: cutscene to gameplay, step 3b"
+                   width="2000" height="556" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            Setting things up this way allowed me to control when in the sequence to reset the player controller, handle updating post process settings like DOF, resetting the player controller, and when to destroy the level sequence. This step was also important as it would allow me to notify the Ystra blueprint when the cutscene was over, so the enemy AI could also transition to gameplay.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-step-4.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-step-4.webp"
+                   alt="Blueprint: cutscene to gameplay, step 4, detaching from the root motion dummies"
+                   width="2000" height="678" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            When the cutscene was over whats left was to detatch the Actors from their rootmotion dummys and attach the camera back to the player character's camera boom. Then control is given back to the player with the player's collision reenabled.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/blend-into-gameplay-camera.webp">
+              <img src="/assets/img/cine2game/blend-into-gameplay-camera.webp"
+                   alt="Blueprint: BlendIntoGameplayCameraPosition and ResetCameraLag"
+                   width="2000" height="764" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            What comes next is resetting the camera to a predetermined focal length and arm length. I did this because I wanted a subtly gamey way of signalling to the player that they could control the character so I also added a feature to control transitioning to "gamecam".
+          </p>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1920" height="1080"
+                   poster="/assets/video/cine2game/gamecam-transition.jpg"
+                   aria-label="The camera easing from the cutscene framing into the gameplay camera">
+              <source src="/assets/video/cine2game/gamecam-transition.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <div class="breakdown__pair">
+            <figure class="breakdown__figure">
+              <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/ending-camera-defaults.webp">
+                <img src="/assets/img/cine2game/ending-camera-defaults.webp"
+                     alt="Details panel: Ending Camera defaults, transition rate, rotation, focal length and boom length"
+                     width="414" height="170" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="breakdown__figure">
+              <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/ending-camera-sequencer.webp">
+                <img src="/assets/img/cine2game/ending-camera-sequencer.webp"
+                     alt="Sequencer: the ending camera settings keyed per sequence"
+                     width="619" height="318" loading="lazy" decoding="async">
+              </a>
+            </figure>
+          </div>
+
+          <p>
+            Parameters such as how far away the camera is boomed out from the player, ending focal length, and the rate of the transition are controllable in the characer instance by default, but can also be set on a per sequence basis.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/gamecam-parameters.webp">
+              <img src="/assets/img/cine2game/gamecam-parameters.webp"
+                   alt="Blueprint: applying the gamecam parameters"
+                   width="2000" height="820" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            For the cutscene animation itself, transitioning in and out of the animation is controlled by a variable called BlendInterp that is set by the ThirdPersonCharacterBP and casted to the animBPs of the other elements in the scene affected by the sequencer such as Mjolnir and Ystra.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-to-gameplay-slot.webp">
+              <img src="/assets/img/cine2game/cutscene-to-gameplay-slot.webp"
+                   alt="Anim Blueprint: blending between the Cutscene slot and gameplay animation"
+                   width="1490" height="424" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/cutscene-slot-interp-sequencer.webp">
+              <img src="/assets/img/cine2game/cutscene-slot-interp-sequencer.webp"
+                   alt="Sequencer: the BlendInterp variable keyed across the cutscene"
+                   width="1641" height="488" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            This way each affected animBP could blend between the Cutscene slot and the regular gameplay animation based on one master variable keyable in the sequencer.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/camera-lookupoffset.webp">
+              <img src="/assets/img/cine2game/camera-lookupoffset.webp"
+                   alt="Blueprint: Camera LookUpOffset"
+                   width="2000" height="936" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            When the character has control over the camera again, another blueprint script takes over the gamecam in order to offset the camera to the side when looking up
+          </p>
+
+          <div class="breakdown__pair">
+            <figure class="breakdown__figure">
+              <video controls playsinline preload="none" width="1920" height="1080"
+                     poster="/assets/video/cine2game/with-camera-offset.jpg"
+                     aria-label="Looking up with the camera offset applied">
+                <source src="/assets/video/cine2game/with-camera-offset.webm" type="video/webm">
+              </video>
+              <figcaption class="piece-media__caption">With Camera offset(note the hammer offset aswell)</figcaption>
+            </figure>
+            <figure class="breakdown__figure">
+              <video controls playsinline preload="none" width="1920" height="1080"
+                     poster="/assets/video/cine2game/without-camera-offset.jpg"
+                     aria-label="Looking up without the camera offset">
+                <source src="/assets/video/cine2game/without-camera-offset.webm" type="video/webm">
+              </video>
+              <figcaption class="piece-media__caption">Without Camera offset</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ GAMEPLAY ANIMATION ============================ -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <h2 class="piece-section__heading" data-reveal>Gameplay Animation</h2>
+
+          <h3 class="breakdown__subhead">Locomotion</h3>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/idle-to-run.webp">
+              <img src="/assets/img/cine2game/idle-to-run.webp"
+                   alt="Anim Blueprint: the locomotion state machine, a single idle to run blend"
+                   width="651" height="240" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            I decided to keep the locomotion statemachine rather basic in order to accomodate the rest of the complexity of the project as well as to challenge myself to see how much I could get out of a simple idle to run blend.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/direction-based-speed.webp">
+              <img src="/assets/img/cine2game/direction-based-speed.webp"
+                   alt="Blendspace: run cycles placed on a curve so forward movement is faster than backward"
+                   width="2000" height="608" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            In order to give the player character a better feel to the locomotion, I have added a feature to allow for the player to move faster going forward than going backward. This is reflected in the form of a curve in the placement of animation cycles in the blendspace.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/locomotion-blendspace-animbp.webp">
+              <img src="/assets/img/cine2game/locomotion-blendspace-animbp.webp"
+                   alt="Anim Blueprint: the default and aiming locomotion blendspace configurations"
+                   width="2000" height="884" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/stride-warping.webp">
+              <img src="/assets/img/cine2game/stride-warping.webp"
+                   alt="Anim Blueprint: stride warping with a bone transform correcting the pelvis"
+                   width="1265" height="384" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            In the animation Blueprint, I setup two different configurations. One to take the blendspace for when the Thor's default movement, and another to handle when Thor is aiming. I found that when aiming and using Fullbody IK Stride Warping sometimes Thor would have a tendancy to have a squatted down duckwalk. This was due to the fact that the hammer swing animations were from the more rooted idle pose. To correct this I set up bone transforms to tweak the pelvis position relative to the ik-feet.
+          </p>
+
+          <div class="breakdown__pair">
+            <figure class="breakdown__figure">
+              <video controls playsinline preload="none" width="836" height="888"
+                     poster="/assets/video/cine2game/basic-locomotion-blendspace.jpg"
+                     aria-label="Scrubbing through the basic locomotion blendspace">
+                <source src="/assets/video/cine2game/basic-locomotion-blendspace.webm" type="video/webm">
+              </video>
+              <figcaption class="piece-media__caption">Basic Locomotion Blendspace</figcaption>
+            </figure>
+            <figure class="breakdown__figure">
+              <video controls playsinline preload="none" width="836" height="900"
+                     poster="/assets/video/cine2game/aiming-movement-blendspace.jpg"
+                     aria-label="Scrubbing through the aiming movement blendspace">
+                <source src="/assets/video/cine2game/aiming-movement-blendspace.webm" type="video/webm">
+              </video>
+              <figcaption class="piece-media__caption">Aiming Movement Blendspace</figcaption>
+            </figure>
+          </div>
+
+          <p>
+            The Locomotion Animations Were handled largely with a 2D blendspace. this allowed me to get cover a large number of animation possibilities while only really animating movement going in one direction and mirroring over the animations to account for the other direction.
+          </p>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1280" height="720"
+                   poster="/assets/video/cine2game/strafe-variants.jpg"
+                   aria-label="The five strafing variants">
+              <source src="/assets/video/cine2game/strafe-variants.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <p>
+            In order to cover a wide variety of directional movement, I made 5 strafing variants. A horizontal run, diagonal run, cross-over run, diagonal sidestep run, and sidestep run. In gameplay they provide a naturalistic movement without foot intersections and blend well with the idle.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/torso-blending.webp">
+              <img src="/assets/img/cine2game/torso-blending.webp"
+                   alt="Anim Blueprint: procedural torso lean driven by movement direction"
+                   width="1861" height="698" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/g7u5pmqk/" target="_blank" rel="noopener">
+            Open the torso blending Blueprint <span aria-hidden="true">&nearr;</span>
+          </a>
+
+          <figure class="breakdown__figure breakdown__figure--narrow">
+            <video controls playsinline preload="none" width="618" height="772"
+                   poster="/assets/video/cine2game/torso-offset-mirrored.jpg"
+                   aria-label="One animation mirrored and reversed, with the torso offset applied">
+              <source src="/assets/video/cine2game/torso-offset-mirrored.webm" type="video/webm">
+            </video>
+            <figcaption class="piece-media__caption">Exact same animation mirrored/reversed but with a torso offset</figcaption>
+          </figure>
+
+          <p>
+            In order to add variety and weight while saving on animation work I programmed a procedural torso lean into the animation blueprint. this way, identical animation assets played in reverse or mirrored will have a plausible weightshift to them based on the player pawn's direction. I had added values aswell that can tweak how much Thor would lean in any given direction
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/update-looking-angle.webp">
+              <img src="/assets/img/cine2game/update-looking-angle.webp"
+                   alt="Anim Blueprint: the UpdateLookingAngle function"
+                   width="1803" height="552" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/-wxhk629/" target="_blank" rel="noopener">
+            Open the looking angle Blueprint <span aria-hidden="true">&nearr;</span>
+          </a>
+
+          <figure class="breakdown__figure breakdown__figure--narrow">
+            <video controls playsinline preload="none" width="852" height="890"
+                   poster="/assets/video/cine2game/torso-lean-aim.jpg"
+                   aria-label="The torso and hammer leaning with the camera aim">
+              <source src="/assets/video/cine2game/torso-lean-aim.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <p>
+            A similar function using different input variables drives how the torso would lean based on the camera aim, as well as how thor tilts his hammer ever so slightly to leave room for the player to aim
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ COMBAT ============================ -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <h2 class="piece-section__heading" data-reveal>Combat</h2>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1764" height="888"
+                   poster="/assets/video/cine2game/hammer-throw-statemachine-demo.jpg"
+                   aria-label="The hammer throw state machine running">
+              <source src="/assets/video/cine2game/hammer-throw-statemachine-demo.webm" type="video/webm">
+            </video>
+            <figcaption class="piece-media__caption">Hammer Throw Statemachine Demo</figcaption>
+          </figure>
+
+          <p>
+            The state machine for the hammer throw attack has the animBP playing an anim montage to enter and exit from three hold states, The cached locomotion pose, the hammer swing cycle, and the RecallHold.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/combat-gameplay-bp.webp">
+              <img src="/assets/img/cine2game/combat-gameplay-bp.webp"
+                   alt="Blueprint: the combat gameplay graph"
+                   width="1821" height="898" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            The Blueprint For the combat systems can be viewed <a href="https://blueprintue.com/blueprint/sh56b81e/" target="_blank" rel="noopener">here</a> on compatible devices (on pc, ctrl+Scroll to zoom, ctrl+RightClick+Drag to pan)
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/gameplay-aim-mechanic.webp">
+              <img src="/assets/img/cine2game/gameplay-aim-mechanic.webp"
+                   alt="Blueprint: the aim mechanic, dollying the camera to an aim focal length and boom length"
+                   width="2000" height="700" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            The ranged attack is a simple aim-throw-recall gameplay loop. The aiming is rather basic, when the character holds aim, the camera zoom and dollys in to a desired focal length and boom arm length, when the aim is released it returns.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-throw-mechanic-1.webp">
+              <img src="/assets/img/cine2game/hammer-throw-mechanic-1.webp"
+                   alt="Blueprint: hammer throw, part 1, tracing from the shoulder socket to the centre of the camera view"
+                   width="2000" height="766" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            The attack checks if the player is currently holding the hammer and also aiming. If the player is, then when the blueprint recieves the notify from the anim montage, a line is traced from a socket on Thor's shoulder to whatever is at the center of camera view
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-throw-mechanic-2.webp">
+              <img src="/assets/img/cine2game/hammer-throw-mechanic-2.webp"
+                   alt="Blueprint: hammer throw, part 2, hiding the held hammer and spawning the projectile"
+                   width="2000" height="660" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            The hammer in Thor's hand gets hidden and a new projectile hammer is spawned. It then travels from A to B at a rate defined by the designer. Because this is controlled with a time line the ramping of the speed can be controlled by the desiger as well.
+          </p>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="922" height="696"
+                   poster="/assets/video/cine2game/hammer-throw-tweaking.jpg"
+                   aria-label="Tweaking the hammer throw variables">
+              <source src="/assets/video/cine2game/hammer-throw-tweaking.webm" type="video/webm">
+            </video>
+            <figcaption class="piece-media__caption">Hammer Throw Tweaking Demonstration</figcaption>
+          </figure>
+
+          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/fcpm_myp/" target="_blank" rel="noopener">
+            Open the Hammer Projectile Blueprint <span aria-hidden="true">&nearr;</span>
+          </a>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-recall-mechanic-1.webp">
+              <img src="/assets/img/cine2game/hammer-recall-mechanic-1.webp"
+                   alt="Blueprint: hammer recall, part 1, building the spline at run time"
+                   width="2000" height="502" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-recall-mechanic-2.webp">
+              <img src="/assets/img/cine2game/hammer-recall-mechanic-2.webp"
+                   alt="Blueprint: hammer recall, part 2, the recall timeline"
+                   width="2000" height="536" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1092" height="742"
+                   poster="/assets/video/cine2game/hammer-recall.jpg"
+                   aria-label="Tweaking the hammer recall spline">
+              <source src="/assets/video/cine2game/hammer-recall.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <p>
+            The Hammer Recall is driven by a spline component created at run time. In order to tweak the spline I added variables to control the tangent handle. Because the recall is handled by a timeline, it can be tweaked just the same as the hammer throw.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-recall-nudge-blueprint.webp">
+              <img src="/assets/img/cine2game/hammer-recall-nudge-blueprint.webp"
+                   alt="Blueprint: the recall nudge, a sphere trace along the recall path"
+                   width="1894" height="472" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-recall-nudge-projectile-bp.webp">
+              <img src="/assets/img/cine2game/hammer-recall-nudge-projectile-bp.webp"
+                   alt="Blueprint: the recall nudge inside the hammer projectile Blueprint"
+                   width="1779" height="556" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            I wanted to add a feature where the player could hit an object with the hammer on the recall if they were slick about it, but also wanted to control how easy or difficult is was for the player to do so. To manage this, while the hammer projectile is recalling, it checks if a compatible entity is in range of the path with a sphere trace.
+          </p>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1044" height="718"
+                   poster="/assets/video/cine2game/recallhitdemo.jpg"
+                   aria-label="The recalling hammer nudged toward Ystra and hitting her">
+              <source src="/assets/video/cine2game/recallhitdemo.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <p>
+            If the projectile ends up detecting the enemy, its path will be nudged toward it. The Radius Can be tweaked as well
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ YSTRA ============================ -->
+    <section class="piece-section">
+      <div class="container">
+        <div class="breakdown">
+          <h2 class="piece-section__heading" data-reveal>Ystra Enemy Ai</h2>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1920" height="976"
+                   poster="/assets/video/cine2game/ystra-idle.jpg"
+                   aria-label="Ystra's idle, with dynamics on her limbs">
+              <source src="/assets/video/cine2game/ystra-idle.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <p>
+            I kept things minimalistic with Ystra's Animation I kept the idle animation with some dynamics to add some inertia her limbs.
+          </p>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/ystra-movement-volume.webp">
+              <img src="/assets/img/cine2game/ystra-movement-volume.webp"
+                   alt="In engine: the volume that bounds Ystra's movement"
+                   width="1720" height="1108" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            Ystra's Ai is similarly straight forward. All her movement is bound to a volume, and on a timer, Ystra will move to a random point in the volume and continue attacking with spear rain.
+          </p>
+
+          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/gdm6-d-t/" target="_blank" rel="noopener">
+            Open the Ystra Blueprint <span aria-hidden="true">&nearr;</span>
+          </a>
+
+          <figure class="breakdown__figure">
+            <video controls playsinline preload="none" width="1258" height="706"
+                   poster="/assets/video/cine2game/ystra-hit-react.jpg"
+                   aria-label="Ystra's hit react, her movement growing more erratic">
+              <source src="/assets/video/cine2game/ystra-hit-react.webm" type="video/webm">
+            </video>
+          </figure>
+
+          <figure class="breakdown__figure">
+            <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/ystra-hit-react.webp">
+              <img src="/assets/img/cine2game/ystra-hit-react.webp"
+                   alt="Blueprint: Ystra's hit react"
+                   width="1650" height="260" loading="lazy" decoding="async">
+            </a>
+          </figure>
+
+          <p>
+            In order to bring some life to Ystra as an Enemy, I added a hit react wherin the actor would jitter, and make the overall movement more erratic. Her Movement overall also speeds up the more she is hit.
+          </p>
+
+          <p class="piece-lede">
+            Thank you for taking the time to read this breakdown! This was a very exciting project to create and I hope this provided some insight into my process.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ RELATED ============================
+         Built by js/modules/relatedWork.js from js/data/pieces.js. This page
+         is not in that catalogue, so it can never offer itself.
+    -->
+    <section class="container related-work" data-related-work>
+      <h2 class="related-work__title">Related work</h2>
+      <p class="related-work__fallback">
+        <a href="/#featured">See all work</a>
+      </p>
+    </section>
+
+    <!-- =========================== CONNECT ============================
+         Markup lives in js/modules/connectBand.js — one copy for every page.
+    -->
+    <section class="section connect" id="connect" data-connect-band>
+      <div class="container connect__inner">
+        <div class="connect__pitch">
+          <h2 class="connect__title">Let&rsquo;s make something great!</h2>
+          <p class="connect__lede">
+            Open to commissions, collaborations, and full-time roles.
+            <a href="mailto:adam.casey.velazquez@gmail.com">Email me</a> and
+            I&rsquo;ll get back to you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer site-footer--minimal">
+    <div class="container">
+      <div class="site-footer__bottom">
+        <p>&copy; <span data-current-year>2026</span> Adam Velazquez. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

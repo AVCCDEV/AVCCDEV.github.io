@@ -16,6 +16,7 @@ import { initScrollHint } from "./modules/scrollHint.js";
 import { initConnectBand } from "./modules/connectBand.js";
 import { initContactForm } from "./modules/contactForm.js";
 import { initRelatedWork } from "./modules/relatedWork.js";
+import { initLightbox } from "./modules/lightbox.js";
 
 /** Keeps the footer copyright year correct without an annual edit. */
 function initCurrentYear() {
@@ -33,6 +34,7 @@ function boot() {
   initHeroVideo();
   initScrollHint();
   initRelatedWork();
+  initLightbox();
   // Order matters: the band builds the form, contactForm.js then binds to it.
   initConnectBand();
   initContactForm();

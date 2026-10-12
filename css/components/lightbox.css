@@ -1,0 +1,105 @@
+/* ==========================================================================
+   lightbox.css — full-screen image viewer built by js/modules/lightbox.js.
+   It sits over artwork, so it uses the theme-independent --color-media-*
+   tokens: the surround is dark in both themes.
+   ========================================================================== */
+
+/* Only style the open state for display: a closed <dialog> must stay
+   display: none, which the UA stylesheet handles. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-media-scrim);
+  color: var(--color-on-media);
+  overscroll-behavior: contain;
+}
+.lightbox[open] {
+  display: grid;
+  animation: lightbox-in var(--dur-med) var(--ease-out);
+}
+.lightbox::backdrop { background: transparent; }
+
+/* Stop the page behind scrolling while the viewer is up. */
+html:has(.lightbox[open]) { overflow: hidden; }
+
+.lightbox__figure {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: var(--space-8) var(--space-9);
+  min-height: 0;
+}
+
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100svh - 2 * var(--space-8));
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+
+.lightbox__button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--space-7);
+  height: var(--space-7);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-media-scrim-soft);
+  color: var(--color-on-media);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.lightbox__button:hover {
+  background: var(--color-hero-button-hover);
+  color: var(--color-on-media);
+}
+.lightbox__button:focus-visible {
+  outline: 2px solid var(--color-on-media);
+  outline-offset: 3px;
+  border-radius: var(--radius-full);
+}
+
+.lightbox__close { top: var(--space-4); right: var(--space-4); }
+.lightbox__prev,
+.lightbox__next  { top: 50%; translate: 0 -50%; }
+.lightbox__prev  { left: var(--space-4); }
+.lightbox__next  { right: var(--space-4); }
+
+.lightbox__count {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  translate: -50% 0;
+  margin: 0;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-on-media-muted);
+}
+
+/* Narrow screens: give the image the full width and move prev/next down
+   beside the counter, out of the picture. */
+@media (max-width: 40rem) {
+  .lightbox__figure { padding: var(--space-8) var(--space-2); }
+  .lightbox__prev,
+  .lightbox__next   { top: auto; bottom: var(--space-2); translate: none; }
+  .lightbox__count  { bottom: var(--space-5); }
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

@@ -163,6 +163,21 @@ selector outranks any single class.** Padding set on a list in `pages/` or
 `components/` is silently dropped — `.feature-list` carried a dead
 `padding-block` for weeks. Use margin on list elements.
 
+**`/cine2game/` is unlisted on purpose** (Adam, 2026-10-12). It is a long
+college-era breakdown ripped from his old Wix site, reachable only by URL: it
+is **not** in `js/data/pieces.js` and **not** in the landing grid, and it sits
+at the site root rather than under `work/`. Do not "fix" either. Its styles
+are `css/pages/cine2game.css`, layered on `piece.css`; its clips use the
+webm-only `lean` preset; its Blueprints are links to blueprintUE, not iframes,
+to keep the site's external requests at two. Its copy is Adam's verbatim,
+typos included.
+
+**Images that enlarge on click use the lightbox** (`js/modules/lightbox.js`
+plus `css/components/lightbox.css`, Adam 2026-10-12). Wrap the `<img>` in
+`<a href="<full-size file>" data-lightbox>` and add the stylesheet link. With
+JS off the link just opens the file. Every `data-lightbox` link on a page is
+one prev/next sequence. Never use `target="_blank"` on image links.
+
 **Titles longer than ~35 characters need `.piece-title--long`.** At full
 display size they wrap to four lines and push the trailer below the fold.
 

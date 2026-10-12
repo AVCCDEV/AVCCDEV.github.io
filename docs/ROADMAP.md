@@ -62,6 +62,12 @@ gotchas live in `CLAUDE.md` — do not repeat them here.
 - **Git history is 33 MB** against a ~1 MB tree — the deleted 32 MB Obsidian
   trailers persist in it. Unpushed, so it can still be rewritten; destructive,
   so ask first.
+- **Cine2Game gameplay playthrough** — YouTube video ID. The 5-minute
+  playthrough (`MediaPool/Cine2Game/video/27_Gameplay-Animation.mp4`) goes on
+  YouTube, not in the repo. Its placeholder was removed so the page could
+  ship (2026-10-12). Once Adam supplies the ID, add a `.piece-embed`
+  youtube-nocookie iframe, as on `work/covenant/`, directly under the
+  "Gameplay Animation" heading in `cine2game/index.html`.
 
 ## Decisions
 
