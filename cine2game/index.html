@@ -126,7 +126,7 @@
     <div class="piece-media--bleed" data-reveal>
       <figure>
         <div class="piece-video">
-          <video controls playsinline preload="none" width="1920" height="1080"
+          <video controls muted loop playsinline preload="none" data-loop-video width="1920" height="1080"
                  poster="/assets/video/cine2game/game-demo.jpg"
                  aria-label="Game demo: the cutscene hands off seamlessly to gameplay">
             <source src="/assets/video/cine2game/game-demo.webm" type="video/webm">
@@ -176,7 +176,7 @@
           <h2 class="piece-section__heading" data-reveal>Cutscene Animation</h2>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1280" height="720"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1280" height="720"
                    poster="/assets/video/cine2game/cutscene-animation.jpg"
                    aria-label="The finished cutscene animation">
               <source src="/assets/video/cine2game/cutscene-animation.webm" type="video/webm">
@@ -225,6 +225,15 @@
       <div class="container">
         <div class="breakdown">
           <h2 class="piece-section__heading" data-reveal>Cutscene to Gameplay Blueprint</h2>
+
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/fgxet0z1/"
+                      title="Blueprint: cutscene to gameplay transition system"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <p>
             The Blueprint For the Cutscene to Gameplay Transition System can be viewed <a href="https://blueprintue.com/blueprint/fgxet0z1/" target="_blank" rel="noopener">here</a> (ctrl+Scroll to zoom, ctrl+RightClick+Drag to pan)
@@ -340,7 +349,7 @@
           </p>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1920" height="1080"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1920" height="1080"
                    poster="/assets/video/cine2game/gamecam-transition.jpg"
                    aria-label="The camera easing from the cutscene framing into the gameplay camera">
               <source src="/assets/video/cine2game/gamecam-transition.webm" type="video/webm">
@@ -414,7 +423,7 @@
 
           <div class="breakdown__pair">
             <figure class="breakdown__figure">
-              <video controls playsinline preload="none" width="1920" height="1080"
+              <video controls muted loop playsinline preload="none" data-loop-video width="1920" height="1080"
                      poster="/assets/video/cine2game/with-camera-offset.jpg"
                      aria-label="Looking up with the camera offset applied">
                 <source src="/assets/video/cine2game/with-camera-offset.webm" type="video/webm">
@@ -422,7 +431,7 @@
               <figcaption class="piece-media__caption">With Camera offset(note the hammer offset aswell)</figcaption>
             </figure>
             <figure class="breakdown__figure">
-              <video controls playsinline preload="none" width="1920" height="1080"
+              <video controls muted loop playsinline preload="none" data-loop-video width="1920" height="1080"
                      poster="/assets/video/cine2game/without-camera-offset.jpg"
                      aria-label="Looking up without the camera offset">
                 <source src="/assets/video/cine2game/without-camera-offset.webm" type="video/webm">
@@ -488,7 +497,7 @@
 
           <div class="breakdown__pair">
             <figure class="breakdown__figure">
-              <video controls playsinline preload="none" width="836" height="888"
+              <video controls muted loop playsinline preload="none" data-loop-video width="836" height="888"
                      poster="/assets/video/cine2game/basic-locomotion-blendspace.jpg"
                      aria-label="Scrubbing through the basic locomotion blendspace">
                 <source src="/assets/video/cine2game/basic-locomotion-blendspace.webm" type="video/webm">
@@ -496,7 +505,7 @@
               <figcaption class="piece-media__caption">Basic Locomotion Blendspace</figcaption>
             </figure>
             <figure class="breakdown__figure">
-              <video controls playsinline preload="none" width="836" height="900"
+              <video controls muted loop playsinline preload="none" data-loop-video width="836" height="900"
                      poster="/assets/video/cine2game/aiming-movement-blendspace.jpg"
                      aria-label="Scrubbing through the aiming movement blendspace">
                 <source src="/assets/video/cine2game/aiming-movement-blendspace.webm" type="video/webm">
@@ -510,7 +519,7 @@
           </p>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1280" height="720"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1280" height="720"
                    poster="/assets/video/cine2game/strafe-variants.jpg"
                    aria-label="The five strafing variants">
               <source src="/assets/video/cine2game/strafe-variants.webm" type="video/webm">
@@ -528,12 +537,17 @@
                    width="1861" height="698" loading="lazy" decoding="async">
             </a>
           </figure>
-          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/g7u5pmqk/" target="_blank" rel="noopener">
-            Open the torso blending Blueprint <span aria-hidden="true">&nearr;</span>
-          </a>
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/g7u5pmqk/"
+                      title="Blueprint: torso blending"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <figure class="breakdown__figure breakdown__figure--narrow">
-            <video controls playsinline preload="none" width="618" height="772"
+            <video controls muted loop playsinline preload="none" data-loop-video width="618" height="772"
                    poster="/assets/video/cine2game/torso-offset-mirrored.jpg"
                    aria-label="One animation mirrored and reversed, with the torso offset applied">
               <source src="/assets/video/cine2game/torso-offset-mirrored.webm" type="video/webm">
@@ -552,12 +566,17 @@
                    width="1803" height="552" loading="lazy" decoding="async">
             </a>
           </figure>
-          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/-wxhk629/" target="_blank" rel="noopener">
-            Open the looking angle Blueprint <span aria-hidden="true">&nearr;</span>
-          </a>
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/-wxhk629/"
+                      title="Blueprint: looking angle"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <figure class="breakdown__figure breakdown__figure--narrow">
-            <video controls playsinline preload="none" width="852" height="890"
+            <video controls muted loop playsinline preload="none" data-loop-video width="852" height="890"
                    poster="/assets/video/cine2game/torso-lean-aim.jpg"
                    aria-label="The torso and hammer leaning with the camera aim">
               <source src="/assets/video/cine2game/torso-lean-aim.webm" type="video/webm">
@@ -578,7 +597,7 @@
           <h2 class="piece-section__heading" data-reveal>Combat</h2>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1764" height="888"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1764" height="888"
                    poster="/assets/video/cine2game/hammer-throw-statemachine-demo.jpg"
                    aria-label="The hammer throw state machine running">
               <source src="/assets/video/cine2game/hammer-throw-statemachine-demo.webm" type="video/webm">
@@ -589,6 +608,15 @@
           <p>
             The state machine for the hammer throw attack has the animBP playing an anim montage to enter and exit from three hold states, The cached locomotion pose, the hammer swing cycle, and the RecallHold.
           </p>
+
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/sh56b81e/"
+                      title="Blueprint: combat systems"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <figure class="breakdown__figure">
             <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/combat-gameplay-bp.webp">
@@ -639,7 +667,7 @@
           </p>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="922" height="696"
+            <video controls muted loop playsinline preload="none" data-loop-video width="922" height="696"
                    poster="/assets/video/cine2game/hammer-throw-tweaking.jpg"
                    aria-label="Tweaking the hammer throw variables">
               <source src="/assets/video/cine2game/hammer-throw-tweaking.webm" type="video/webm">
@@ -647,9 +675,14 @@
             <figcaption class="piece-media__caption">Hammer Throw Tweaking Demonstration</figcaption>
           </figure>
 
-          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/fcpm_myp/" target="_blank" rel="noopener">
-            Open the Hammer Projectile Blueprint <span aria-hidden="true">&nearr;</span>
-          </a>
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/fcpm_myp/"
+                      title="Blueprint: hammer projectile"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <figure class="breakdown__figure">
             <a class="breakdown__zoom" data-lightbox href="/assets/img/cine2game/hammer-recall-mechanic-1.webp">
@@ -668,7 +701,7 @@
           </figure>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1092" height="742"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1092" height="742"
                    poster="/assets/video/cine2game/hammer-recall.jpg"
                    aria-label="Tweaking the hammer recall spline">
               <source src="/assets/video/cine2game/hammer-recall.webm" type="video/webm">
@@ -700,7 +733,7 @@
           </p>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1044" height="718"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1044" height="718"
                    poster="/assets/video/cine2game/recallhitdemo.jpg"
                    aria-label="The recalling hammer nudged toward Ystra and hitting her">
               <source src="/assets/video/cine2game/recallhitdemo.webm" type="video/webm">
@@ -721,7 +754,7 @@
           <h2 class="piece-section__heading" data-reveal>Ystra Enemy Ai</h2>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1920" height="976"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1920" height="976"
                    poster="/assets/video/cine2game/ystra-idle.jpg"
                    aria-label="Ystra's idle, with dynamics on her limbs">
               <source src="/assets/video/cine2game/ystra-idle.webm" type="video/webm">
@@ -744,12 +777,17 @@
             Ystra's Ai is similarly straight forward. All her movement is bound to a volume, and on a timer, Ystra will move to a random point in the volume and continue attacking with spear rain.
           </p>
 
-          <a class="breakdown__blueprint" href="https://blueprintue.com/blueprint/gdm6-d-t/" target="_blank" rel="noopener">
-            Open the Ystra Blueprint <span aria-hidden="true">&nearr;</span>
-          </a>
+          <figure class="breakdown__figure">
+            <div class="breakdown__blueprint">
+              <iframe src="https://blueprintue.com/render/gdm6-d-t/"
+                      title="Blueprint: Ystra enemy AI"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </figure>
 
           <figure class="breakdown__figure">
-            <video controls playsinline preload="none" width="1258" height="706"
+            <video controls muted loop playsinline preload="none" data-loop-video width="1258" height="706"
                    poster="/assets/video/cine2game/ystra-hit-react.jpg"
                    aria-label="Ystra's hit react, her movement growing more erratic">
               <source src="/assets/video/cine2game/ystra-hit-react.webm" type="video/webm">

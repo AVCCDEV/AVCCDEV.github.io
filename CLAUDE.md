@@ -168,9 +168,13 @@ college-era breakdown ripped from his old Wix site, reachable only by URL: it
 is **not** in `js/data/pieces.js` and **not** in the landing grid, and it sits
 at the site root rather than under `work/`. Do not "fix" either. Its styles
 are `css/pages/cine2game.css`, layered on `piece.css`; its clips use the
-webm-only `lean` preset; its Blueprints are links to blueprintUE, not iframes,
-to keep the site's external requests at two. Its copy is Adam's verbatim,
-typos included.
+webm-only `lean` preset and all carry `data-loop-video` (silent, so they
+autoplay muted while on screen, keeping controls for scrubbing — Adam,
+2026-10-12); its six Blueprints are lazy-loaded blueprintUE
+iframes (`blueprintue.com/render/<id>/`) placed where the Wix page had them
+(Adam, 2026-10-12, reversing an earlier links-only choice). That makes
+blueprintue.com a third external origin, on this page only. Its copy is
+Adam's verbatim, typos included.
 
 **Images that enlarge on click use the lightbox** (`js/modules/lightbox.js`
 plus `css/components/lightbox.css`, Adam 2026-10-12). Wrap the `<img>` in
