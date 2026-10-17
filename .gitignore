@@ -20,6 +20,13 @@ node_modules/
 *.tiff
 *_original.*
 
+# The machine's global excludesFile (core.excludesFile in ~/.gitconfig) points
+# at an unrelated project's .gitignore that ignores *.png. That silently kept
+# every company and tool mark out of the repo, so they 404'd on the live site
+# and the masks rendered blank (found 2026-10-17). A repo .gitignore outranks
+# the global one, so re-include PNGs here. Keep this line.
+!*.png
+
 # Encoded, but shelved until the page that uses it exists (2026-08-27).
 #
 # These are NOT junk — they are finished encodes waiting on their piece pages,

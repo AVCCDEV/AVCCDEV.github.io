@@ -131,15 +131,57 @@
       </div>
     </section>
 
-    <!-- ============================ TRAILER ============================ -->
+    <!-- ===================== SAMPLES + TRAILER =====================
+         Two small samples stacked on the left, the trailer as the big pane on
+         the right (Adam, 2026-10-17). See .piece-panels in piece.css. On a
+         phone it is one column in source order: samples, then trailer. -->
     <div class="piece-media--bleed" data-reveal>
-      <div class="piece-embed">
-        <!-- youtube-nocookie: no tracking cookie until the viewer hits play. -->
-        <iframe src="https://www.youtube-nocookie.com/embed/6B5NUd6B9I4"
-                title="Clockwork Revolution — The Heist | Xbox Games Showcase 2026"
-                loading="lazy" allowfullscreen
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+      <div class="piece-panels">
+        <figure>
+          <div class="piece-video">
+            <!-- Encoded by tools/media/compress.sh (preset: web). webm first,
+                 mp4 as the universal fallback. -->
+            <video controls playsinline preload="metadata"
+                   poster="/assets/video/clockwork-revolution/heist-endcard.jpg"
+                   aria-label="Clockwork Revolution — The Heist endcard logo">
+              <source src="/assets/video/clockwork-revolution/heist-endcard.webm" type="video/webm">
+              <source src="/assets/video/clockwork-revolution/heist-endcard.mp4" type="video/mp4">
+              <p>Your browser cannot play this video.
+                 <a href="/assets/video/clockwork-revolution/heist-endcard.mp4">Download the mp4</a>.</p>
+            </video>
+          </div>
+          <figcaption class="piece-media__caption">
+            The endcard logo.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <div class="piece-video">
+            <!-- Encoded by tools/media/compress.sh (preset: clip). -->
+            <video controls playsinline preload="metadata"
+                   poster="/assets/video/clockwork-revolution/inxile-logo.jpg"
+                   aria-label="inXile Entertainment logo animation">
+              <source src="/assets/video/clockwork-revolution/inxile-logo.webm" type="video/webm">
+              <source src="/assets/video/clockwork-revolution/inxile-logo.mp4" type="video/mp4">
+              <p>Your browser cannot play this video.
+                 <a href="/assets/video/clockwork-revolution/inxile-logo.mp4">Download the mp4</a>.</p>
+            </video>
+          </div>
+          <figcaption class="piece-media__caption">
+            The inXile logo.
+          </figcaption>
+        </figure>
+
+        <div class="piece-panels__main">
+          <div class="piece-embed">
+            <!-- youtube-nocookie: no tracking cookie until the viewer hits play. -->
+            <iframe src="https://www.youtube-nocookie.com/embed/6B5NUd6B9I4"
+                    title="Clockwork Revolution — The Heist | Xbox Games Showcase 2026"
+                    loading="lazy" allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -155,27 +197,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ============================ ENDCARD ============================ -->
-    <div class="piece-media--bleed" style="margin-top: var(--section-y);" data-reveal>
-      <figure>
-        <div class="piece-video">
-          <!-- Encoded by tools/media/compress.sh (preset: web). webm first,
-               mp4 as the universal fallback. -->
-          <video controls playsinline preload="metadata"
-                 poster="/assets/video/clockwork-revolution/heist-endcard.jpg"
-                 aria-label="Clockwork Revolution — The Heist endcard logo">
-            <source src="/assets/video/clockwork-revolution/heist-endcard.webm" type="video/webm">
-            <source src="/assets/video/clockwork-revolution/heist-endcard.mp4" type="video/mp4">
-            <p>Your browser cannot play this video.
-               <a href="/assets/video/clockwork-revolution/heist-endcard.mp4">Download the mp4</a>.</p>
-          </video>
-        </div>
-        <figcaption class="piece-media__caption">
-          The endcard logo.
-        </figcaption>
-      </figure>
-    </div>
 
     <!-- ============================ RELATED ============================
          Built by js/modules/relatedWork.js from js/data/pieces.js. It picks
