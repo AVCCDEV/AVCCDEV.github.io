@@ -404,8 +404,15 @@
   text-wrap: balance;
 }
 .feature__title-line { display: block; }
-/* Second line sits lighter, so the stack has hierarchy — as on piece pages. */
-.feature__title-line--soft { color: var(--color-text-muted); }
+/* Second line sits lighter and at half size, so the stack has hierarchy and
+   the subtitle reads as a caption, not a second headline. em keeps it tied to
+   --feature-title-size at every column count; the margin opens the 0.98
+   line-height, which is set for the big line and crowds a small one under it. */
+.feature__title-line--soft {
+  margin-top: 0.3em;
+  font-size: 0.5em;
+  color: var(--color-text-muted);
+}
 
 /* margin-top:auto pins it to the bottom of the card, which is what keeps the
    links level across a row when titles wrap to different depths. align-self
